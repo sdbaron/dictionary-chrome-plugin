@@ -1,0 +1,1 @@
+# dictionary-chrome-plugin
