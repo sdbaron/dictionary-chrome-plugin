@@ -1,0 +1,27 @@
+.sdb-popup {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 200px;
+    min-width: 200px;
+    max-width: 500px;
+    background-color: aliceblue;
+    border: 1px lightblue;
+    border-radius: 3px;
+    z-index: 999;
+    }
+
+.sdb-popup_hide{
+    display: none;
+    }
+
+.sdb-popup__header{
+    position: relative;
+    min-height: 2em;
+    background-color: lightgrey;
+    }
+
+.sdb-popup__body{
+    position: relative;
+    }
