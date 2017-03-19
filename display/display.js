@@ -16,6 +16,14 @@
         let header;
         let body;
 
+        return {
+            show: show,
+            hide: hide,
+            showLoadingBar: showLoadingBar,
+            hideLoadingBar: hideLoadingBar
+
+        };
+
         /**
          * @param {string|null} message -
          * @param {number} [top] -
@@ -43,7 +51,7 @@
 
         function setPopupPosition(srcTop, left) {
             // try set popup under te selected word
-            let top = srcTop + 20;
+            let top = srcTop + 10;
             popupElement.style.top = !top ? 0 : (top + 'px');
             popupElement.style.left = !left ? 0 : (left + 'px');
 
@@ -85,12 +93,5 @@
             document.body.appendChild(p);
         }
 
-        return {
-            show: show,
-            hide: hide,
-            showLoadingBar: showLoadingBar,
-            hideLoadingBar: hideLoadingBar
-
-        }
     }
 })();
