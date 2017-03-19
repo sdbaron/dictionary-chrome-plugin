@@ -2,7 +2,7 @@
     let messageElement = document.createElement('div');
     document.body.insertBefore(messageElement, document.body.firstChild);
 
-    window.SDBYandexDict = {
+    window.SDBDisplay = {
         showMessage: function (message) {
             messageElement.innerHTML = message;
         },
@@ -12,28 +12,48 @@
 
     function Popup() {
         let popupElement;
+        let loadingBar;
         let header;
         let body;
 
         /**
-         * @param {string} message -
-         * @param {number} [srcTop] -
+         * @param {string|null} message -
+         * @param {number} [top] -
          * @param {number} [left] -
          */
-        function show(message, srcTop, left) {
+        function show(message, top, left) {
             if (!popupElement) {
                 create();
             }
-            let top = srcTop + 20;
-            popupElement.style.top = !top ? 0 : (top + 'px');
-            popupElement.style.left = !left ? 0 : (left + 'px');
+            setPopupPosition(top, left);
+
+            hideLoadingBar();
 
             displayMessage(message);
 
             popupElement.classList.remove('sdb-popup_hide');
+
         }
 
-        function displayMessage(message){
+        function showLoadingBar(text, top, left) {
+            show(null, top, left);
+            loadingBar.innerHTML = `Ищем перевод слова ${text}...`;
+            popupElement.classList.add('sdb-popup_loading');
+        }
+
+        function setPopupPosition(srcTop, left) {
+            // try set popup under te selected word
+            let top = srcTop + 20;
+            popupElement.style.top = !top ? 0 : (top + 'px');
+            popupElement.style.left = !left ? 0 : (left + 'px');
+
+        }
+
+        function hideLoadingBar() {
+            popupElement.classList.remove('sdb-popup_loading');
+        }
+
+        function displayMessage(message) {
             body.innerHTML = message;
         }
 
@@ -46,6 +66,12 @@
         function create() {
             const p = popupElement = document.createElement('div');
             p.classList.add('sdb-popup');
+
+            loadingBar = document.createElement('div');
+            loadingBar.classList.add('sdb-popup__loading-bar');
+            loadingBar.innerHTML = 'Loading...';
+            p.appendChild(loadingBar);
+            p.addEventListener('click', () => hide());
 
             header = document.createElement('div');
             header.classList.add('sdb-popup__header');
@@ -61,9 +87,10 @@
 
         return {
             show: show,
-            hide: hide
+            hide: hide,
+            showLoadingBar: showLoadingBar,
+            hideLoadingBar: hideLoadingBar
+
         }
     }
-
-
 })();

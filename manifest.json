@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Translator yandex dictionary",
-  "description": "Translator",
-  "version": "0.1",
+  "name": "Multi dictionary",
+  "description": "Popup with translated word by double click",
+  "version": "0.0.1.2",
   "options_page": "options.html",
   "browser_action": {
     "default_title": "translate",
@@ -12,11 +12,16 @@
     {
       "matches": ["<all_urls>"],
       "css": ["display/display.css", "on-page.css"],
-      "js": ["display/display.js", "on-page.js"]
+      "js": [
+        "dictionaries/yandex/api.js",
+        "display/display.js", "on-page.js"]
     }
   ],
   "permissions": [
     "unlimitedStorage",
     "notifications"
+  ],
+  "web_accessible_resources": [
+    "dictionaries/yandex/*"
   ]
 }

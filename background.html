@@ -3,7 +3,12 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Title</title>
-	<script src="on-page.js"></script>
+	<script>
+		chrome.browserAction.onClicked.addListener(function(tab) {
+			chrome.tabs.executeScript(null, {file: 'dictionaries/yandex/api.js'});
+		});
+
+	</script>
 </head>
 <body>
 

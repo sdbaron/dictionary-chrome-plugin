@@ -10,10 +10,24 @@
     border: 1px lightblue;
     border-radius: 3px;
     z-index: 999;
+    box-shadow: 5px 5px 14px 0 rgba(0,0,0,0.5);
     }
 
 .sdb-popup_hide{
     display: none;
+    }
+
+.sdb-popup_loading {
+    min-height: 20px;
+    }
+
+.sdb-popup_loading .sdb-popup__header
+, .sdb-popup_loading .sdb-popup__body {
+    display: none;
+    }
+
+.sdb-popup_loading .sdb-popup__loading-bar {
+    display: block;
     }
 
 .sdb-popup__header{
@@ -24,4 +38,15 @@
 
 .sdb-popup__body{
     position: relative;
+    padding: 0.5em;
+    }
+
+.sdb-popup__loading-bar{
+    display: none;
+    position: relative;
+    padding: 0.5em;
+    min-height: 2em;
+    line-height: 2em;
+    text-align: center;
+    background-color: lightgrey;
     }
