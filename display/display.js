@@ -54,7 +54,6 @@
             let top = srcTop + 10;
             popupElement.style.top = !top ? 0 : (top + 'px');
             popupElement.style.left = !left ? 0 : (left + 'px');
-
         }
 
         function hideLoadingBar() {

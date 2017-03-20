@@ -2,7 +2,14 @@ window.SDBDictionary || (window.SDBDictionary = {});
 window.SDBDictionary.Api || (window.SDBDictionary.Api = {});
 
 window.SDBDictionary.Api.Yandex = {
-    translate: function( text, langFrom='de', langTo='ru' ) {
+    /**
+     * ВОзвращает промис с перводом текста
+     * @param {string} text Переводимый текст
+     * @param {string} langFrom Двухсимвольное обозначение исходного языка
+     * @param {string} langTo Двухсимвольное обозначение целвого языка
+     * @returns {Promise<string>} Промис результата перевода
+     */
+    translate: function (text, langFrom = 'de', langTo = 'ru') {
         return new Promise((success, reject) => {
                 let xhr = new XMLHttpRequest();
                 const personalKey = 'dict.1.1.20170204T094736Z.4a8cda8b35129593.50f7488e10edade7598f506c52a1ab431d8e1958';
@@ -22,7 +29,19 @@ window.SDBDictionary.Api.Yandex = {
                 }
             }
         )
+    },
+
+    /**
+     * Форматирует результат перевода в html
+     * @param {string} text Результат перевода
+     * @param {HTMLElement} parentElement Элемент, в котрый будет всатвлен результат
+     */
+    toHtml: function (text, parentElement) {
+        'use strict';
+        const data = JSON.parse(text);
+
     }
+
 };
 
 

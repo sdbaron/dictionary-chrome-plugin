@@ -20,7 +20,19 @@ window.SDBDictionary.Api.Google = {
                 }
             }
         )
+    },
+
+    /**
+     * Форматирует результат перевода в html
+     * @param {string} text Результат перевода
+     * @param {HTMLElement} parentElement Элемент, в котрый будет всатвлен результат
+     */
+    toHtml: function (text, parentElement) {
+        'use strict';
+        return text;
+
     }
+
 };
 
 
