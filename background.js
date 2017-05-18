@@ -12,13 +12,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.forms[0].addEventListener('click', function(e){
         e || ( e = window.event);
+
         const target = e.target || e.srcElement;
+        let form = target.closest('.main-form');
+        if (form){
+            form.style.backgroundColor = 'green';
+        }
         if (!document.forms[0].isRed.checked && target.matches('input[type="submit"]')) {
             e.preventDefault ? e.preventDefault() : (e.returnValue = false);
             e.stopPropagation ? e.stopPropagation() : (e.cancelBubble = true);
         }
     });
-    const xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
 
     (xhr.addEventListener || xhr.attachEvent).call(xhr, 'readystatechange', function() {
        if (this.readyState != 4) return;
@@ -33,9 +38,26 @@ document.addEventListener('DOMContentLoaded', () => {
       console.dir(data);
     };
 
-    xhr.open('POST', 'https://yandex.ru/search/');
-    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xhr.open('GET', 'https://yandex.ru/search/');
+    // xhr.setRequestHeader('Origin', 'localhost');
 
     let f = new FormData(document.forms[0]);
     xhr.send(f);
+
+    let XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
+    xhr = new XHR();
+
+// (2) запрос на другой домен :)
+    xhr.open('GET', 'http://yandex.ru/search/?text=xmlhttpreqest', true);
+    // xhr.setRequestHeader('Origin', 'localhost');
+
+    xhr.onload = function() {
+        // alert( this.responseText );
+    };
+
+    xhr.onerror = function() {
+        alert( 'Ошибка ' + this.status );
+    };
+
+    xhr.send();
 });

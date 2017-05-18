@@ -3,7 +3,7 @@ window.SDBDictionary.Api || (window.SDBDictionary.Api = {});
 
 window.SDBDictionary.Api.Yandex = {
     /**
-     * ВОзвращает промис с перводом текста
+     * Возвращает промис с переводом текста
      * @param {string} text Переводимый текст
      * @param {string} langFrom Двухсимвольное обозначение исходного языка
      * @param {string} langTo Двухсимвольное обозначение целвого языка

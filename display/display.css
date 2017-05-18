@@ -6,11 +6,14 @@
     min-height: 200px;
     min-width: 200px;
     max-width: 500px;
+    width: 500px;
     background-color: aliceblue;
     border: 1px lightblue;
     border-radius: 3px;
     z-index: 999;
     box-shadow: 5px 5px 14px 0 rgba(0,0,0,0.5);
+    transition-property: height;
+    transition-duration: 2s;
     }
 
 .sdb-popup_hide{

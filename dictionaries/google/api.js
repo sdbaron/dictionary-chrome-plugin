@@ -10,9 +10,9 @@ window.SDBDictionary.Api.Google = {
                 xhr.send();
 
                 xhr.onreadystatechange = () => {
-                    if (xhr.readyState != 4) return;
+                    if (xhr.readyState !== 4) return;
 
-                    if (xhr.status == 200) {
+                    if (xhr.status === 200) {
                         success(xhr.responseText);
                     } else {
                         reject(new Error(`Ошибка при получении перевода: ${xhr.status}`));

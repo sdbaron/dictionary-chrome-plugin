@@ -13,6 +13,7 @@
       "matches": ["<all_urls>"],
       "css": ["display/display.css", "on-page.css"],
       "js": [
+        "dictionaries/google/api.js",
         "dictionaries/yandex/api.js",
         "display/display.js", "on-page.js"]
     }
