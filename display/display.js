@@ -3,25 +3,29 @@
     document.body.insertBefore(messageElement, document.body.firstChild);
 
     window.SDBDisplay = {
-        showMessage: function (message) {
-            messageElement.innerHTML = message;
-        },
-        popup: new Popup
+        // showMessage: function (message) {
+        //     messageElement.innerHTML = message;
+        // },
+        Popup: Popup
 
     };
 
-    function Popup() {
+    /**
+     *
+     * @param {[translate.<function>, renderView.<function>]} apis
+     * @returns {{show: show, hide: hide, showLoadingBar: showLoadingBar, hideLoadingBar: hideLoadingBar}}
+     * @constructor
+     */
+    function Popup(apis) {
         let popupElement;
         let loadingBar;
         let header;
         let body;
-
         return {
             show: show,
             hide: hide,
             showLoadingBar: showLoadingBar,
             hideLoadingBar: hideLoadingBar
-
         };
 
         /**
@@ -36,17 +40,27 @@
             setPopupPosition(top, left);
 
             hideLoadingBar();
+            const apiPromises = apis.map(api => {
+                return  api.translator.translate(message, 'de', 'ru')
+                    .then(text => api.presenter.renderView(text, body))
+            });
 
-            displayMessage(message);
-
-            popupElement.classList.remove('sdb-popup_hide');
+            return Promise.all(apiPromises).then( () => {
+                popupElement.classList.remove('sdb-popup_hide');
+                return true;
+            })
 
         }
 
         function showLoadingBar(text, top, left) {
-            show(null, top, left);
-            loadingBar.innerHTML = `Ищем перевод слова ${text}...`;
+            if (!popupElement) {
+                create();
+            }
+
             popupElement.classList.add('sdb-popup_loading');
+            setPopupPosition(top, left);
+            loadingBar.innerHTML = `Ищем перевод слова ${text}...`;
+            apis.forEach( api => api.presenter.clearView(body));
         }
 
         function setPopupPosition(srcTop, left) {
@@ -60,8 +74,8 @@
             popupElement.classList.remove('sdb-popup_loading');
         }
 
-        function displayMessage(message) {
-            body.innerHTML = message;
+        function displayMessage(text, parentElement) {
+            parentElement.innerHTML = text;
         }
 
         function hide() {

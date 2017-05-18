@@ -1,7 +1,9 @@
-window.SDBDictionary || (window.SDBDictionary = {});
-window.SDBDictionary.Api || (window.SDBDictionary.Api = {});
+'use strict';
 
-window.SDBDictionary.Api.Google = {
+window.SDBDictionary || (window.SDBDictionary = {});
+window.SDBDictionary.Google || (window.SDBDictionary.Google = {});
+
+window.SDBDictionary.Google.Api = {
     translate: function( text, langFrom='de', langTo='ru' ) {
         return new Promise((success, reject) => {
                 let xhr = new XMLHttpRequest();
@@ -20,19 +22,7 @@ window.SDBDictionary.Api.Google = {
                 }
             }
         )
-    },
-
-    /**
-     * Форматирует результат перевода в html
-     * @param {string} text Результат перевода
-     * @param {HTMLElement} parentElement Элемент, в котрый будет всатвлен результат
-     */
-    toHtml: function (text, parentElement) {
-        'use strict';
-        return text;
-
     }
-
 };
 
 

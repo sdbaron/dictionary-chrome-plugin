@@ -1,7 +1,8 @@
+'use strict';
 window.SDBDictionary || (window.SDBDictionary = {});
-window.SDBDictionary.Api || (window.SDBDictionary.Api = {});
+window.SDBDictionary.Yandex || (window.SDBDictionary.Yandex = {});
 
-window.SDBDictionary.Api.Yandex = {
+window.SDBDictionary.Yandex.Api = {
     /**
      * Возвращает промис с переводом текста
      * @param {string} text Переводимый текст
@@ -19,9 +20,9 @@ window.SDBDictionary.Api.Yandex = {
                 xhr.send();
 
                 xhr.onreadystatechange = () => {
-                    if (xhr.readyState != 4) return;
+                    if (xhr.readyState !== 4) return;
 
-                    if (xhr.status == 200) {
+                    if (xhr.status === 200) {
                         success(xhr.responseText);
                     } else {
                         reject(new Error(`Ошибка при получении перевода: ${xhr.status}`));
@@ -29,19 +30,7 @@ window.SDBDictionary.Api.Yandex = {
                 }
             }
         )
-    },
-
-    /**
-     * Форматирует результат перевода в html
-     * @param {string} text Результат перевода
-     * @param {HTMLElement} parentElement Элемент, в котрый будет всатвлен результат
-     */
-    toHtml: function (text, parentElement) {
-        'use strict';
-        const data = JSON.parse(text);
-
     }
-
 };
 
 
