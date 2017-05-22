@@ -3,11 +3,13 @@
 const NODE_ENV = process.env.NODE_ENV || 'development',
     webpack = require('webpack'),
     ExtractTextPlugin = require('extract-text-webpack-plugin'),
-    extractSASS = new ExtractTextPlugin('../css/[name].css'),
-    extractCSS = new ExtractTextPlugin('../css/[name].css'),
+    extractSASS = new ExtractTextPlugin('./css/[name].css'),
+    extractCSS = new ExtractTextPlugin('./css/[name].css'),
     autoprefixer = require('autoprefixer'),
     browserslist = require('browserslist'),
     OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const path = require('path');
 
@@ -25,7 +27,7 @@ module.exports = {
         application: './on-page.js'
     },
     output: {
-        path: __dirname + '/resources/public/js',
+        path: __dirname + '/resources/public',
         filename: '[name].js',
         chunkFilename: '[name]-[chunkhash].js',
         library: '[name]'
@@ -44,21 +46,32 @@ module.exports = {
             NODE_ENV: JSON.stringify(NODE_ENV)
         }),
         /*new webpack.optimize.CommonsChunkPlugin({
-            name: 'commons',
-            filename: './common.js'
-        }),*/ /*
-        new WebpackNotifierPlugin({
-            title: 'Webpack',
-            alwaysNotify: true
-        }),*/
+         name: 'commons',
+         filename: './common.js'
+         }),*/ /*
+         new WebpackNotifierPlugin({
+         title: 'Webpack',
+         alwaysNotify: true
+         }),*/
         extractCSS,
-        extractSASS
+        extractSASS,
+        new CopyWebpackPlugin([
+            {
+                from: path.join(__dirname, 'manifest.json'),
+                to: path.join(__dirname, '/resources/public/manifest.json')
+            },
+            {
+                from: path.join(__dirname, '*.html'),
+                to: path.join(__dirname, '/resources/public/[name].[ext]')
+            }
+        ])
+        // new HtmlWebpackPlugin({ title: 'Tree-shaking' })
     ],
     resolve: {
         modules: [
             path.join(__dirname, "src"),
             "node_modules"
-            ],
+        ],
         // modulesDirectories: ['node_modules'],
         extensions: ['.js'] //,
 
@@ -91,11 +104,11 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: extractCSS.extract({fallback:'style-loader', use :'postcss'})
+                loader: extractCSS.extract({use: ['css-loader', 'style-loader']})
             },
             {
                 test: /\.scss$/,
-                loader: extractSASS.extract({fallback:'style-loader', use : ['postcss', 'sass']})
+                loader: extractSASS.extract({fallback: 'style-loader', use: ['css-loader', 'sass-loader']})
             },
             {
                 test: /\.(png|jpg)$/,
