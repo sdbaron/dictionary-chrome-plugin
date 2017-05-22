@@ -1,7 +1,8 @@
+'use strict';
 window.SDBDictionary || (window.SDBDictionary = {});
-window.SDBDictionary.Api || (window.SDBDictionary.Api = {});
+window.SDBDictionary.Yandex || (window.SDBDictionary.Yandex = {});
 
-window.SDBDictionary.Api.Yandex = {
+window.SDBDictionary.Yandex.Api = {
     /**
      * Возвращает промис с переводом текста
      * @param {string} text Переводимый текст
@@ -28,19 +29,7 @@ window.SDBDictionary.Api.Yandex = {
                 }
             }
         )
-    },
-
-    /**
-     * Форматирует результат перевода в html
-     * @param {string} text Результат перевода
-     * @param {HTMLElement} parentElement Элемент, в котрый будет всатвлен результат
-     */
-    toHtml: function (text, parentElement) {
-        'use strict';
-        const data = JSON.parse(text);
-
     }
-
 };
 
 

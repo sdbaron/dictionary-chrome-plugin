@@ -14,8 +14,11 @@
       "css": ["display/display.css", "on-page.css"],
       "js": [
         "dictionaries/google/api.js",
+        "dictionaries/google/presenter.js",
         "dictionaries/yandex/api.js",
-        "display/display.js", "on-page.js"]
+        "dictionaries/yandex/presenter.js",
+        "display/display.js",
+        "on-page.js"]
     }
   ],
   "permissions": [
