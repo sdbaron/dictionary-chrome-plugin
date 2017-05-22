@@ -7,15 +7,9 @@ const NODE_ENV = process.env.NODE_ENV || 'development',
     extractCSS = new ExtractTextPlugin('../css/[name].css'),
     autoprefixer = require('autoprefixer'),
     browserslist = require('browserslist'),
-    WebpackNotifierPlugin = require('webpack-notifier'),
-    OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
-    babelQuery = {
-        presets: ['es2015']/*,
-        plugins: [
-            'transform-es3-member-expression-literals',
-            'transform-es3-property-literals'
-        ]*/
-    };
+    OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+const path = require('path');
 
 // минимизируем css для production
 const CSS_LOADER_NAME = (NODE_ENV === 'production') ? 'css?minimize' : 'css?-minimize';
@@ -44,15 +38,15 @@ module.exports = {
     devtool: developmentSources,
 
     plugins: [
-        new webpack.NoErrorsPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
         // далее определяем те переменные, которые хотим сделать доступными клиенту (в исходниках)
         new webpack.DefinePlugin({
             NODE_ENV: JSON.stringify(NODE_ENV)
         }),
-        new webpack.optimize.CommonsChunkPlugin({
+        /*new webpack.optimize.CommonsChunkPlugin({
             name: 'commons',
             filename: './common.js'
-        }), /*
+        }),*/ /*
         new WebpackNotifierPlugin({
             title: 'Webpack',
             alwaysNotify: true
@@ -61,8 +55,12 @@ module.exports = {
         extractSASS
     ],
     resolve: {
-        modulesDirectories: ['node_modules'],
-        extensions: ['', '.js'] //,
+        modules: [
+            path.join(__dirname, "src"),
+            "node_modules"
+            ],
+        // modulesDirectories: ['node_modules'],
+        extensions: ['.js'] //,
 
         // алиасы для import, чтобы не писать много точек в пути до модулей
         // alias: {
@@ -78,26 +76,26 @@ module.exports = {
         //     aAjax$: __dirname + '/Resources/src/js/ajax/ajax',
         // }
     },
-    resolveLoader: {
-        modulesDirectories: ['node_modules'],
-        moduleTemplates: ['*-loader'],
-        extensions: ['', '.js']
-    },
+    // resolveLoader: {
+    //     modulesDirectories: ['node_modules'],
+    //     // moduleTemplates: ['*-loader'],
+    //     extensions: ['', '.js']
+    // },
     module: {
-        loaders: [
+        rules: [
             // сюда вставится es3ify в продакшн-версии
             {
                 test: /\.js$/,
-                ignore: /(node_modules|bower_components)/,
-                loaders: [`babel?${JSON.stringify(babelQuery)}`]
+                exclude: /(node_modules|bower_components)/,
+                loaders: ['babel-loader']
             },
             {
                 test: /\.css$/,
-                loader: extractCSS.extract('style', CSS_LOADER_NAME + '!postcss')
+                loader: extractCSS.extract({fallback:'style-loader', use :'postcss'})
             },
             {
                 test: /\.scss$/,
-                loader: extractSASS.extract('style', CSS_LOADER_NAME + '!postcss!sass')
+                loader: extractSASS.extract({fallback:'style-loader', use : ['postcss', 'sass']})
             },
             {
                 test: /\.(png|jpg)$/,
@@ -117,16 +115,16 @@ module.exports = {
     },
 
     // модули и из настройки для загрузчика postcss
-    postcss: function () {
-        return [
-            // автоматически проставит вендорные префиксы
-            autoprefixer({
-                browsers: browserslist('ie < 12, Opera < 20, Firefox < 20, Chrome < 40,  Edge < 15')
-            })
-            // препроцессор ()
-            // , require('precss')
-        ];
-    }
+    // postcss: function () {
+    //     return [
+    //         // автоматически проставит вендорные префиксы
+    //         autoprefixer({
+    //             browsers: browserslist('ie < 12, Opera < 20, Firefox < 20, Chrome < 40,  Edge < 15')
+    //         })
+    //         // препроцессор ()
+    //         // , require('precss')
+    //     ];
+    // }
 
 };
 
