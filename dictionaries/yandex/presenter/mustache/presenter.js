@@ -1,4 +1,8 @@
 'use strict';
+const Mustache=require('mustache');
+import cardTemplate from './card.mst';
+import './card.scss';
+
 // (function() {
 //     window.SDBDictionary || (window.SDBDictionary = {});
 //     window.SDBDictionary.Yandex || (window.SDBDictionary.Yandex = {});
@@ -71,19 +75,6 @@ function getDef(data){
 }
 
 function getHtml(data){
-    let result = '';
-    for(let def of data['def']){
-        // что перводили
-        const text = def.text;
-        // какая часть речи у переводимого слова
-        const pos = def.pos;
-        for (let translate of def['tr']){
-            // перевод
-            const trText = translate.text;
-            // часть речи
-            const trPos = translate.pos;
+    return Mustache.render(cardTemplate, data);
 
-        }
-    }
-    let msg = '';
 }

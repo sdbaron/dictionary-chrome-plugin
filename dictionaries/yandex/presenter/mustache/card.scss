@@ -1,0 +1,28 @@
+.card-def:first-of-type ~ .card-def {
+    margin-top: 1em;
+    }
+
+.card-translates {
+    margin-top: 0.3em;
+    border-top: 1px solid lightgrey;
+    }
+.card-translate-text{
+    float: left;
+    }
+
+.card-synonyms {
+    float: left;
+    list-style: none;
+    }
+
+.card-synonym {
+    float: left;
+    }
+
+.card-means {
+    float: left;
+    list-style: none;
+    }
+.card-mean{
+    float: left;
+    }

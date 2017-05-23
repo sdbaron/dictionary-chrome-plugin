@@ -1,5 +1,5 @@
 import YandexDictionaryApi from './dictionaries/yandex/api';
-import YandexPresenter from './dictionaries/yandex/presenter';
+import YandexPresenter from './dictionaries/yandex/presenter/mustache/presenter';
 import Popup from './display/display';
 /**
  *  Инициализация popop, подписвываемся на двойной клик, во время клика получаем выделенный текст и его координаты,

@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "",
   "main": "",
-  "dependencies": {},
+  "dependencies": {
+    "mustache": "^2.3.0"
+  },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
     "babel-cli": "^6.10.1",
