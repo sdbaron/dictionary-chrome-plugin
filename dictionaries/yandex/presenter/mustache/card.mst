@@ -5,27 +5,39 @@ const card = `
 			<li class="card-def">
 				<span class="card-def-text">{{text}}</span>
 				<span class="card-def-pos">{{pos}}</span>
-				<ul class="card-translates">
+				{{> marks }}
+				<ol class="card-translates">
 					{{#tr}}
 						<li class="card-translate">
-							<div class="card-translate-text" title="{{pos}}">{{text}}</div>
-							<ul class="card-synonyms">
-								{{#syn}}
-									<li class="card-synonym">
-										, {{text}}
-									</li>
-								{{/syn}}
-							</ul>
-							<ul class="card-means">
-								{{#mean}}
-									<li class="card-mean">
-										{{text}}
-									</li>
-								{{/mean}}
-							</ul>
+							<a href="" class="card-translate-text" title="{{pos}}">{{text}}</a>
+							{{> marks }}
+							{{#syn}}
+								<div class="card-synonym-delimiter">,</div><a href="" class="card-synonym">{{text}}</a>
+								{{> marks }}
+							{{/syn}}
+
+							<div class="clear"></div>
+
+							<ul class="card-means">{{#mean}}
+								<li class="card-mean"><a href="" class="card-mean-href">{{text}}</a></li>
+							{{/mean}}</ul>
+
+							<div class="clear"></div>
+
+							<ul class="card-examples">{{#ex}}
+								<li class="card-example"><div class="card-example-text">{{text}}</div>
+									<ul class="card-example-translates">{{#tr}}
+										<li class="card-example-translate">{{text}}</li>
+									{{/tr}}</ul>
+
+								</li>
+							{{/ex}}</ul>
+
+							<div class="clear"></div>
+
 						</li>
 					{{/tr}}
-				</ul>
+				</ol>
 			</li>
 		{{/def}}
 	</ul>

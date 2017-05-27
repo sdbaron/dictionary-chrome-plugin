@@ -1,28 +1,169 @@
-.card-def:first-of-type ~ .card-def {
+.clear {
+    clear: both;
+    }
+
+.clearfix {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
+    }
+
+.ul, ol, li {
+    list-style-type: none;
+    }
+
+.card-defs {
+    //list-style-type: none;
+    }
+
+//.card-def:first-of-type ~ .card-def {
+.card-def {
     margin-top: 1em;
+    //border-top: 1px solid lightgrey;
     }
 
 .card-translates {
-    margin-top: 0.3em;
-    border-top: 1px solid lightgrey;
-    }
-.card-translate-text{
-    float: left;
+    position: relative;
+    margin: 0.6em 0 0 0;
+
+    // padding left for counters' place
+    padding: 0 0 0 1.35em;
+    list-style: none; //decimal;
+    counter-reset: card-translates-counter;
     }
 
-.card-synonyms {
+.card-translate {
+    margin: .6em 0 0 0;
+
+    // custom counters
+    &::before {
+        position: absolute;
+        left: 0;
+        width: 1em;
+        counter-increment: card-translates-counter;
+        content: counter(card-translates-counter, decimal);
+        color: #9a9a9a;
+        }
+    }
+
+.card-marks {
+    display: inline-block;
     float: left;
-    list-style: none;
+    margin: 0 0 0 .3em;
+    color: #9a9a9a;
+    &:empty {
+        display: none;
+        }
+    }
+
+.cart-marks__gen {
+    font-style: italic;
+    }
+
+.cart-marks__fl {
+    margin: 0 0 0 .6em;
+    }
+
+.card-translates .cart-marks__fl {
+    display: none;
+    }
+
+.card-def > .card-marks {
+    float: none;
+    }
+
+.card-translate-text {
+    float: left;
+    margin: 0 0 0 .6em;
+    &:first-child {
+        margin-left: 0;
+        }
+    }
+
+.card-def-pos {
+    color: #070;
     }
 
 .card-synonym {
     float: left;
     }
 
+.card-synonym-delimiter {
+    float: left;
+    margin: 0 .5em 0 0;
+    }
+
 .card-means {
     float: left;
-    list-style: none;
+    margin: .3em 0 0 0;
+    color: #80494b;
+    // hide list with no children
+    &:empty {
+        display: none;
+        }
+
+    &::before {
+        float: left;
+        content: '(';
+        }
+
+    &::after { content: ')' }
     }
-.card-mean{
+
+@mixin li-comma-delimiter {
     float: left;
+    // words comma delimiter
+    &::after {
+        content: ', ';
+        padding: 0 .5em 0 0;
+        }
+    // no comma after last word
+    &:last-of-type::after {
+        content: '';
+        padding: 0;
+        }
+    // no comma after single word
+    &:only-of-type::after {
+        content: '';
+        padding: 0;
+        }
+    }
+
+.card-mean {
+    @include li-comma-delimiter;
+    }
+
+.card-mean-href {
+    color: #80494b;
+    }
+
+.card-examples {
+    @extend .clearfix;
+    margin: .6em 0 0 1em;
+    color: #777;
+
+    &:empty { display: none; }
+
+    }
+
+.card-example {
+    @extend .clearfix;
+    margin: 0 0 .3em 0;
+    }
+
+.card-example-text {
+    float: left;
+    &:after {
+        content: ' –';
+        margin: 0 .3em 0 0;
+        }
+    }
+
+.card-example-translates {
+    }
+
+.card-example-translate {
+    @include li-comma-delimiter;
     }

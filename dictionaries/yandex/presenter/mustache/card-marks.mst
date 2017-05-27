@@ -1,0 +1,6 @@
+const template = `<div class="card-marks">
+	<span class="cart-marks__gen">{{gen}}</span>
+	<span class="cart-marks__fl">{{fl}}</span>
+</div>`;
+
+export default template;

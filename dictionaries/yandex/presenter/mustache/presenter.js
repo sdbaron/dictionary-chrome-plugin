@@ -1,6 +1,7 @@
 'use strict';
 const Mustache=require('mustache');
 import cardTemplate from './card.mst';
+import cardMarksTemplate from './card-marks.mst';
 import './card.scss';
 
 // (function() {
@@ -75,6 +76,5 @@ function getDef(data){
 }
 
 function getHtml(data){
-    return Mustache.render(cardTemplate, data);
-
+    return Mustache.render(cardTemplate, data, {marks: cardMarksTemplate});
 }
