@@ -94,12 +94,12 @@ function Popup(apis) {
         loadingBar.classList.add('sdb-popup__loading-bar');
         loadingBar.innerHTML = 'Loading...';
         p.appendChild(loadingBar);
-        p.addEventListener('click', () => hide());
+        // p.addEventListener('click', () => hide());
 
         header = document.createElement('div');
         header.classList.add('sdb-popup__header');
         p.appendChild(header);
-        p.addEventListener('click', () => hide());
+        header.addEventListener('click', () => hide());
 
         body = document.createElement('div');
         body.classList.add('sdb-popup__body');

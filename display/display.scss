@@ -1,9 +1,15 @@
+$popupMaxHeight: 30em;
+$popupHeaderHeight: 2em;
+
+$popupBodyHeight: $popupMaxHeight - $popupHeaderHeight;
+
 .sdb-popup {
     display: block;
     position: absolute;
     top: 0;
     left: 0;
     min-height: 200px;
+    max-height: $popupMaxHeight;
     min-width: 200px;
     max-width: 500px;
     width: 500px;
@@ -35,13 +41,16 @@
 
 .sdb-popup__header{
     position: relative;
-    min-height: 2em;
+    min-height: $popupHeaderHeight;
     background-color: lightgrey;
     }
 
 .sdb-popup__body{
     position: relative;
     padding: 0.5em;
+    max-height: $popupBodyHeight;
+    box-sizing: border-box;
+    overflow: auto;
     }
 
 .sdb-popup__loading-bar{

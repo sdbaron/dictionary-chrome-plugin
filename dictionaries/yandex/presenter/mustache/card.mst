@@ -1,18 +1,21 @@
 const card = `
 <div class="card">
-	<ul class="card-defs">
+	<ul class="card-defs examples-expanded">
 		{{#def}}
 			<li class="card-def">
 				<span class="card-def-text">{{text}}</span>
 				<span class="card-def-pos">{{pos}}</span>
 				{{> marks }}
+				<span class="card-def__examples-toggle" data-text-show="показать примеры"
+					  data-text-hide="скрыть примеры"></span>
 				<ol class="card-translates">
 					{{#tr}}
 						<li class="card-translate">
 							<a href="" class="card-translate-text" title="{{pos}}">{{text}}</a>
 							{{> marks }}
 							{{#syn}}
-								<div class="card-synonym-delimiter">,</div><a href="" class="card-synonym">{{text}}</a>
+								<div class="card-synonym-delimiter">,</div>
+								<a href="" class="card-synonym">{{text}}</a>
 								{{> marks }}
 							{{/syn}}
 
@@ -25,7 +28,8 @@ const card = `
 							<div class="clear"></div>
 
 							<ul class="card-examples">{{#ex}}
-								<li class="card-example"><div class="card-example-text">{{text}}</div>
+								<li class="card-example">
+									<div class="card-example-text">{{text}}</div>
 									<ul class="card-example-translates">{{#tr}}
 										<li class="card-example-translate">{{text}}</li>
 									{{/tr}}</ul>
@@ -38,6 +42,11 @@ const card = `
 						</li>
 					{{/tr}}
 				</ol>
+			</li>
+		{{/def}}
+		{{^def}}
+			<li class="card-def card-def_empty">
+				<span class="card-def-text">Translate has not been found</span>
 			</li>
 		{{/def}}
 	</ul>

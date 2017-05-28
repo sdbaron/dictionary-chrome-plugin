@@ -1,5 +1,5 @@
 'use strict';
-const Mustache=require('mustache');
+const Mustache = require('mustache');
 import cardTemplate from './card.mst';
 import cardMarksTemplate from './card-marks.mst';
 import './card.scss';
@@ -50,7 +50,7 @@ import './card.scss';
 //     }
 // })();
 
-class Presenter{
+class Presenter {
     /**
      * Форматирует результат перевода в html
      * @param {string} text Результат перевода
@@ -61,9 +61,47 @@ class Presenter{
 
         parentElement.innerHTML = getHtml(data);
 
+        const cardDefinitionElement = document.querySelector('.card-defs');
+        const exampleToggleElement = parentElement.querySelector('.card-def__examples-toggle');
+        if (exampleToggleElement) {
+            exampleToggleElement.addEventListener('click', () => {
+                cardDefinitionElement.classList.toggle('examples-expanded');
+            });
+        }
+
+        if (exampleToggleElement && (!cardDefinitionElement || !cardDefinitionElement.querySelector('.card-example'))){
+            exampleToggleElement.style.display = 'none';
+        }
+
+        (function f() {
+            let gens = parentElement.querySelectorAll('.cart-marks__gen');
+            [].forEach.call(gens, gen => {
+                let hint = getHint(gen.innerText);
+                if (hint) {
+                    gen.setAttribute('title', hint);
+                }
+            });
+
+            function getHint(value) {
+                switch (value) {
+                    case 'm':
+                    case 'м':
+                        return 'Мужской род';
+                    case 'ж':
+                    case 'f':
+                        return 'Женский род';
+                    case 'ср':
+                    case 'n':
+                        return 'Средний род';
+                    default:
+                        return 'Неизвестно!'
+                }
+            }
+        })()
+
     }
 
-    clearView(parentElement){
+    clearView(parentElement) {
         parentElement.innerHTML = '';
     }
 
@@ -71,10 +109,11 @@ class Presenter{
 
 export default Presenter;
 
-function getDef(data){
+function getDef(data) {
 
 }
 
-function getHtml(data){
+function getHtml(data) {
     return Mustache.render(cardTemplate, data, {marks: cardMarksTemplate});
+
 }
