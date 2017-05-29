@@ -1,5 +1,5 @@
 div(class="card")
-    ul(class="card-defs examples-expanded")
+    ul.card-defs.examples-expanded
         each val in def
             li.card-def
                 span.card-def-text= val.text
@@ -48,3 +48,6 @@ div(class="card")
                                                         each tr in ex.tr
                                                             li.card-example-translate= tr.text
                                                     div.clear
+        else
+            li.card-def
+                span.card-def-text.card-def_empty Translate has not been found
