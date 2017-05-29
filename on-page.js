@@ -15,8 +15,8 @@ const popup = new Popup([
     {
         translator: new YandexDictionaryApi(),
         presenter: new YandexPresenter(
-            // PugTextConverter
-            MustacheTextConverter
+            PugTextConverter
+            // MustacheTextConverter
             )
     }
 ]);

@@ -1,4 +1,4 @@
-div(class="card")
+div.card
     ul.card-defs.examples-expanded
         each val in def
             li.card-def
@@ -9,8 +9,7 @@ div(class="card")
                 - glob.fl = val.fl;
                 include card-marks
 
-                span(
-                class="card-def__examples-toggle"
+                span.card-def__examples-toggle(
                 data-text-show="показать примеры"
                 data-text-hide="скрыть примеры")
 
@@ -18,14 +17,14 @@ div(class="card")
                     ol.card-translates
                         each tr in val.tr
                             li.card-translate
-                                a( href="" class="card-translate-text" title=tr.pos)= tr.text
+                                a.card-translate-text(href="" title=tr.pos)= tr.text
                                 - glob.gen = tr.gen;
                                 - glob.fl = tr.fl;
                                 include card-marks
                                 if tr.syn
                                     each syn in tr.syn
                                         div.card-synonym-delimiter ,
-                                        a(href="" class="card-synonym")= syn.text
+                                        a.card-synonym(href="")= syn.text
                                         - glob.gen = syn.gen;
                                         - glob.fl = syn.fl;
                                         include card-marks
@@ -35,7 +34,7 @@ div(class="card")
                                     ul.card-means
                                         each mean in tr.mean
                                             li.card-mean
-                                                a(href="" class="card-mean-href")= mean.text
+                                                a.card-mean-href(href="")= mean.text
                                     div.clear
 
                                 if tr.ex
