@@ -44,6 +44,7 @@
 
 .card-translate {
     margin: .6em 0 0 0;
+    @extend .clearfix;
 
     // custom counters
     &::before {
@@ -57,7 +58,6 @@
     }
 
 .card-marks {
-    display: inline-block;
     float: left;
     margin: 0 0 0 .3em;
     color: #9a9a9a;
@@ -65,6 +65,13 @@
         display: none;
         }
     }
+
+.card-def > .card-marks {
+    float: none;
+    display: inline-block;
+    margin: 0 0 0 .6em;
+    }
+
 
 .cart-marks__gen {
     font-style: italic;
@@ -84,11 +91,6 @@
     display: none;
     }
 
-.card-def > .card-marks {
-    float: none;
-    margin: 0 0 0 .6em;
-    }
-
 .card-translate-text {
     float: left;
     margin: 0 0 0 .6em;
@@ -98,6 +100,7 @@
     }
 
 .card-def-pos {
+    margin-left: .3em;
     color: #070;
     }
 
@@ -111,7 +114,6 @@
     }
 
 .card-means {
-    float: left;
     margin: .3em 0 0 0;
     color: #80494b;
     // hide list with no children
@@ -124,7 +126,10 @@
         content: '(';
         }
 
-    &::after { content: ')' }
+    &::after {
+        float: left;
+        content: ')'
+        }
     }
 
 @mixin li-comma-delimiter {
@@ -170,6 +175,9 @@
 .card-example {
     @extend .clearfix;
     margin: 0 0 .3em 0;
+    &:last-of-type {
+        margin-bottom: 0;
+        }
     }
 
 .card-example-text {

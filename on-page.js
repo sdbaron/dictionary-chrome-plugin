@@ -1,5 +1,7 @@
 import YandexDictionaryApi from './dictionaries/yandex/api';
-import YandexPresenter from './dictionaries/yandex/presenter/mustache/presenter';
+import MustacheTextConverter from './dictionaries/yandex/presenter/mustache/textConverter';
+import PugTextConverter from './dictionaries/yandex/presenter/pug/textConverter';
+import YandexPresenter from './dictionaries/yandex/presenter/presenter';
 import Popup from './display/display';
 /**
  *  Инициализация popop, подписвываемся на двойной клик, во время клика получаем выделенный текст и его координаты,
@@ -12,7 +14,10 @@ import Popup from './display/display';
 const popup = new Popup([
     {
         translator: new YandexDictionaryApi(),
-        presenter: new YandexPresenter()
+        presenter: new YandexPresenter(
+            // PugTextConverter
+            MustacheTextConverter
+            )
     }
 ]);
 

@@ -103,6 +103,23 @@ module.exports = {
                 loaders: ['babel-loader']
             },
             {
+                test: /\.mst$/,
+                use : [{
+                    loader: 'mustache-loader',
+                    options: {
+                        noShortcut: true
+                    }
+                }]
+            },
+            {
+                test: /\.pug$/,
+                use : [{
+                    loader: 'pug-loader',
+                    options: {
+                    }
+                }]
+            },
+            {
                 test: /\.css$/,
                 loader: extractCSS.extract({use: ['css-loader', 'style-loader']})
             },
@@ -117,7 +134,7 @@ module.exports = {
                 // query.regExp задает регулярное выражение по которому будут подбираться файлы, анализ параметра url
                 // query.limit задает лимит размера файлов, которые могут быть вставлены как Base64 строка, если размер файла будет превышать это
                 //             значение он будет скопирован в директорию
-                loader: 'url',
+                loader: 'url-loader',
                 query: {
                     name: '../img/[name].[ext]',
                     regExp: 'Resources/img/(.*)',

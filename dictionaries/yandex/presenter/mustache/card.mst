@@ -1,4 +1,3 @@
-const card = `
 <div class="card">
 	<ul class="card-defs examples-expanded">
 		{{#def}}
@@ -50,6 +49,4 @@ const card = `
 			</li>
 		{{/def}}
 	</ul>
-</div>`;
-
-export default card;
+</div>
