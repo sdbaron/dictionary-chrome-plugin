@@ -23,9 +23,14 @@ function Popup(apis) {
     let loadingBar;
     let header;
     let body;
+    /**
+     * @returns enum
+     *
+     */
     return {
         show: show,
         hide: hide,
+        isVisible: isVisible,
         showLoadingBar: showLoadingBar,
         hideLoadingBar: hideLoadingBar
     };
@@ -82,8 +87,12 @@ function Popup(apis) {
 
     function hide() {
         if (popupElement) {
-            popupElement.classList.add('sdb-popup_hide');
+            popupElement.classList.add(popupHiddenCssClass);
         }
+    }
+
+    function isVisible(){
+        return popupElement && !popupElement.classList.contains(popupHiddenCssClass);
     }
 
     function create() {
@@ -99,7 +108,7 @@ function Popup(apis) {
         header = document.createElement('div');
         header.classList.add('sdb-popup__header');
         p.appendChild(header);
-        header.addEventListener('click', () => hide());
+        // header.addEventListener('click', () => hide());
 
         body = document.createElement('div');
         body.classList.add('sdb-popup__body');
@@ -107,8 +116,11 @@ function Popup(apis) {
 
         document.body.appendChild(p);
     }
-
 }
+
+Popup.getRootCssClass = () => rootPopupCssClass;
 
 export default Popup;
 
+const popupHiddenCssClass = 'sdb-popup_hide';
+const rootPopupCssClass = 'sdb-popup';

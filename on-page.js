@@ -4,7 +4,7 @@ import PugTextConverter from './dictionaries/yandex/presenter/pug/textConverter'
 import YandexPresenter from './dictionaries/yandex/presenter/presenter';
 import Popup from './display/display';
 /**
- *  Инициализация popop, подписвываемся на двойной клик, во время клика получаем выделенный текст и его координаты,
+ *  Инициализация popup, подписвываемся на двойной клик, во время клика получаем выделенный текст и его координаты,
  *  вычисляем координаты всплывающего окна и открываем его
  *
  */
@@ -29,15 +29,27 @@ function init() {
     // showMessage("<b>Ok, lets begin!</b>");
     // loadDictionaryApi('chrome-extension://__MSG_@@extension_id__/dictionaries/yandex/api.js');
     console.warn("I am here");
-    document.addEventListener("dblclick", clickEventHandler);
+
+    // handle any click
+    document.addEventListener('click', catchOutsideClick);
+
+    // handle double click for open popup
+    document.addEventListener('dblclick', clickEventHandler);
 }
 
-// function loadDictionaryApi(path) {
-//     let script = document.createElement('script');
-//     script.src = path;
-//     document.head.appendChild(script);
-// }
-//
+/**
+ * if click was happening outside popup then hide them
+ * @param event
+ */
+function catchOutsideClick(event){
+    if (popup && popup.isVisible()){
+        const popupCls  = Popup.getRootCssClass();
+        // if click was happened ouside
+        if (!event.target.closest('.' + popupCls)){
+            popup.hide();
+        }
+    }
+}
 
 function clickEventHandler(event) {
     // const target = event.target;
