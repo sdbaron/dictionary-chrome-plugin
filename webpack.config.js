@@ -103,8 +103,16 @@ module.exports = {
                 loaders: ['babel-loader']
             },
             {
+                test: /\.jsx?$/,
+                exclude: /(node_modules|bower_components)/,
+                use: ['babel-loader'],
+                // query: {
+                //     presets: ['es2015', 'react']
+                // }
+            },
+            {
                 test: /\.mst$/,
-                use : [{
+                use: [{
                     loader: 'mustache-loader',
                     options: {
                         noShortcut: true
@@ -113,10 +121,9 @@ module.exports = {
             },
             {
                 test: /\.pug$/,
-                use : [{
+                use: [{
                     loader: 'pug-loader',
-                    options: {
-                    }
+                    options: {}
                 }]
             },
             {

@@ -16,7 +16,10 @@ class Presenter {
     renderView(text, parentElement ) {
         const data = JSON.parse(text);
 
-        parentElement.innerHTML = this.textConverter.getHtml(data);
+        const cardContent = this.textConverter.getHtml(data, parentElement);
+        if (cardContent) {
+            parentElement.innerHTML = cardContent;
+        }
 
         const cardDefinitionElement = document.querySelector('.card-defs');
         const exampleToggleElement = parentElement.querySelector('.card-def__examples-toggle');
