@@ -73,7 +73,7 @@ module.exports = {
             "node_modules"
         ],
         // modulesDirectories: ['node_modules'],
-        extensions: ['.js'] //,
+        extensions: ['.js', '.jsx'],
 
         // алиасы для import, чтобы не писать много точек в пути до модулей
         // alias: {
@@ -98,17 +98,9 @@ module.exports = {
         rules: [
             // сюда вставится es3ify в продакшн-версии
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 exclude: /(node_modules|bower_components)/,
                 loaders: ['babel-loader']
-            },
-            {
-                test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                use: ['babel-loader'],
-                // query: {
-                //     presets: ['es2015', 'react']
-                // }
             },
             {
                 test: /\.mst$/,

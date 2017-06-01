@@ -11,9 +11,10 @@
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
+    "babel": "^6.23.0",
     "babel-cli": "^6.24.1",
-    "babel-core": "^6.9.1",
-    "babel-loader": "^6.2.4",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
     "babel-plugin-transform-es2015-arrow-functions": "^6.8.0",
     "babel-plugin-transform-es2015-block-scoped-functions": "^6.3.13",
     "babel-plugin-transform-es2015-block-scoping": "^6.3.13",
@@ -68,7 +69,7 @@
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^2.5.1",
+    "webpack": "^2.6.1",
     "webpack-notifier": "^1.4.1"
   },
   "scripts": {
