@@ -6,7 +6,7 @@ import '../card.scss';
 
 class TextConverter {
     static getHtml(data, parentElement) {
-        render(parentElement);
+        render(parentElement, data);
     }
 }
 

@@ -1,4 +1,5 @@
 'use strict';
+import './card.scss';
 
 class Presenter {
     /**
