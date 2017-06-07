@@ -2,16 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 
-function ClearDelimiter(){
-   return (<div className="clear"/>);
+function ClearDelimiter() {
+    return (<div className="clear"/>);
 }
 
-function Examples(props){
+function Examples(props) {
     if (!props.examples || !props.examples.length) return (null);
     const examples = props.examples.map((item, index) =>
-        <div className="card-example-text">{item.text}</div>
+        <li key={index} className="card-example">
+            <div className="card-example-text">{item.text}</div>
+            <ExamplesTranslates trans={item.tr}/>
+        </li>
     );
-    return (<ul className="card-examples">{examples}</ul> )
+    return (<ul className="card-examples">{examples}</ul> );
+
+    function ExamplesTranslates(props) {
+        if (!props.trans || !props.trans.length) return (null);
+        const trans = props.trans.map((item, index) =>
+            <li key={index} className="card-example-translate">{item.text}</li>
+        );
+
+        return (<ul className="card-example-translates">{trans}</ul>);
+    }
 
     // <ul class="card-examples">{{#ex}}
     //     <li class="card-example">
@@ -25,28 +37,22 @@ function Examples(props){
     //
 }
 function Means(props) {
-    let means = props.means;
-    if (means) {
-        means = means.map((item, index) =>
-            <li key={index} className="card-mean"><a href="" className="card-mean-href">{item.text}</a></li>
-        );
-        return (<ul className="card-means">{means}</ul> )
-    }
-    return (null);
+    if (!props.means || !props.means.length) return (null);
+    const means = props.means.map((item, index) =>
+        <li key={index} className="card-mean"><a href="" className="card-mean-href">{item.text}</a></li>
+    );
+    return (<ul className="card-means">{means}</ul>);
 }
 
 function Synonyms(props) {
-    let synonyms = props.synonyms;
-    if (synonyms) {
-        synonyms = synonyms.map((syn, index) =>
-            <li key={index} className="card-synonym-list__item">
-                <a href="" className="card-synonym-list__item-text">{syn.text}</a>
-                <CardMarks def={syn}/>
-            </li>
-        );
-        return ( <ul className="card-synonym-list">{synonyms}</ul> )
-    }
-    return (null);
+    if (!props.synonyms || !props.synonyms.length) return (null);
+    const synonyms = props.synonyms.map((syn, index) =>
+        <li key={index} className="card-synonym-list__item">
+            <a href="" className="card-synonym-list__item-text">{syn.text}</a>
+            <CardMarks def={syn}/>
+        </li>
+    );
+    return ( <ul className="card-synonym-list">{synonyms}</ul>)
 }
 
 function CardTranslates(props) {
@@ -56,7 +62,7 @@ function CardTranslates(props) {
             <CardMarks def={tr}/>
             <Synonyms synonyms={tr.syn}/>
             <ClearDelimiter/>
-            <Means means={tr.mean} />
+            <Means means={tr.mean}/>
             <ClearDelimiter/>
             <Examples examples={tr.ex}/>
         </li>
