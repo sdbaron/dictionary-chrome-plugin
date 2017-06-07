@@ -2,6 +2,7 @@
 import render from './card.jsx';
 
 import '../card.scss';
+import './card.scss';
 
 
 class TextConverter {
