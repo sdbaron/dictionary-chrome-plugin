@@ -22,20 +22,20 @@ div.card
                                 - glob.fl = tr.fl;
                                 include card-marks
                                 if tr.syn
-                                    each syn in tr.syn
-                                        div.card-synonym-delimiter ,
-                                        a.card-synonym(href="")= syn.text
-                                        - glob.gen = syn.gen;
-                                        - glob.fl = syn.fl;
-                                        include card-marks
-                                    div.clear
+                                    ul.card-synonym-list
+                                        each syn in tr.syn
+                                            li.card-synonym-list__item
+                                                a.card-synonym-list__item-text(href="")= syn.text
+                                                - glob.gen = syn.gen;
+                                                - glob.fl = syn.fl;
+                                                include card-marks
+                                div.clear
 
                                 if tr.mean
                                     ul.card-means
                                         each mean in tr.mean
                                             li.card-mean
                                                 a.card-mean-href(href="")= mean.text
-                                    div.clear
 
                                 if tr.ex
                                     ul.card-examples
@@ -46,7 +46,6 @@ div.card
                                                     ul.card-example-translates
                                                         each tr in ex.tr
                                                             li.card-example-translate= tr.text
-                                                    div.clear
         else
             li.card-def
                 span.card-def-text.card-def_empty Translate has not been found

@@ -1,32 +1,42 @@
+@import '../../../display/display';
+
+// отступ после запятой в списках, разделённых запятыми
+$comma-list-padding: .3em;
+
+// вертикальный отступ между элементами
+$vertical-list-padding: .6em;
+
 .clear {
     clear: both;
-}
+    }
 
 .clearfix {
-    &:after {
-        content: "";
-        display: table;
-        clear: both;
+    overflow: hidden;
+    zoom: 1;
+    //&:after {
+    //    content: "";
+    //    display: table;
+    //    clear: both;
+    //}
     }
-}
 
 .card {
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
-}
+    }
 
 .card-defs {
     margin: 0;
     padding: 0;
-}
+    }
 
 .card-def:not(:first-of-type) {
     margin-top: 1em;
-}
+    }
 
 .card-def-text {
     font-size: 1.3em;
-}
+    }
 
 .card-translates {
     position: relative;
@@ -36,10 +46,10 @@
     padding: 0 0 0 1.35em;
     list-style: none; //decimal;
     counter-reset: card-translates-counter;
-}
+    }
 
 .card-translate {
-    margin: .6em 0 0 0;
+    margin: $vertical-list-padding 0 0 0;
     @extend .clearfix;
 
     // custom counters
@@ -50,8 +60,8 @@
         counter-increment: card-translates-counter;
         content: counter(card-translates-counter, decimal);
         color: #9a9a9a;
+        }
     }
-}
 
 .card-marks {
     float: left;
@@ -59,159 +69,184 @@
     color: #9a9a9a;
     &:empty {
         display: none;
+        }
     }
-}
 
 .card-def > .card-marks {
     float: none;
     display: inline-block;
     margin: 0 0 0 .6em;
-}
+    }
 
 .cart-marks__gen {
     font-style: italic;
     &:empty {
         display: none;
+        }
     }
-}
 
 .cart-marks__fl {
     margin: 0 0 0 .6em;
     &:empty {
         display: none;
+        }
     }
-}
 
 .card-translates .cart-marks__fl {
     display: none;
-}
+    }
 
 .card-translate-text {
     float: left;
     margin: 0 0 0 .6em;
     &:first-child {
         margin-left: 0;
+        }
     }
-}
 
 .card-def-pos {
     margin-left: .3em;
     color: #070;
-}
+    }
 
+// <!-- синонимы
 .card-synonym {
     float: left;
-}
+    }
+
+.card-synonym-list {
+    float: left;
+    margin: 0;
+    padding: 0;
+    }
+
+.card-synonym-list__item {
+    float: left;
+    // перед первым элеменом списка покажем запятую
+    &:first-of-type:before {
+        float: left;
+        margin: 0 $comma-list-padding 0 0;
+        content: ',';
+        }
+    // и после всех элементов, кроме последнего, тоже покажем запятую
+    &:not(:last-of-type):after {
+        float: left;
+        margin: 0 $comma-list-padding 0 0;
+        content: ',';
+        }
+    }
+
+.card-synonym-list__item-text {
+    float: left;
+    }
 
 .card-synonym-delimiter {
     float: left;
     margin: 0 .5em 0 0;
-}
+    }
+
+// -- end of synonyms -->
 
 .card-means {
-    margin: .3em 0 0 0;
-    padding: 0;
-
+    margin: $vertical-list-padding 0 0 0;
     color: #80494b;
+    @extend .clearfix;
+    @extend .clear;
+
     // hide list with no children
     &:empty {
         display: none;
-    }
+        }
 
     &::before {
         float: left;
         content: '(';
-    }
+        }
 
     &::after {
         float: left;
         content: ')'
+        }
     }
-}
 
 @mixin li-comma-delimiter {
     float: left;
     // words comma delimiter
-    &::after {
+    &:not(:last-of-type):after {
         content: ', ';
-        padding: 0 .5em 0 0;
-    }
-    // no comma after last word
-    &:last-of-type::after {
-        content: '';
-        padding: 0;
-    }
+        padding: 0 $comma-list-padding 0 0;
+        }
     // no comma after single word
     &:only-of-type::after {
         content: '';
         padding: 0;
+        }
     }
-}
 
 .card-mean {
     @include li-comma-delimiter;
-}
+    }
 
 a.card-mean-href {
     color: #80494b;
     &:visited {
         color: #80494b;
+        }
     }
-}
 
 .card-examples {
     @extend .clearfix;
-    margin: .6em 0 0 1em;
+    margin: $vertical-list-padding 0 0 1em;
     padding: 0;
     color: #777;
 
     &:empty {
         display: none;
+        }
     }
-
-}
 
 .card-defs:not(.examples-expanded) .card-examples {
     display: none;
-}
+    }
 
 .card-example {
     @extend .clearfix;
     margin: 0 0 .3em 0;
     &:last-of-type {
         margin-bottom: 0;
+        }
     }
-}
 
 .card-example-text {
     float: left;
     &:after {
         content: ' –';
         margin: 0 .3em 0 0;
+        }
     }
-}
 
 .card-example-translates {
     padding: 0;
     margin: 0;
-}
+    }
 
 .card-example-translate {
     @include li-comma-delimiter;
-}
+    }
 
 .card-def__examples-toggle {
+    margin: 0 0 0 2em;
     color: #9a9a9a;
     cursor: pointer;
     &:after {
         content: attr(data-text-show);
+        }
     }
-}
 
 .card-def:not(:first-child) .card-def__examples-toggle {
     display: none;
-}
+    }
 
 .card-defs.examples-expanded .card-def__examples-toggle:after {
     content: attr(data-text-hide);
-}
+    }

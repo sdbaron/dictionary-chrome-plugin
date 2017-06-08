@@ -17,7 +17,7 @@ const popup = new Popup([
         translator: new YandexDictionaryApi(),
         presenter: new YandexPresenter(
             ReactTextConverter
-            // PugTextConverter
+            //PugTextConverter
             // MustacheTextConverter
             )
     }

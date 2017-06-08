@@ -6,6 +6,12 @@ function ClearDelimiter() {
     return (<div className="clear"/>);
 }
 
+function listItems(items, className){
+    return items.map((item, index) =>
+        <li key={index} className={className}>{item.text}</li>
+    );
+}
+
 function Examples(props) {
     if (!props.examples || !props.examples.length) return (null);
     const examples = props.examples.map((item, index) =>
@@ -18,24 +24,14 @@ function Examples(props) {
 
     function ExamplesTranslates(props) {
         if (!props.trans || !props.trans.length) return (null);
-        const trans = props.trans.map((item, index) =>
-            <li key={index} className="card-example-translate">{item.text}</li>
-        );
+        // const trans = props.trans.map((item, index) =>
+        //     <li key={index} className="card-example-translate">{item.text}</li>
+        // );
 
-        return (<ul className="card-example-translates">{trans}</ul>);
+        return (<ul className="card-example-translates">{listItems(props.trans, "card-example-translate")}</ul>);
     }
-
-    // <ul class="card-examples">{{#ex}}
-    //     <li class="card-example">
-    //         <div class="card-example-text">{{text}}</div>
-    //         <ul class="card-example-translates">{{#tr}}
-    //             <li class="card-example-translate">{{text}}</li>
-    //             {{/tr}}</ul>
-    //
-    //     </li>
-    //     {{/ex}}</ul>
-    //
 }
+
 function Means(props) {
     if (!props.means || !props.means.length) return (null);
     const means = props.means.map((item, index) =>
@@ -61,9 +57,8 @@ function CardTranslates(props) {
             <a href="" className="card-translate-text" title="{tr.pos}">{tr.text}</a>
             <CardMarks def={tr}/>
             <Synonyms synonyms={tr.syn}/>
-            <ClearDelimiter/>
+            <div className="clear"/>
             <Means means={tr.mean}/>
-            {/*<ClearDelimiter/>*/}
             <Examples examples={tr.ex}/>
         </li>
     );

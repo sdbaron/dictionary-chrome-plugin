@@ -12,19 +12,21 @@
 						<li class="card-translate">
 							<a href="" class="card-translate-text" title="{{pos}}">{{text}}</a>
 							{{> marks }}
-							{{#syn}}
-								<div class="card-synonym-delimiter">,</div>
-								<a href="" class="card-synonym">{{text}}</a>
-								{{> marks }}
-							{{/syn}}
-
+							<ul class="card-synonym-list">
+								{{#syn}}
+									<li class="card-synonym-list__item">
+										<a href="" class="card-synonym">{{text}}</a>
+										{{> marks }}
+									</li>
+								{{/syn}}
+							</ul>
 							<div class="clear"></div>
 
 							<ul class="card-means">{{#mean}}
 								<li class="card-mean"><a href="" class="card-mean-href">{{text}}</a></li>
 							{{/mean}}</ul>
 
-							<div class="clear"></div>
+							<!--<div class="clear"></div>-->
 
 							<ul class="card-examples">{{#ex}}
 								<li class="card-example">
@@ -36,7 +38,7 @@
 								</li>
 							{{/ex}}</ul>
 
-							<div class="clear"></div>
+							<!--<div class="clear"></div>-->
 
 						</li>
 					{{/tr}}

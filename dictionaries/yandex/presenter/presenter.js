@@ -1,5 +1,5 @@
 'use strict';
-import './card.scss';
+// import './card.scss';
 
 class Presenter {
     /**
