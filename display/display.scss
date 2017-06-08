@@ -1,3 +1,5 @@
+@import './reset.scss';
+
 $popupMaxHeight: 30em;
 $popupHeaderHeight: 2em;
 
@@ -16,44 +18,45 @@ $popupBodyHeight: $popupMaxHeight - $popupHeaderHeight;
     border: 1px solid #ddd;
     border-radius: 3px;
     background-color: #fff;
+    font-size: 14px;
+    line-height: 1.25;
     z-index: 999;
-    box-shadow: 5px 5px 14px 0 rgba(0,0,0,0.5);
+    box-shadow: 5px 5px 14px 0 rgba(0, 0, 0, 0.5);
     transition-property: height;
     transition-duration: 2s;
-    }
+}
 
-.sdb-popup_hide{
+.sdb-popup_hide {
     display: none;
-    }
+}
 
 .sdb-popup_loading {
     min-height: 20px;
-    }
+}
 
-.sdb-popup_loading .sdb-popup__header
-, .sdb-popup_loading .sdb-popup__body {
+.sdb-popup_loading .sdb-popup__header, .sdb-popup_loading .sdb-popup__body {
     display: none;
-    }
+}
 
 .sdb-popup_loading .sdb-popup__loading-bar {
     display: block;
-    }
+}
 
-.sdb-popup__header{
+.sdb-popup__header {
     position: relative;
     min-height: $popupHeaderHeight;
     background-color: lightgrey;
-    }
+}
 
-.sdb-popup__body{
+.sdb-popup__body {
     position: relative;
     padding: 0.5em;
     max-height: $popupBodyHeight;
     box-sizing: border-box;
     overflow: auto;
-    }
+}
 
-.sdb-popup__loading-bar{
+.sdb-popup__loading-bar {
     display: none;
     position: relative;
     padding: 0.5em;
@@ -61,4 +64,4 @@ $popupBodyHeight: $popupMaxHeight - $popupHeaderHeight;
     line-height: 2em;
     text-align: center;
     background-color: lightgrey;
-    }
+}

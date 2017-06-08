@@ -63,7 +63,7 @@ function CardTranslates(props) {
             <Synonyms synonyms={tr.syn}/>
             <ClearDelimiter/>
             <Means means={tr.mean}/>
-            <ClearDelimiter/>
+            {/*<ClearDelimiter/>*/}
             <Examples examples={tr.ex}/>
         </li>
     );

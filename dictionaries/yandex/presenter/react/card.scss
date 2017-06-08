@@ -1,4 +1,8 @@
+@import '../card.scss';
+
 .card-synonym-list{
+    margin: 0;
+    padding: 0;
     float: left;
 }
 
@@ -9,5 +13,10 @@
 
 .card-synonym-list__item-text {
     float: left;
+}
+
+.card-means {
+    overflow: hidden;
+    zoom: 1;
 }
 

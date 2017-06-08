@@ -1,0 +1,10 @@
+.sdb-popup {
+    & p, & ul, & ol, & dl, & li {
+        font: 14px/1.25 Arial, Helvetica, sans-serifinjected stylesheet
+        //font-size: 14px;
+        //line-height: 1.25;
+    }
+    & ul, & ol, & dl, & li{
+        list-style-type: none;
+    }
+}
