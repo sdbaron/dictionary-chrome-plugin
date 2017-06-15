@@ -10,8 +10,10 @@
 				<ol class="card-translates">
 					{{#tr}}
 						<li class="card-translate">
-							<a href="" class="card-translate-text" title="{{pos}}">{{text}}</a>
-							{{> marks }}
+							<div className="card-translate__main-block">
+								<a href="" class="card-translate-text" title="{{pos}}">{{text}}</a>
+								{{> marks }}
+							</div>
 							<ul class="card-synonym-list">
 								{{#syn}}
 									<li class="card-synonym-list__item">
