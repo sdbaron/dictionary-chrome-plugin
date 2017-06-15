@@ -76,19 +76,19 @@ function clickEventHandler(event) {
             }
         }
 
-        getTranslate(selectedText, top, left);
+        popup.process(selectedText, top, left);
     }
 }
 
-function getTranslate(text, top, left) {
-
-    popup.showLoadingBar(text, top, left);
-    popup.show(text, top, left).catch(
-        error => {
-            console.error(error.message);
-            popup.hide();
-        });
-}
+// function getTranslate(text, top, left) {
+//
+//     popup.showLoadingBar(text, top, left);
+//     popup.show(text, top, left).catch(
+//         error => {
+//             console.error(error.message);
+//             popup.hide();
+//         });
+// }
 
 function getRangeFromSelection(x, y) {
     let sel = window.getSelection();

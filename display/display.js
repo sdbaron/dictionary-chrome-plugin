@@ -28,6 +28,7 @@ function Popup(apis) {
      *
      */
     return {
+        process: process,
         show: show,
         hide: hide,
         isVisible: isVisible,
@@ -35,12 +36,21 @@ function Popup(apis) {
         hideLoadingBar: hideLoadingBar
     };
 
+    function process(text, top, left, srcLng = 'de', tgtLng = 'ru') {
+        this.showLoadingBar(text, top, left);
+        this.show(text, top, left, srcLng, tgtLng).catch(
+            error => {
+                console.error(error.message);
+                this.hide();
+            });
+    }
+
     /**
      * @param {string|null} message -
      * @param {number} [top] -
      * @param {number} [left] -
      */
-    function show(message, top, left) {
+    function show(message, top, left, srcLng = 'de', tgtLng = 'ru') {
         if (!popupElement) {
             create();
         }
@@ -48,8 +58,12 @@ function Popup(apis) {
 
         hideLoadingBar();
         const apiPromises = apis.map(api => {
-            return api.translator.translate(message, 'de', 'ru')
-                .then(text => api.presenter.renderView(text, body))
+            return api.translator.translate(message, srcLng, tgtLng)
+                .then(text => api.presenter.renderView(
+                    text, body, srcLng, tgtLng,
+                    (text, sourceLang, targetLang) => this.process(text, top, left, sourceLang, targetLang)
+                    )
+                )
         });
 
         return Promise.all(apiPromises).then(() => {
@@ -91,7 +105,7 @@ function Popup(apis) {
         }
     }
 
-    function isVisible(){
+    function isVisible() {
         return popupElement && !popupElement.classList.contains(popupHiddenCssClass);
     }
 

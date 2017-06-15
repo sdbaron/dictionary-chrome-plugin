@@ -14,7 +14,7 @@ class Presenter {
      * @param {string} text Результат перевода
      * @param {HTMLElement} parentElement Элемент, в котрый будет вставлен результат
      */
-    renderView(text, parentElement ) {
+    renderView(text, parentElement, srcLng, tgtLng, processTranslate ) {
         const data = JSON.parse(text);
 
         const cardContent = this.textConverter.getHtml(data, parentElement);
@@ -32,6 +32,22 @@ class Presenter {
 
         if (exampleToggleElement && (!cardDefinitionElement || !cardDefinitionElement.querySelector('.card-example'))){
             exampleToggleElement.style.display = 'none';
+        }
+
+        let linksToTranslate = parentElement.querySelectorAll('.card-mean-href');
+        for( let link of linksToTranslate){
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                processTranslate(link.innerHTML, srcLng, tgtLng);
+            })
+        }
+
+        linksToTranslate = parentElement.querySelectorAll('.card-translate-text, .card-synonym-list__item-text');
+        for( let link of linksToTranslate){
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                processTranslate(link.innerHTML, tgtLng, srcLng);
+            })
         }
 
         (function f() {
