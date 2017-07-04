@@ -53,8 +53,7 @@
     "karma-mocha-reporter": "^2.2.1",
     "karma-opera-launcher": "^1.0.0",
     "karma-phantomjs-launcher": "^1.0.1",
-    "karma-sass-preprocessor": "0.0.1",
-    "karma-webpack": "^1.8.0",
+    "karma-webpack": "^2.0.3",
     "mocha": "*",
     "mustache-loader": "^0.4.1",
     "node-sass": "^3.13.1",
@@ -74,7 +73,7 @@
   },
   "scripts": {
     "test:jasmine": "babel-node spec/run.js",
-    "test:watch": "karma start"
+    "test:watch": "karma start carma.conf.js"
   },
   "author": "",
   "license": "ISC"
