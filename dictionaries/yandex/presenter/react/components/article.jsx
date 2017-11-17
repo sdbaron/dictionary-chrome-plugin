@@ -5,6 +5,6 @@ export default function Article(props) {
     const v = { m: 'der', f: 'die', n: 'das' }
     const article = v[props.def.gen]
     return (
-        <span className="cart-marks__article">{article}</span>
+        <span className="card-article">{article}</span>
     );
 }
