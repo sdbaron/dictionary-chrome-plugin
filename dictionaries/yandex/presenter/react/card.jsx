@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';
 
 import CardMarks from './components/marks';
 import CardTranslates from './components/translates';
+import Atricle from './components/article';
 
 function CardDefinition(props) {
     const defs = props.defs && props.defs.length
         ? props.defs.map((def, index) =>
             <li key={index} className="card-def">
+                <Atricle def={def}/>
                 <span className="card-def-text">{def.text}</span>
                 <span className="card-def-pos">{def.pos}</span>
 

@@ -6,11 +6,11 @@ $comma-list-padding: .3em;
 // вертикальный отступ между элементами
 $vertical-list-padding: .6em;
 
-.clear {
+.sdb-popup .clear {
     clear: both;
     }
 
-.clearfix {
+.sdb-popup .clearfix {
     overflow: hidden;
     zoom: 1;
     //&:after {
@@ -20,25 +20,25 @@ $vertical-list-padding: .6em;
     //}
     }
 
-.card {
+.sdb-popup .card {
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
     }
 
-.card-defs {
+.sdb-popup .card-defs {
     margin: 0;
     padding: 0;
     }
 
-.card-def:not(:first-of-type) {
+.sdb-popup .card-def:not(:first-of-type) {
     margin-top: 1em;
     }
 
-.card-def-text {
+.sdb-popup .card-def-text {
     font-size: 1.3em;
     }
 
-.card-translates {
+.sdb-popup .card-translates {
     position: relative;
     margin: 0.6em 0 0 0;
 
@@ -48,7 +48,7 @@ $vertical-list-padding: .6em;
     counter-reset: card-translates-counter;
     }
 
-.card-translate {
+.sdb-popup .card-translate {
     margin: $vertical-list-padding 0 0 0;
     @extend .clearfix;
 
@@ -63,7 +63,7 @@ $vertical-list-padding: .6em;
         }
     }
 
-.card-marks {
+.sdb-popup .card-marks {
     float: left;
     margin: 0 0 0 .3em;
     color: #9a9a9a;
@@ -72,31 +72,42 @@ $vertical-list-padding: .6em;
         }
     }
 
-.card-def > .card-marks {
+.sdb-popup .card-def > .card-marks {
     float: none;
     display: inline-block;
     margin: 0 0 0 .6em;
     }
 
-.cart-marks__gen {
+.sdb-popup .cart-marks__gen {
+    margin: 0 0 0 .3em;
     font-style: italic;
     &:empty {
         display: none;
         }
     }
 
-.cart-marks__fl {
+.sdb-popup .cart-marks__article {
+    color: #676767;
+    margin: 0 0.3em 0 0;
+    font-size: 1.1em;
+    //font-style: italic;
+    &:empty {
+        display: none;
+    }
+}
+
+.sdb-popup .cart-marks__fl {
     margin: 0 0 0 .6em;
     &:empty {
         display: none;
         }
     }
 
-.card-translates .cart-marks__fl {
+.sdb-popup .card-translates .cart-marks__fl {
     display: none;
     }
 
-.card-translate-text {
+.sdb-popup .card-translate-text {
     float: left;
     margin: 0 0 0 .6em;
     &:first-child {
@@ -104,23 +115,23 @@ $vertical-list-padding: .6em;
         }
     }
 
-.card-def-pos {
+.sdb-popup .card-def-pos {
     margin-left: .3em;
     color: #070;
     }
 
 // <!-- синонимы
-.card-synonym {
+.sdb-popup .card-synonym {
     float: left;
     }
 
-.card-synonym-list {
+.sdb-popup .card-synonym-list {
     float: none;
     margin: 0;
     padding: 0;
     }
 
-.card-synonym-list__item {
+.sdb-popup .card-synonym-list__item {
     float: left;
     // перед первым элеменом списка покажем запятую
     &:first-of-type:before {
@@ -136,18 +147,18 @@ $vertical-list-padding: .6em;
         }
     }
 
-.card-synonym-list__item-text {
+.sdb-popup .card-synonym-list__item-text {
     float: left;
     }
 
-.card-synonym-delimiter {
+.sdb-popup .card-synonym-delimiter {
     float: left;
     margin: 0 .5em 0 0;
     }
 
 // -- end of synonyms -->
 
-.card-means {
+.sdb-popup .card-means {
     margin: $vertical-list-padding 0 0 0;
     color: #80494b;
     @extend .clearfix;
@@ -183,7 +194,7 @@ $vertical-list-padding: .6em;
         }
     }
 
-.card-mean {
+.sdb-popup .card-mean {
     @include li-comma-delimiter;
     }
 
@@ -194,7 +205,7 @@ a.card-mean-href {
         }
     }
 
-.card-examples {
+.sdb-popup .card-examples {
     @extend .clearfix;
     margin: $vertical-list-padding 0 0 1em;
     padding: 0;
@@ -205,11 +216,11 @@ a.card-mean-href {
         }
     }
 
-.card-defs:not(.examples-expanded) .card-examples {
+.sdb-popup .card-defs:not(.examples-expanded) .card-examples {
     display: none;
     }
 
-.card-example {
+.sdb-popup .card-example {
     @extend .clearfix;
     margin: 0 0 .3em 0;
     &:last-of-type {
@@ -217,7 +228,7 @@ a.card-mean-href {
         }
     }
 
-.card-example-text {
+.sdb-popup .card-example-text {
     float: left;
     &:after {
         content: ' –';
@@ -225,16 +236,16 @@ a.card-mean-href {
         }
     }
 
-.card-example-translates {
+.sdb-popup .card-example-translates {
     padding: 0;
     margin: 0;
     }
 
-.card-example-translate {
+.sdb-popup .card-example-translate {
     @include li-comma-delimiter;
     }
 
-.card-def__examples-toggle {
+.sdb-popup .card-def__examples-toggle {
     margin: 0 0 0 2em;
     color: #9a9a9a;
     cursor: pointer;
@@ -243,10 +254,10 @@ a.card-mean-href {
         }
     }
 
-.card-def:not(:first-child) .card-def__examples-toggle {
+.sdb-popup .card-def:not(:first-child) .card-def__examples-toggle {
     display: none;
     }
 
-.card-defs.examples-expanded .card-def__examples-toggle:after {
+.sdb-popup .card-defs.examples-expanded .card-def__examples-toggle:after {
     content: attr(data-text-hide);
     }
