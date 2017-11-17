@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default function CareTranscription(props) {
-    const ts = v[props.ts]
+export default function CardTranscription(props) {
+    if (!props.def) return (null)
     return (
-        <span className="card-transcription">{ts}</span>
+        <span className="card-transcription">[{props.def}]</span>
     );
 }
