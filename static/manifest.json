@@ -14,12 +14,6 @@
       "css": ["./css/application.css"],
       "js": [
         "application.js"
-        //        "dictionaries/google/api.js",
-        //        "dictionaries/google/presenter.js",
-        //        "dictionaries/yandex/api.js",
-        //        "dictionaries/yandex/presenter.js",
-        //        "display/display.js",
-        //        "on-page.js"
       ]
     }
   ],

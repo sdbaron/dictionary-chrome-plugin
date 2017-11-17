@@ -7,7 +7,8 @@ const NODE_ENV = process.env.NODE_ENV || 'development',
     extractCSS = new ExtractTextPlugin('./css/[name].css'),
     autoprefixer = require('autoprefixer'),
     browserslist = require('browserslist'),
-    OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+    OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
+    CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const needToWatchChanges = NODE_ENV !== 'production' && NODE_ENV !== 'demo';
 const codeCompression = NODE_ENV === 'production' || NODE_ENV === 'demo';
@@ -20,22 +21,25 @@ const path = require('path');
 module.exports = {
     watch: needToWatchChanges,
     watchOptions: {
-        aggregateTimeout: 100
+        aggregateTimeout: 100,
     },
 
     plugins: [
         new webpack.NoEmitOnErrorsPlugin(),
         // далее определяем те переменные, которые хотим сделать доступными клиенту (в исходниках)
         new webpack.DefinePlugin({
-            NODE_ENV: JSON.stringify(NODE_ENV)
+            NODE_ENV: JSON.stringify(NODE_ENV),
         }),
         extractCSS,
-        extractSASS
+        extractSASS,
+        new CopyWebpackPlugin([
+            { from: './static' }
+        ])
     ],
     resolve: {
         modules: [
-            path.join(__dirname, "src"),
-            "node_modules"
+            path.join(__dirname, 'src'),
+            'node_modules',
         ],
         extensions: ['.js', '.jsx'],
 
@@ -46,31 +50,31 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /(node_modules|bower_components)/,
-                loaders: ['babel-loader']
+                loaders: ['babel-loader'],
             },
             {
                 test: /\.mst$/,
                 use: [{
                     loader: 'mustache-loader',
                     options: {
-                        noShortcut: true
-                    }
-                }]
+                        noShortcut: true,
+                    },
+                }],
             },
             {
                 test: /\.pug$/,
                 use: [{
                     loader: 'pug-loader',
-                    options: {}
-                }]
+                    options: {},
+                }],
             },
             {
                 test: /\.css$/,
-                loader: extractCSS.extract({use: ['css-loader', 'style-loader']})
+                loader: extractCSS.extract({ use: ['css-loader', 'style-loader'] }),
             },
             {
                 test: /\.scss$/,
-                loader: extractSASS.extract({fallback: 'style-loader', use: ['css-loader', 'sass-loader']})
+                loader: extractSASS.extract({ fallback: 'style-loader', use: ['css-loader', 'sass-loader'] }),
             },
             {
                 test: /\.(png|jpg)$/,
@@ -83,10 +87,10 @@ module.exports = {
                 options: {
                     name: '../img/[name].[ext]',
                     regExp: 'Resources/img/(.*)',
-                    limit: '2048'
-                }
-            }
-        ]
+                    limit: '2048',
+                },
+            },
+        ],
     },
 
     // модули и из настройки для загрузчика postcss
@@ -111,19 +115,19 @@ if (codeCompression) {
                 warnings: false,
                 drop_console: true,
                 unsafe: true,
-                screw_ie8: false
+                screw_ie8: false,
             },
             mangle: {
                 screw_ie8: false,
-                except: ['name', 'super', '$super', '$uper']
+                except: ['name', 'super', '$super', '$uper'],
             },
             mangleProperties: {
                 screw_ie8: false,
-                except: ['name', 'super', '$super', '$uper']
+                except: ['name', 'super', '$super', '$uper'],
             },
             output: {
-                screw_ie8: false
-            }
+                screw_ie8: false,
+            },
         }));
 
     // добавляем плагин сжатия css файлов
@@ -131,9 +135,9 @@ if (codeCompression) {
         assetNameRegExp: /\.min\.css$/,
         cssProcessorOptions: {
             discardComments: {
-                removeAll: true
-            }
-        }
+                removeAll: true,
+            },
+        },
     }));
 }
 
