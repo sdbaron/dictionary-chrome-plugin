@@ -1,0 +1,56 @@
+<div class="card">
+	<ul class="card-defs examples-expanded">
+		{{#def}}
+			<li class="card-def">
+				<span class="card-def-text">{{text}}</span>
+				<span class="card-def-pos">{{pos}}</span>
+				{{> marks }}
+				<span class="card-def__examples-toggle" data-text-show="показать примеры"
+					  data-text-hide="скрыть примеры"></span>
+				<ol class="card-translates">
+					{{#tr}}
+						<li class="card-translate">
+							<div className="card-translate__main-block">
+								<a href="" class="card-translate-text" title="{{pos}}">{{text}}</a>
+								{{> marks }}
+							</div>
+							<ul class="card-synonym-list">
+								{{#syn}}
+									<li class="card-synonym-list__item">
+										<a href="" class="card-synonym">{{text}}</a>
+										{{> marks }}
+									</li>
+								{{/syn}}
+							</ul>
+							<div class="clear"></div>
+
+							<ul class="card-means">{{#mean}}
+								<li class="card-mean"><a href="" class="card-mean-href">{{text}}</a></li>
+							{{/mean}}</ul>
+
+							<!--<div class="clear"></div>-->
+
+							<ul class="card-examples">{{#ex}}
+								<li class="card-example">
+									<div class="card-example-text">{{text}}</div>
+									<ul class="card-example-translates">{{#tr}}
+										<li class="card-example-translate">{{text}}</li>
+									{{/tr}}</ul>
+
+								</li>
+							{{/ex}}</ul>
+
+							<!--<div class="clear"></div>-->
+
+						</li>
+					{{/tr}}
+				</ol>
+			</li>
+		{{/def}}
+		{{^def}}
+			<li class="card-def card-def_empty">
+				<span class="card-def-text">Translate has not been found</span>
+			</li>
+		{{/def}}
+	</ul>
+</div>

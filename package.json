@@ -56,6 +56,7 @@
     "webpack-notifier": "^1.4.1"
   },
   "scripts": {
+    "test:api:lingvo": "newman run dictionaries/lingvo/postman_abby.json -e dictionaries/lingvo/postman_env_abby.json",
     "test:jasmine": "babel-node spec/run.js",
     "test:watch": "karma start carma.conf.js"
   },

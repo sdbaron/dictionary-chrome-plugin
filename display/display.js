@@ -19,6 +19,8 @@ document.body.insertBefore(messageElement, document.body.firstChild);
  * @constructor
  */
 function Popup(apis) {
+
+
     let popupElement;
     let loadingBar;
     let header;
