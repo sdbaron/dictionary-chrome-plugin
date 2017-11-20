@@ -1,6 +1,7 @@
-"use strict";
+'use strict';
 
 import './display.scss';
+import LingvoApi from '../dictionaries/lingvo/api'
 
 let messageElement = document.createElement('div');
 document.body.insertBefore(messageElement, document.body.firstChild);
@@ -35,7 +36,7 @@ function Popup(apis) {
         hide: hide,
         isVisible: isVisible,
         showLoadingBar: showLoadingBar,
-        hideLoadingBar: hideLoadingBar
+        hideLoadingBar: hideLoadingBar,
     };
 
     function process(text, top, left, srcLng = 'de', tgtLng = 'ru') {
@@ -60,11 +61,23 @@ function Popup(apis) {
 
         hideLoadingBar();
         const apiPromises = apis.map(api => {
+            const lingvoApi = new LingvoApi()
+            lingvoApi.translate(message, srcLng, tgtLng)
+                .then(text => {
+                    console.dir(text)
+                    // console.log(`translated: ${JSON.stringify(text)}`)
+                })
+                .catch(err => {
+                        console.error(`error: ${err}`)
+                    },
+                )
+
+
             return api.translator.translate(message, srcLng, tgtLng)
                 .then(text => api.presenter.renderView(
                     text, body, srcLng, tgtLng,
-                    (text, sourceLang, targetLang) => this.process(text, top, left, sourceLang, targetLang)
-                    )
+                    (text, sourceLang, targetLang) => this.process(text, top, left, sourceLang, targetLang),
+                    ),
                 )
         });
 
@@ -131,6 +144,7 @@ function Popup(apis) {
         p.appendChild(body);
 
         document.body.appendChild(p);
+
     }
 }
 

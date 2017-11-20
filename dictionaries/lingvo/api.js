@@ -4,7 +4,7 @@ const API_KEY = 'MzA1OTMzZjktNzY3OC00MTM4LTkzNTQtOWFiZjRhNWNiY2NkOjhjZmYwZTAyYWY
 
 // getToken(true).then(token => console.log(token))
 
-class LingvoApi {
+export default class LingvoApi {
     constructor() {
         this.token = 'Z342'; //null; // 'ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmxlSEFpT2pFMU1URXhNelkxTlRNc0lrMXZaR1ZzSWpwN0lrTm9ZWEpoWTNSbGNuTlFaWEpFWVhraU9qVXdNREF3TENKVmMyVnlTV1FpT2pRME1pd2lWVzVwY1hWbFNXUWlPaUl6TURVNU16Tm1PUzAzTmpjNExUUXhNemd0T1RNMU5DMDVZV0ptTkdFMVkySmpZMlFpZlgwLkpnS1l1R2l3LWFzSnZZeEtscUhySFdHV0x2b1dNMDB6cDZ4VVd4MERjNDA='
     }
