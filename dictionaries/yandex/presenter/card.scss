@@ -20,25 +20,25 @@ $vertical-list-padding: .6em;
     //}
     }
 
-.sdb-popup .card {
+.sdb-popup-card {
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
     }
 
-.sdb-popup .card-defs {
+.sdb-popup-card-defs {
     margin: 0;
     padding: 0;
     }
 
-.sdb-popup .card-def:not(:first-of-type) {
+.sdb-popup-card-def:not(:first-of-type) {
     margin-top: 1em;
     }
 
-.sdb-popup .card-def-text {
+.sdb-popup-card-def-text {
     font-size: 1.3em;
     }
 
-.sdb-popup .card-translates {
+.sdb-popup-card-translates {
     position: relative;
     margin: 0.6em 0 0 0;
 
@@ -48,7 +48,7 @@ $vertical-list-padding: .6em;
     counter-reset: card-translates-counter;
     }
 
-.sdb-popup .card-translate {
+.sdb-popup-card-translate {
     margin: $vertical-list-padding 0 0 0;
     @extend .clearfix;
 
@@ -63,7 +63,7 @@ $vertical-list-padding: .6em;
         }
     }
 
-.sdb-popup .card-marks {
+.sdb-popup-card-marks {
     float: left;
     margin: 0 0 0 .3em;
     color: #9a9a9a;
@@ -72,13 +72,13 @@ $vertical-list-padding: .6em;
         }
     }
 
-.sdb-popup .card-def > .card-marks {
+.sdb-popup-card-def > .sdb-popup-card-marks {
     float: none;
     display: inline-block;
     margin: 0 0 0 .6em;
     }
 
-.sdb-popup .cart-marks__gen {
+.sdb-popup-card-marks__gen {
     margin: 0 0 0 .3em;
     font-style: italic;
     &:empty {
@@ -86,7 +86,7 @@ $vertical-list-padding: .6em;
         }
     }
 
-.sdb-popup .card-article {
+.sdb-popup-card-article {
     color: #676767;
     margin: 0 0.3em 0 0;
     font-size: 1.1em;
@@ -95,7 +95,7 @@ $vertical-list-padding: .6em;
     }
 }
 
-.sdb-popup .card-transcription {
+.sdb-popup-card-transcription {
     color: #9a9a9a;
     margin: 0 0 0 0.3em ;
     font-size: 1em;
@@ -104,18 +104,18 @@ $vertical-list-padding: .6em;
     }
 }
 
-.sdb-popup .cart-marks__fl {
+.sdb-popup-card-marks__fl {
     margin: 0 0 0 .6em;
     &:empty {
         display: none;
         }
     }
 
-.sdb-popup .card-translates .cart-marks__fl {
+.sdb-popup-card-translates .cart-marks__fl {
     display: none;
     }
 
-.sdb-popup .card-translate-text {
+.sdb-popup-card-translate-text {
     float: left;
     margin: 0 0 0 .6em;
     &:first-child {
@@ -123,23 +123,23 @@ $vertical-list-padding: .6em;
         }
     }
 
-.sdb-popup .card-def-pos {
+.sdb-popup-card-def-pos {
     margin-left: .3em;
     color: #070;
     }
 
 // <!-- синонимы
-.sdb-popup .card-synonym {
+.sdb-popup-card-synonym {
     float: left;
     }
 
-.sdb-popup .card-synonym-list {
+.sdb-popup-card-synonym-list {
     float: none;
     margin: 0;
     padding: 0;
     }
 
-.sdb-popup .card-synonym-list__item {
+.sdb-popup-card-synonym-list__item {
     float: left;
     // перед первым элеменом списка покажем запятую
     &:first-of-type:before {
@@ -155,18 +155,18 @@ $vertical-list-padding: .6em;
         }
     }
 
-.sdb-popup .card-synonym-list__item-text {
+.sdb-popup-card-synonym-list__item-text {
     float: left;
     }
 
-.sdb-popup .card-synonym-delimiter {
+.sdb-popup-card-synonym-delimiter {
     float: left;
     margin: 0 .5em 0 0;
     }
 
 // -- end of synonyms -->
 
-.sdb-popup .card-means {
+.sdb-popup-card-means {
     margin: $vertical-list-padding 0 0 0;
     color: #80494b;
     @extend .clearfix;
@@ -202,18 +202,18 @@ $vertical-list-padding: .6em;
         }
     }
 
-.sdb-popup .card-mean {
+.sdb-popup-card-mean {
     @include li-comma-delimiter;
     }
 
-a.card-mean-href {
+a.sdb-popup-card-mean-href {
     color: #80494b;
     &:visited {
         color: #80494b;
         }
     }
 
-.sdb-popup .card-examples {
+.sdb-popup-card-examples {
     @extend .clearfix;
     margin: $vertical-list-padding 0 0 1em;
     padding: 0;
@@ -224,11 +224,11 @@ a.card-mean-href {
         }
     }
 
-.sdb-popup .card-defs:not(.examples-expanded) .card-examples {
+.sdb-popup-card-defs:not(.examples-expanded) .sdb-popup-card-examples {
     display: none;
     }
 
-.sdb-popup .card-example {
+.sdb-popup-card-example {
     @extend .clearfix;
     margin: 0 0 .3em 0;
     &:last-of-type {
@@ -236,7 +236,7 @@ a.card-mean-href {
         }
     }
 
-.sdb-popup .card-example-text {
+.sdb-popup-card-example-text {
     float: left;
     &:after {
         content: ' –';
@@ -244,16 +244,16 @@ a.card-mean-href {
         }
     }
 
-.sdb-popup .card-example-translates {
+.sdb-popup-card-example-translates {
     padding: 0;
     margin: 0;
     }
 
-.sdb-popup .card-example-translate {
+.sdb-popup-card-example-translate {
     @include li-comma-delimiter;
     }
 
-.sdb-popup .card-def__examples-toggle {
+.sdb-popup-card-def__examples-toggle {
     margin: 0 0 0 2em;
     color: #9a9a9a;
     cursor: pointer;
@@ -262,10 +262,10 @@ a.card-mean-href {
         }
     }
 
-.sdb-popup .card-def:not(:first-child) .card-def__examples-toggle {
+.sdb-popup-card-def:not(:first-child) .sdb-popup-card-def__examples-toggle {
     display: none;
     }
 
-.sdb-popup .card-defs.examples-expanded .card-def__examples-toggle:after {
+.sdb-popup-card-defs.examples-expanded .sdb-popup-card-def__examples-toggle:after {
     content: attr(data-text-hide);
     }

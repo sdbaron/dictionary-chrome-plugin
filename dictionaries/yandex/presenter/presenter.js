@@ -22,19 +22,19 @@ class Presenter {
             parentElement.innerHTML = cardContent;
         }
 
-        const cardDefinitionElement = document.querySelector('.card-defs');
-        const exampleToggleElement = parentElement.querySelector('.card-def__examples-toggle');
+        const cardDefinitionElement = document.querySelector('.sdb-popup-card-defs');
+        const exampleToggleElement = parentElement.querySelector('.sdb-popup-card-def__examples-toggle');
         if (exampleToggleElement) {
             exampleToggleElement.addEventListener('click', () => {
                 cardDefinitionElement.classList.toggle('examples-expanded');
             });
         }
 
-        if (exampleToggleElement && (!cardDefinitionElement || !cardDefinitionElement.querySelector('.card-example'))){
+        if (exampleToggleElement && (!cardDefinitionElement || !cardDefinitionElement.querySelector('.sdb-popup-card-example'))){
             exampleToggleElement.style.display = 'none';
         }
 
-        let linksToTranslate = parentElement.querySelectorAll('.card-mean-href');
+        let linksToTranslate = parentElement.querySelectorAll('.sdb-popup-card-mean-href');
         for( let link of linksToTranslate){
             link.addEventListener('click', event => {
                 event.preventDefault();
@@ -42,7 +42,7 @@ class Presenter {
             })
         }
 
-        linksToTranslate = parentElement.querySelectorAll('.card-translate-text, .card-synonym-list__item-text');
+        linksToTranslate = parentElement.querySelectorAll('.sdb-popup-card-translate-text, .sdb-popup-card-synonym-list__item-text');
         for( let link of linksToTranslate){
             link.addEventListener('click', event => {
                 event.preventDefault();

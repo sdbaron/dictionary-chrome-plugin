@@ -9,27 +9,27 @@ import CardTranscription from './components/transcription';
 function CardDefinition(props) {
     const defs = props.defs && props.defs.length
         ? props.defs.map((def, index) =>
-            <li key={index} className="card-def">
+            <li key={index} className="sdb-popup-card-def">
                 <Article def={def}/>
-                <span className="card-def-text">{def.text}</span>
+                <span className="sdb-popup-card-def-text">{def.text}</span>
                 <CardTranscription def={def.ts}/>
-                <span className="card-def-pos">{def.pos}</span>
+                <span className="sdb-popup-card-def-pos">{def.pos}</span>
 
                 <CardMarks def={def}/>
-                <span className="card-def__examples-toggle" data-text-show="показать примеры"
+                <span className="sdb-popup-card-def__examples-toggle" data-text-show="показать примеры"
                       data-text-hide="скрыть примеры"/>
                 <CardTranslates translates={def.tr}/>
             </li>
         )
         : (
-            <li class="card-def card-def_empty">
-                <span class="card-def-text">Translate has not been found</span>
+            <li class="sdb-popup-card-def card-def_empty">
+                <span class="sdb-popup-card-def-text">Translate has not been found</span>
             </li>
         );
 
 
     return (
-        <ul className="card-defs examples-expanded">{defs}</ul>
+        <ul className="sdb-popup-card-defs examples-expanded">{defs}</ul>
     )
 }
 
@@ -41,7 +41,7 @@ class Card extends React.Component {
 
     render() {
         return (
-            <div className="card"><CardDefinition defs={this.props.def}/></div>
+            <div className="sdb-popup-card"><CardDefinition defs={this.props.def}/></div>
         )
     }
 

@@ -1,4 +1,4 @@
-<div class="card-marks">
-	<span class="cart-marks__gen">{{gen}}</span>
-	<span class="cart-marks__fl">{{fl}}</span>
+<div class="sdb-popup-card-marks">
+	<span class="sdb-popup-card-marks__gen">{{gen}}</span>
+	<span class="sdb-popup-card-marks__fl">{{fl}}</span>
 </div>

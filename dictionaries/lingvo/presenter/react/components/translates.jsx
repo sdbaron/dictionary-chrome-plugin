@@ -7,7 +7,7 @@ import Means from './means';
 
 export default function CardTranslates(props) {
     const trs = props.translates.map((tr, index) =>
-        <li key={index} className="card-translate">
+        <li key={index} className="sdb-popup-card-translate">
             <TranslateText text={tr.text} hint={tr.pos} hasSynonyms={tr.syn && tr.syn.length} tr={tr}/>
             <Synonyms synonyms={tr.syn}/>
             <div className="clear"/>
@@ -17,14 +17,14 @@ export default function CardTranslates(props) {
     );
 
     return (
-        <ol className="card-translates">{trs}</ol>
+        <ol className="sdb-popup-card-translates">{trs}</ol>
     )
 }
 
 function TranslateText(props) {
     return (
-        <div className="card-translate__main-block">
-            <a href="" className="card-translate-text" title={props.hint}>{props.text}</a>
+        <div className="sdb-popup-card-translate__main-block">
+            <a href="" className="sdb-popup-card-translate-text" title={props.hint}>{props.text}</a>
             <CardMarks def={props.tr}/>
         </div>
     )
