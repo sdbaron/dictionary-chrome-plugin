@@ -1,0 +1,390 @@
+{
+	"info": {
+		"name": "ABBYY Lingvo API Shared Set",
+		"_postman_id": "b90074ba-3489-d4c8-31b6-21386fc5d5b7",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"Token\", responseBody);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{ApiKey}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{ServiceUrl}}/api/v1.1/authenticate",
+					"host": [
+						"{{ServiceUrl}}"
+					],
+					"path": [
+						"api",
+						"v1.1",
+						"authenticate"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Translation",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{Token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{ServiceUrl}}/api/v1/Translation?text=ersten&srcLang= 1031&dstLang=1049",
+					"host": [
+						"{{ServiceUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"Translation"
+					],
+					"query": [
+						{
+							"key": "text",
+							"value": "ersten",
+							"equals": true
+						},
+						{
+							"key": "srcLang",
+							"value": " 1031",
+							"equals": true
+						},
+						{
+							"key": "dstLang",
+							"value": "1049",
+							"equals": true
+						}
+					]
+				},
+				"description": "Словарный перевод слова/фразы. Поиск осуществляется только в указанном направлении"
+			},
+			"response": []
+		},
+		{
+			"name": "WordList",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{Token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{ServiceUrl}}/api/v1/WordList?prefix=mother&srcLang=1033&dstLang=1049&pageSize=20&startPos",
+					"host": [
+						"{{ServiceUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"WordList"
+					],
+					"query": [
+						{
+							"key": "prefix",
+							"value": "mother"
+						},
+						{
+							"key": "srcLang",
+							"value": "1033"
+						},
+						{
+							"key": "dstLang",
+							"value": "1049"
+						},
+						{
+							"key": "pageSize",
+							"value": "20"
+						},
+						{
+							"key": "startPos",
+							"value": ""
+						}
+					]
+				},
+				"description": "Часть словника, соответствующая имеющимся словарям"
+			},
+			"response": []
+		},
+		{
+			"name": "Minicard",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{Token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{ServiceUrl}}/api/v1/Minicard?text=towel&srcLang=1033&dstLang=1049",
+					"host": [
+						"{{ServiceUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"Minicard"
+					],
+					"query": [
+						{
+							"key": "text",
+							"value": "towel"
+						},
+						{
+							"key": "srcLang",
+							"value": "1033"
+						},
+						{
+							"key": "dstLang",
+							"value": "1049"
+						}
+					]
+				},
+				"description": "Миникарточка (краткий перевод слова/фразы)"
+			},
+			"response": []
+		},
+		{
+			"name": "Search",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{Token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{ServiceUrl}}/api/v1/Search?text=mother&srcLang=1033&dstLang=1049&searchZone=15&startIndex=0&pageSize=10",
+					"host": [
+						"{{ServiceUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"Search"
+					],
+					"query": [
+						{
+							"key": "text",
+							"value": "mother"
+						},
+						{
+							"key": "srcLang",
+							"value": "1033"
+						},
+						{
+							"key": "dstLang",
+							"value": "1049"
+						},
+						{
+							"key": "searchZone",
+							"value": "15"
+						},
+						{
+							"key": "startIndex",
+							"value": "0"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				},
+				"description": "Полнотекстовый поиск по статьям доступных словарей"
+			},
+			"response": []
+		},
+		{
+			"name": "Article",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{Token}}"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "ru"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{ServiceUrl}}/api/v1/Article?heading=connect&dict=Electronics%20(En-Ru)&srcLang=1033&dstLang=1049",
+					"host": [
+						"{{ServiceUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"Article"
+					],
+					"query": [
+						{
+							"key": "heading",
+							"value": "connect"
+						},
+						{
+							"key": "dict",
+							"value": "Electronics%20(En-Ru)"
+						},
+						{
+							"key": "srcLang",
+							"value": "1033"
+						},
+						{
+							"key": "dstLang",
+							"value": "1049"
+						}
+					]
+				},
+				"description": "Конкретная статья из конкретного словаря Lingvo"
+			},
+			"response": []
+		},
+		{
+			"name": "Suggests",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{Token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{ServiceUrl}}/api/v1/Suggests?text=helo&srcLang=1033&dstLang=1049",
+					"host": [
+						"{{ServiceUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"Suggests"
+					],
+					"query": [
+						{
+							"key": "text",
+							"value": "helo"
+						},
+						{
+							"key": "srcLang",
+							"value": "1033"
+						},
+						{
+							"key": "dstLang",
+							"value": "1049"
+						}
+					]
+				},
+				"description": "Саджесты"
+			},
+			"response": []
+		},
+		{
+			"name": "WordForms",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{Token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{ServiceUrl}}/api/v1/WordForms?text=han&lang=1033",
+					"host": [
+						"{{ServiceUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"WordForms"
+					],
+					"query": [
+						{
+							"key": "text",
+							"value": "han"
+						},
+						{
+							"key": "lang",
+							"value": "1033"
+						}
+					]
+				},
+				"description": "Словоформы для слова"
+			},
+			"response": []
+		},
+		{
+			"name": "Sound",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{Token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{ServiceUrl}}/api/v1/Sound?dictionaryName=LingvoUniversal%20(En-Ru)&fileName=mother.wav",
+					"host": [
+						"{{ServiceUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"Sound"
+					],
+					"query": [
+						{
+							"key": "dictionaryName",
+							"value": "LingvoUniversal%20(En-Ru)"
+						},
+						{
+							"key": "fileName",
+							"value": "mother.wav"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
