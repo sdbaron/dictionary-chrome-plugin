@@ -274,3 +274,15 @@ a.sdb-popup-card-mean-href {
 .sdb-popup-card-defs.examples-expanded .sdb-popup-card-def__examples-toggle:after {
     content: attr(data-text-hide);
     }
+
+.sdb-popup-card-def-sound {
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+    color: #1d9bf5;
+    background: red;
+    padding: 2px;
+    border-radius: 2px;
+    width: 29px;
+    height: 25px;
+    }

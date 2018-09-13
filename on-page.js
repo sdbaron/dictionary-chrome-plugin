@@ -1,4 +1,5 @@
 import YandexDictionaryApi from './dictionaries/yandex/api';
+import LingvoApi from './dictionaries/lingvo/api';
 import MustacheTextConverter from './dictionaries/yandex/presenter/mustache/textConverter';
 import PugTextConverter from './dictionaries/yandex/presenter/pug/textConverter';
 import ReactTextConverter from './dictionaries/yandex/presenter/react/textConverter';
@@ -19,7 +20,8 @@ const popup = new Popup([
             ReactTextConverter
             //PugTextConverter
             // MustacheTextConverter
-            )
+            ),
+        sound: new LingvoApi(),
     }
 ]);
 
