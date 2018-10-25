@@ -99,7 +99,8 @@ function getRangeFromSelection(x, y) {
         const rangeCount = sel.rangeCount;
         for (let i = 0; i < rangeCount; i++) {
             let range = sel.getRangeAt(i);
-            let text = range.toString().trim();
+            let text = range.startContainer.textContent.trim();
+            // let text = range.toString().trim();
             // выберем регион, в котором встречается выделенное слово
             if (~text.indexOf(selectedText)) {
                 // и координаты указателя лежат в границах этого региона
