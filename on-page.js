@@ -1,156 +1,199 @@
-import YandexDictionaryApi from './dictionaries/yandex/api';
-import LingvoApi from './dictionaries/lingvo/api';
-import MustacheTextConverter from './dictionaries/yandex/presenter/mustache/textConverter';
-import PugTextConverter from './dictionaries/yandex/presenter/pug/textConverter';
-import ReactTextConverter from './dictionaries/yandex/presenter/react/textConverter';
-import YandexPresenter from './dictionaries/yandex/presenter/presenter';
-import Popup from './display/display';
+import YandexDictionaryApi from './dictionaries/yandex/api'
+import LingvoApi from './dictionaries/lingvo/api'
+import MustacheTextConverter from './dictionaries/yandex/presenter/mustache/textConverter'
+import PugTextConverter from './dictionaries/yandex/presenter/pug/textConverter'
+import ReactTextConverter from './dictionaries/yandex/presenter/react/textConverter'
+import YandexPresenter from './dictionaries/yandex/presenter/presenter'
+import Popup from './display/display'
+
 /**
  *  Инициализация popup, подписвываемся на двойной клик, во время клика получаем выделенный текст и его координаты,
  *  вычисляем координаты всплывающего окна и открываем его
  *
  */
 
-// (function () {
-
 const popup = new Popup([
-    {
-        translator: new YandexDictionaryApi(),
-        presenter: new YandexPresenter(
-            ReactTextConverter
-            //PugTextConverter
-            // MustacheTextConverter
-            ),
-        sound: new LingvoApi(),
-    }
-]);
+  {
+    translator: new YandexDictionaryApi(),
+    presenter: new YandexPresenter(
+      ReactTextConverter
+      //PugTextConverter
+      // MustacheTextConverter
+    ),
+    sound: new LingvoApi(),
+  }
+])
 
-init();
+init()
 
 
 function init() {
-    //
-    // showMessage("<b>Ok, lets begin!</b>");
-    // loadDictionaryApi('chrome-extension://__MSG_@@extension_id__/dictionaries/yandex/api.js');
-    console.warn("I am here");
+  //
+  // showMessage("<b>Ok, lets begin!</b>");
+  // loadDictionaryApi('chrome-extension://__MSG_@@extension_id__/dictionaries/yandex/api.js');
+  console.warn("I am here")
 
-    // handle any click
-    document.addEventListener('click', catchOutsideClick);
+  // handle any click
+  document.addEventListener('click', catchOutsideClick)
 
-    // handle double click for open popup
-    document.addEventListener('dblclick', clickEventHandler);
+  // handle double click for open popup
+  document.addEventListener('dblclick', clickEventHandler)
 }
 
 /**
  * if click was happening outside popup then hide them
  * @param event
  */
-function catchOutsideClick(event){
-    if (popup && popup.isVisible()){
-        const popupCls  = Popup.getRootCssClass();
-        // if click was happened ouside
-        if (!event.target.closest('.' + popupCls)){
-            popup.hide();
-        }
+function catchOutsideClick(event) {
+  if (popup && popup.isVisible()) {
+    const popupCls = Popup.getRootCssClass()
+    // if click was happened ouside
+    if (!event.target.closest('.' + popupCls)) {
+      popup.hide()
     }
+  }
 }
 
 function clickEventHandler(event) {
-    // const target = event.target;
-    if (!event.ctrlKey && !event.metaKey) return;
+  if (!event.ctrlKey && !event.metaKey) return
 
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
 
-    // let style = getComputedStyle(target);
-    let sel = window.getSelection();
-    let selectedText = sel.toString();
-    let rect = getRangeFromSelection(event.pageX - scrollLeft, event.pageY - scrollTop);
-    if (rect) {
-        let top = rect.bottom + scrollTop;
-        let left = rect.left + scrollLeft - 20;
-        let right = left + 500;
-        let widthOver = right - document.documentElement.clientWidth;
-        if (widthOver > 0) {
-            left -= widthOver + 20;
-            if (left < 0) {
-                left += widthOver / 2;
-            }
-        }
-
-        popup.process(selectedText, top, left);
+  // const { text, rect } = getRangeFromSelection(event.pageX - scrollLeft, event.pageY - scrollTop)
+  const { text, rect } = getRangeFromSelection(event.clientX, event.clientY)
+  if (rect) {
+    let top = rect.bottom + scrollTop
+    let left = rect.left + scrollLeft - 20
+    let right = left + 500
+    let widthOver = right - document.documentElement.clientWidth
+    if (widthOver > 0) {
+      left -= widthOver + 20
+      if (left < 0) {
+        left += widthOver / 2
+      }
     }
+
+    popup.process(text, top, left)
+  }
 }
 
-// function getTranslate(text, top, left) {
+// function getRangeFromSelection(x, y) {
+//   let el = document.elementFromPoint(x, y)
+//   alert(`tagName=${el.tagName} nodeType=${el.nodeType}\n text=${el.innerHTML}`)
+  // const rangeCount = sel.rangeCount
+  // let values = []
+  // let result = {}
+  // for (let i = 0; i < rangeCount; i++) {
+  //   let range = sel.getRangeAt(i)
+  //   if (range.startContainer.nodeType === 3 && range.endContainer.nodeType === 3) {
+  //     if (range.startContainer.nodeValue === range.endContainer.nodeValue) {
+  //       let s = range.startContainer.nodeValue
+  //       s = s && s.substr(range.startOffset)
+  //       const text = s && s.split(' ')[0]
+  //       text && values.push(text)
+  //     } else {
+  //       let s = range.startContainer.nodeValue
+  //       s = s && s.substr(range.startOffset)
+  //       s && values.push(s)
+  //       let ss = range.endContainer.nodeValue
+  //       ss = ss && ss.slice(0, range.endOffset)
+  //       ss && values.push(ss)
+  //     }
+  //     const found = values.length && Array.from(range.getClientRects()).some((rect, i) => {
+  //       const text = values[i]
+  //       const width = getTextLength(text)
+  //       if (x >= rect.left && x <= (rect.left + width) && y >= rect.top && y <= rect.bottom) {
+  //         result = { text, rect}
+  //         return true
+  //       }
+  //     })
+  //     if (found) break
+  //   }
+  // }
+  // return result
+
+//   function getTextLength(text) {
+//     let parentElement = sel.anchorNode.parentElement
+//     let clone = parentElement.cloneNode(false)
+//     const wrapper = document.createElement('div')
+//     wrapper.style.top = '-10000px'
+//     wrapper.style.left = '-10000px'
+//     wrapper.style.position = 'absolute'
 //
-//     popup.showLoadingBar(text, top, left);
-//     popup.show(text, top, left).catch(
-//         error => {
-//             console.error(error.message);
-//             popup.hide();
-//         });
+//     clone.innerHTML = text
+//     clone.style.position = 'relative'
+//     clone.style.display = 'inline'
+//     clone.style.border = 0
+//     clone.style.margin = 0
+//     clone.style.padding = 0
+//     // clone.style.opacity = 0
+//     wrapper.appendChild(clone)
+//
+//     let container = parentElement
+//     if (container.parentElement) container = container.parentElement
+//     container.appendChild(wrapper)
+//     const width = wrapper.clientWidth // clone.getBoundingClientRect().width
+//     container.removeChild(wrapper)
+//     return width
+//   }
 // }
-
 function getRangeFromSelection(x, y) {
-    let sel = window.getSelection();
-    let selectedText = sel.toString().trim();
-    if (selectedText) {
-        const rangeCount = sel.rangeCount;
-        for (let i = 0; i < rangeCount; i++) {
-            let range = sel.getRangeAt(i);
-            let text = range.startContainer.textContent.trim();
-            // let text = range.toString().trim();
-            // выберем регион, в котором встречается выделенное слово
-            if (~text.indexOf(selectedText)) {
-                // и координаты указателя лежат в границах этого региона
-                let rect = range.getBoundingClientRect();
-                if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
-                    // return range;
-                    return text === selectedText ? rect : getInfoFromRange(range);
-                }
-            }
+  let sel = window.getSelection()
+  const rangeCount = sel.rangeCount
+  let values = []
+  let result = {}
+  for (let i = 0; i < rangeCount; i++) {
+    let range = sel.getRangeAt(i)
+    if (range.startContainer.nodeType === 3 && range.endContainer.nodeType === 3) {
+      if (range.startContainer.nodeValue === range.endContainer.nodeValue) {
+        let s = range.startContainer.nodeValue
+        s = s && s.substr(range.startOffset)
+        const text = s && s.split(/(\s|&nbsp;|\.|,|:|\?|!|\/|\\|–|-|>|<|=)/)[0]
+        text && values.push(text)
+      } else {
+        let s = range.startContainer.nodeValue
+        s = s && s.substr(range.startOffset)
+        s && values.push(s)
+        let ss = range.endContainer.nodeValue
+        ss = ss && ss.slice(0, range.endOffset)
+        ss && values.push(ss)
+      }
+      const found = values.length && Array.from(range.getClientRects()).some((rect, i) => {
+        const text = values[i]
+        const width = getTextLength(text)
+        if (x >= rect.left && x <= (rect.left + width) && y >= rect.top && y <= rect.bottom) {
+          result = { text, rect}
+          return true
         }
+      })
+      if (found) break
     }
-    // нет совпадений
-    return null;
+  }
+  return result
 
-    function getInfoFromRange(range) {
-        let rect = range.getBoundingClientRect();
-        let text = range.toString();
-        let ind = text.indexOf(selectedText);
-        // если выделенный текст не в начале региона, тогда нужно найти смещение
-        let startPos = 0;
-        if (ind > 0) {
-            let startPos = getTextLength(text.substr(0, ind));
-        }
-        let width = getTextLength(selectedText);
+  function getTextLength(text) {
+    let parentElement = sel.anchorNode.parentElement
+    let clone = parentElement.cloneNode(false)
+    const wrapper = document.createElement('div')
+    wrapper.style.top = '-10000px'
+    wrapper.style.left = '-10000px'
+    wrapper.style.position = 'absolute'
 
-        return {
-            left: rect.x + startPos,
-            width: width,
-            right: rect.x + startPos + width,
-            top: rect.y,
-            height: rect.height,
-            bottom: rect.bottom
-        }
+    clone.innerHTML = text
+    clone.style.position = 'relative'
+    clone.style.display = 'inline'
+    clone.style.border = 0
+    clone.style.margin = 0
+    clone.style.padding = 0
+    // clone.style.opacity = 0
+    wrapper.appendChild(clone)
 
-    }
-
-    function getTextLength(text) {
-        let parentElement = sel.anchorNode.parentElement;
-        let clone = parentElement.cloneNode(false);
-        clone.innerHTML = text;
-        clone.style.top = '-10000px';
-        clone.style.left = '-10000px';
-        clone.style.position = 'absolute';
-        let container = parentElement;
-        if (container.parentElement) container = container.parentElement;
-        container.appendChild(clone);
-        const width = clone.clientWidth;
-        container.removeChild(clone);
-        return width;
-    }
+    let container = parentElement
+    if (container.parentElement) container = container.parentElement
+    container.appendChild(wrapper)
+    const width = wrapper.clientWidth // clone.getBoundingClientRect().width
+    container.removeChild(wrapper)
+    return width
+  }
 }
-
-// })();

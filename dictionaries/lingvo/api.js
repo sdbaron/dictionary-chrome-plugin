@@ -48,7 +48,7 @@ function getToken(forceGetToken = false) {
 
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
-                console.log(this.responseText)
+                // console.log(this.responseText)
                 success(this.responseText)
             }
         })

@@ -81,7 +81,7 @@ function CardDefinition(props) {
     )
     : (
       <li className="sdb-popup-card-def card-def_empty">
-        <span classNmae="sdb-popup-card-def-text">Translate has not been found</span>
+        <span className="sdb-popup-card-def-text">Translate has not been found</span>
       </li>
     )
 
