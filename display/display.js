@@ -15,8 +15,15 @@ document.body.insertBefore(messageElement, document.body.firstChild)
 // };
 
 /**
+ @typedef Api
+ @type {object}
+ @property {object} sound
+ @property {object} presenter
+ */
+
+/**
  *
- * @param {[translate.<function>, renderView.<function>]} apis
+ * @param { Api[]} apis
  * @returns {{show: show, hide: hide, showLoadingBar: showLoadingBar, hideLoadingBar: hideLoadingBar}}
  * @constructor
  */
@@ -64,34 +71,13 @@ function Popup(apis) {
 
     hideLoadingBar()
     const apiPromises = apis.map(api => {
-      const soundPromise = api.sound.sound(message, srcLng, tgtLng)
-        // .then(text => {
-        //   console.dir(text)
-        //   // console.log(`translated: ${JSON.stringify(text)}`)
-        // })
-        .catch(err => {
-            console.error(`error: ${err}`)
-          },
-        )
-
-      const translatePromise = api.translator.translate(message, srcLng, tgtLng)
-
-      return Promise.all([translatePromise, soundPromise])
-        .then(data => {
-          const text = data[0]
-          const soundData = data[1] || {}
-
-          const soundPlayer = new SoundPlayer(soundData.dictionaryName)
-          const play = soundData.dictionaryName && soundData.soundName ? () => soundPlayer.play(soundData.soundName) : () => null;
+      return api.translator.translate(message, srcLng, tgtLng)
+        .then(text => {
           return api.presenter.renderView(
-            text, body, srcLng, tgtLng, {
-              soundData,
-              play
-            },
+            text, body, srcLng, tgtLng, api.sound,
             (text, sourceLang, targetLang) => this.process(text, top, left, sourceLang, targetLang),
           )
         })
-
     })
 
     return Promise.all(apiPromises).then(() => {

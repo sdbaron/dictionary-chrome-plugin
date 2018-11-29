@@ -2,6 +2,8 @@
 
 // import './card.scss';
 
+import SoundPlayer from "../../../display/sound"
+
 class Presenter {
   /**
    *
@@ -16,9 +18,9 @@ class Presenter {
    * @param {string} text Результат перевода
    * @param {HTMLElement} parentElement Элемент, в котрый будет вставлен результат
    */
-  renderView(text, parentElement, srcLng, tgtLng, soundPlayer, processTranslate) {
+  renderView(text, parentElement, srcLng, tgtLng, soundApi, processTranslate) {
     const data = JSON.parse(text)
-    data.soundPlayer = soundPlayer
+    data.soundApi = soundApi
 
     const cardContent = this.textConverter.getHtml(data, parentElement)
     if (cardContent) {
@@ -27,13 +29,17 @@ class Presenter {
 
     Array.from(document.querySelectorAll('.sdb-popup-card-def-sound'))
       .forEach( e => {
-        if (!soundPlayer.soundData.soundName) {
-          e.remove()
-        } else {
-          e.addEventListener('click', () => {
-            soundPlayer.play()
+        const textElement = e.parentElement.querySelector('.sdb-popup-card-def-text')
+        getSoundPlayer(textElement, soundApi, srcLng, tgtLng)
+          .then(soundPlayer => {
+            if (!soundPlayer.soundName) {
+              e.remove()
+            } else {
+              e.addEventListener('click', () => {
+                soundPlayer.play()
+              })
+            }
           })
-        }
       })
     const cardDefinitionElement = document.querySelector('.sdb-popup-card-defs')
     const exampleToggleElement = parentElement.querySelector('.sdb-popup-card-def__examples-toggle')
@@ -98,3 +104,25 @@ class Presenter {
 }
 
 export default Presenter
+
+/**
+ *
+ * @param {HTMLElement|Element} textElement
+ * @param {object} soundApi
+ * @param {string} srcLng
+ * @param {string} tgtLng
+ * @returns {Promise<{{play: function, soundName: string}}>}
+ */
+function getSoundPlayer(textElement, soundApi, srcLng, tgtLng){
+  return soundApi.sound(textElement.innerText, srcLng, tgtLng)
+    .then(data => {
+      const { soundName, dictionaryName } = data || {}
+      const soundPlayer = new SoundPlayer(dictionaryName)
+      const play = dictionaryName && soundName ? () => soundPlayer.play(soundName) : () => null;
+      return { play, soundName, textElement }
+    })
+    .catch(err => {
+        console.error(`error: ${err}`)
+      },
+    )
+}
