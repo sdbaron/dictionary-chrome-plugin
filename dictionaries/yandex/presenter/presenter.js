@@ -29,18 +29,32 @@ class Presenter {
 
     Array.from(document.querySelectorAll('.sdb-popup-card-def-sound'))
       .forEach( e => {
+        const articleElement = e.parentElement.querySelector('.sdb-popup-card-article')
         const textElement = e.parentElement.querySelector('.sdb-popup-card-def-text')
-        getSoundPlayer(textElement, soundApi, srcLng, tgtLng)
-          .then(soundPlayer => {
-            if (!soundPlayer.soundName) {
+        const textSoundPlayerPromise = getSoundPlayer(textElement, soundApi, srcLng, tgtLng)
+        const articleSoundPlayerPromise = getSoundPlayer(articleElement, soundApi, srcLng, tgtLng)
+
+        Promise.all([textSoundPlayerPromise, articleSoundPlayerPromise])
+          .then(soundPlayers => {
+            const textSoundPlayer = soundPlayers[0]
+            const articleSoundPlayer = soundPlayers[1]
+            if (!textSoundPlayer || !textSoundPlayer.soundName) {
+              // have no sound for main word
               e.remove()
             } else {
+              e.style.opacity = 1
               e.addEventListener('click', () => {
-                soundPlayer.play()
+                if (articleSoundPlayer && articleSoundPlayer.soundName) {
+                  articleSoundPlayer.api.play()
+                  setTimeout(() => textSoundPlayer.api.play(), articleSoundPlayer.api.duration() * 1000 * 0.4)
+                } else {
+                  textSoundPlayer.api.play()
+                }
               })
             }
           })
       })
+
     const cardDefinitionElement = document.querySelector('.sdb-popup-card-defs')
     const exampleToggleElement = parentElement.querySelector('.sdb-popup-card-def__examples-toggle')
     if (exampleToggleElement) {
@@ -113,13 +127,17 @@ export default Presenter
  * @param {string} tgtLng
  * @returns {Promise<{{play: function, soundName: string}}>}
  */
-function getSoundPlayer(textElement, soundApi, srcLng, tgtLng){
-  return soundApi.sound(textElement.innerText, srcLng, tgtLng)
+function getSoundPlayer(textElement, soundApi, srcLng, tgtLng) {
+  return soundApi.sound(textElement && textElement.innerText && textElement.innerText.toLowerCase() || null, srcLng, tgtLng)
     .then(data => {
       const { soundName, dictionaryName } = data || {}
       const soundPlayer = new SoundPlayer(dictionaryName)
-      const play = dictionaryName && soundName ? () => soundPlayer.play(soundName) : () => null;
-      return { play, soundName, textElement }
+      let play = null
+      if (dictionaryName && soundPlayer) {
+        soundPlayer.load(soundName)
+        play = () => soundPlayer.play()
+      }
+      return { api: soundPlayer.getApi(), play, soundName, textElement }
     })
     .catch(err => {
         console.error(`error: ${err}`)
