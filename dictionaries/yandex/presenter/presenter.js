@@ -44,12 +44,13 @@ class Presenter {
             } else {
               e.style.opacity = 1
               e.addEventListener('click', () => {
-                if (articleSoundPlayer && articleSoundPlayer.soundName) {
-                  articleSoundPlayer.api.play()
-                  setTimeout(() => textSoundPlayer.api.play(), articleSoundPlayer.api.duration() * 1000 * 0.4)
-                } else {
                   textSoundPlayer.api.play()
-                }
+                // if (articleSoundPlayer && articleSoundPlayer.soundName) {
+                //   articleSoundPlayer.api.play()
+                //   setTimeout(() => textSoundPlayer.api.play(), articleSoundPlayer.api.duration() * 1000 * 0.4)
+                // } else {
+                //   textSoundPlayer.api.play()
+                // }
               })
             }
           })

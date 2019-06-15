@@ -13,7 +13,8 @@ const config = Object.assign(
         entry: {
             // es5Shims: './Resources/src/js/lib/es5-shims/es5-shims.custom',
             // es6Shims: './Resources/src/js/lib/es6-shims/es6-shims',
-            application: './on-page.js'
+            application: './on-page.js',
+            background: './background.js'
         },
         devtool: developmentSources,
         output: {
