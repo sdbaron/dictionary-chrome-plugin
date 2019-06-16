@@ -3,6 +3,8 @@
 // window.SDBDictionary.Yandex || (window.SDBDictionary.Yandex = {});
 //
 // window.SDBDictionary.Yandex.Api = {
+import { fetchResource } from "../../utils"
+
 const REG = 'yandexApiCallbackRegistry'
 export default class YandexApi {
   constructor() {
@@ -36,6 +38,7 @@ export default class YandexApi {
     //         reject(new Error(`Ошибка при получении перевода: ${xhr.status}`));
     //     }
     // }
+
     return fetchResource(request, {
       method: 'GET',
       // credentials: 'include',
@@ -66,24 +69,6 @@ export default class YandexApi {
     })
   }
 
-}
-
-function fetchResource(input, init) {
-  return new Promise((resolve, reject) => {
-    chrome.runtime.sendMessage({input, init}, messageResponse => {
-      const [response, error] = messageResponse;
-      if (response === null) {
-        reject(error);
-      } else {
-        // Use undefined on a 204 - No Content
-        const body = response.body ? new Blob([response.body]) : undefined;
-        resolve(new Response(body, {
-          status: response.status,
-          statusText: response.statusText,
-        }));
-      }
-    });
-  });
 }
 
 // export default Api;

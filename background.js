@@ -64,7 +64,7 @@
 //
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    debugger
+    console.error(`chrome.runtime.onMessage.addListener`)
     fetch(request.input, request.init).then(function(response) {
         return response.text().then(function(text) {
             sendResponse([{
