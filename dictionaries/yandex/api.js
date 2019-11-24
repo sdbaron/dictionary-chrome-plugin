@@ -43,8 +43,8 @@ export default class YandexApi {
       method: 'GET',
       credentials: 'include',
     }).then(function(data){
-      return data.text()
-    }).then(d =>{
+      return data.clone().text()
+    }).then( d => {
       debugger
     })
       .catch(error=>
