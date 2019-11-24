@@ -38,6 +38,19 @@ export default class YandexApi {
     //         reject(new Error(`Ошибка при получении перевода: ${xhr.status}`));
     //     }
     // }
+    debugger
+    fetchResource('https://ru.forvo.com/word/rechtsanwaltskanzlei', {
+      method: 'GET',
+      credentials: 'include',
+    }).then(function(data){
+      return data.text()
+    }).then(d =>{
+      debugger
+    })
+      .catch(error=>
+      console.error(error && error.message || error)
+    )
+
 
     return fetchResource(request, {
       method: 'GET',
