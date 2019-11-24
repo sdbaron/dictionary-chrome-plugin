@@ -39,7 +39,7 @@ export default class YandexApi {
     //     }
     // }
     debugger
-    fetchResource('https://ru.forvo.com/word/rechtsanwaltskanzlei', {
+    fetchResource('https://forvo.com/word/machen', {
       method: 'GET',
       credentials: 'include',
     }).then(function(data){
