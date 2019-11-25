@@ -4,6 +4,7 @@
 //
 // window.SDBDictionary.Yandex.Api = {
 import { fetchResource } from "../../utils"
+import Forvo from '../../forvo/Forvo'
 
 const REG = 'yandexApiCallbackRegistry'
 export default class YandexApi {
@@ -38,19 +39,15 @@ export default class YandexApi {
     //         reject(new Error(`Ошибка при получении перевода: ${xhr.status}`));
     //     }
     // }
-    debugger
-    fetchResource('https://forvo.com/word/machen', {
-      method: 'GET',
-      credentials: 'include',
-    }).then(function(data){
-      return data.clone().text()
-    }).then( d => {
-      debugger
-    })
-      .catch(error=>
-      console.error(error && error.message || error)
-    )
-
+    const forvoMedia = new Forvo(text)
+    forvoMedia.getAudioSources()
+      .then(audioScr => {
+        audioScr.forEach(media => {
+          const { id, mp3Path, oggPath } = media
+          console.log(`forvo ${text}: id(${id}) mp3(http:${mp3Path}) ogg(http:${oggPath})`)
+          debugger
+        })
+      })
 
     return fetchResource(request, {
       method: 'GET',
