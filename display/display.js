@@ -1,18 +1,9 @@
 'use strict'
 
 import './display.scss'
-import LingvoApi from '../dictionaries/lingvo/api'
-import SoundPlayer from './sound'
 
 let messageElement = document.createElement('div')
 document.body.insertBefore(messageElement, document.body.firstChild)
-
-// const SDBDisplay = {
-//     // showMessage: function (message) {
-//     //     messageElement.innerHTML = message;
-//     // },
-//     Popup: Popup
-// };
 
 /**
  @typedef Api
@@ -23,13 +14,11 @@ document.body.insertBefore(messageElement, document.body.firstChild)
 
 /**
  *
- * @param { Api[]} apis
+ * @param {Object} apis
  * @returns {{show: show, hide: hide, showLoadingBar: showLoadingBar, hideLoadingBar: hideLoadingBar}}
  * @constructor
  */
 function Popup(apis) {
-
-
   let popupElement
   let loadingBar
   let header
@@ -49,8 +38,8 @@ function Popup(apis) {
 
   function process(text, top, left, srcLng = 'de', tgtLng = 'ru') {
     this.showLoadingBar(text, top, left)
-    this.show(text, top, left, srcLng, tgtLng).catch(
-      error => {
+    this.show(text, top, left, srcLng, tgtLng)
+      .catch(error => {
         console.error(error.message)
         this.hide()
       })
@@ -70,21 +59,15 @@ function Popup(apis) {
     setPopupPosition(top, left)
 
     hideLoadingBar()
-    const apiPromises = apis.map(api => {
-      return api.translator.translate(message, srcLng, tgtLng)
-        .then(text => {
-          return api.presenter.renderView(
-            text, body, srcLng, tgtLng, api.sound,
-            (text, sourceLang, targetLang) => this.process(text, top, left, sourceLang, targetLang),
-          )
-        })
-    })
 
-    return Promise.all(apiPromises).then(() => {
-      popupElement.classList.remove('sdb-popup_hide')
-      return true
-    })
-
+    const { translator, sound: sound, presenter } = apis
+    return translator.translate(message, srcLng, tgtLng)
+      .then(text => presenter.renderView(
+        text, body, srcLng, tgtLng, sound,
+        (text, sourceLang, targetLang) => this.process(text, top, left, sourceLang, targetLang),
+        )
+      )
+      .then(() => popupElement.classList.remove('sdb-popup_hide'))
   }
 
   function showLoadingBar(text, top, left) {
@@ -95,7 +78,8 @@ function Popup(apis) {
     popupElement.classList.add('sdb-popup_loading')
     setPopupPosition(top, left)
     loadingBar.innerHTML = `Ищем перевод слова ${text}...`
-    apis.forEach(api => api.presenter.clearView(body))
+    const { presenter } = apis
+    presenter && presenter.clearView(body)
   }
 
   function setPopupPosition(srcTop, left) {

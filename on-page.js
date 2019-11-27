@@ -12,8 +12,7 @@ import Popup from './display/display'
  *
  */
 
-const popup = new Popup([
-  {
+const popup = new Popup({
     translator: new YandexDictionaryApi(),
     presenter: new YandexPresenter(
       ReactTextConverter
@@ -21,8 +20,7 @@ const popup = new Popup([
       // MustacheTextConverter
     ),
     sound: new LingvoApi(),
-  }
-])
+  })
 
 init()
 
@@ -78,66 +76,6 @@ function clickEventHandler(event) {
   }
 }
 
-// function getRangeFromSelection(x, y) {
-//   let el = document.elementFromPoint(x, y)
-//   alert(`tagName=${el.tagName} nodeType=${el.nodeType}\n text=${el.innerHTML}`)
-  // const rangeCount = sel.rangeCount
-  // let values = []
-  // let result = {}
-  // for (let i = 0; i < rangeCount; i++) {
-  //   let range = sel.getRangeAt(i)
-  //   if (range.startContainer.nodeType === 3 && range.endContainer.nodeType === 3) {
-  //     if (range.startContainer.nodeValue === range.endContainer.nodeValue) {
-  //       let s = range.startContainer.nodeValue
-  //       s = s && s.substr(range.startOffset)
-  //       const text = s && s.split(' ')[0]
-  //       text && values.push(text)
-  //     } else {
-  //       let s = range.startContainer.nodeValue
-  //       s = s && s.substr(range.startOffset)
-  //       s && values.push(s)
-  //       let ss = range.endContainer.nodeValue
-  //       ss = ss && ss.slice(0, range.endOffset)
-  //       ss && values.push(ss)
-  //     }
-  //     const found = values.length && Array.from(range.getClientRects()).some((rect, i) => {
-  //       const text = values[i]
-  //       const width = getTextLength(text)
-  //       if (x >= rect.left && x <= (rect.left + width) && y >= rect.top && y <= rect.bottom) {
-  //         result = { text, rect}
-  //         return true
-  //       }
-  //     })
-  //     if (found) break
-  //   }
-  // }
-  // return result
-
-//   function getTextLength(text) {
-//     let parentElement = sel.anchorNode.parentElement
-//     let clone = parentElement.cloneNode(false)
-//     const wrapper = document.createElement('div')
-//     wrapper.style.top = '-10000px'
-//     wrapper.style.left = '-10000px'
-//     wrapper.style.position = 'absolute'
-//
-//     clone.innerHTML = text
-//     clone.style.position = 'relative'
-//     clone.style.display = 'inline'
-//     clone.style.border = 0
-//     clone.style.margin = 0
-//     clone.style.padding = 0
-//     // clone.style.opacity = 0
-//     wrapper.appendChild(clone)
-//
-//     let container = parentElement
-//     if (container.parentElement) container = container.parentElement
-//     container.appendChild(wrapper)
-//     const width = wrapper.clientWidth // clone.getBoundingClientRect().width
-//     container.removeChild(wrapper)
-//     return width
-//   }
-// }
 function getRangeFromSelection() {
   let sel = window.getSelection()
   const rangeCount = sel.rangeCount
@@ -147,69 +85,3 @@ function getRangeFromSelection() {
     return { text: null, rect: null }
   }
 }
-  // let values = []
-  // let result = {}
-  // let text = ''
-  // for (let i = 0; i < rangeCount; i++) {
-  //   let range = sel.getRangeAt(i)
-  //   text += range.toString()
-    // if (range.startContainer.nodeType === 3 && range.endContainer.nodeType === 3) {
-    //   // выделение начинается и заканчивается в текстовых узлах
-    //   if (range.startContainer.nodeValue === range.endContainer.nodeValue) {
-    //     // выделение было сделано в одном текстовм узле
-    //     let s = range.startContainer.nodeValue
-    //     // узел текстовый, поэтому startOffset обозначает
-    //     // количество выделенных символов, начиная с начала узла
-    //     s = s && s.substr(range.startOffset)
-    //     const words = s && s.split(/(\s|&nbsp;|\.|,|:|\?|!|\/|\\|–|-|>|<|=)/)
-    //     words && (values = values.concat(words))
-    //   } else {
-    //     // начало выделения в одном контейнере, конец выделения – в другом
-    //     let s = range.startContainer.nodeValue
-    //     // узел текстовый, поэтому startOffset обозначает
-    //     // количество выделенных символов, начиная с начала узла
-    //     s = s && s.substr(range.startOffset)
-    //     s && values.push(s)
-    //     let ss = range.endContainer.nodeValue
-    //     ss = ss && ss.slice(0, range.endOffset)
-    //     ss && values.push(ss)
-    //   }
-    //   const found = values.length && Array.from(range.getClientRects()).some((rect, i) => {
-    //     const text = values[i]
-    //     const width = getTextLength(text)
-    //     if (x >= rect.left && x <= (rect.left + width) && y >= rect.top && y <= rect.bottom) {
-    //       result = { text, rect}
-    //       return true
-    //     }
-    //   })
-    //   if (found) break
-    // }
-  // }
-  // result = { text, rect: sel.getBoundingClientRect() }
-  // return result
-
-//   function getTextLength(text) {
-//     let parentElement = sel.anchorNode.parentElement
-//     let clone = parentElement.cloneNode(false)
-//     const wrapper = document.createElement('div')
-//     wrapper.style.top = '-10000px'
-//     wrapper.style.left = '-10000px'
-//     wrapper.style.position = 'absolute'
-//
-//     clone.innerHTML = text
-//     clone.style.position = 'relative'
-//     clone.style.display = 'inline'
-//     clone.style.border = 0
-//     clone.style.margin = 0
-//     clone.style.padding = 0
-//     // clone.style.opacity = 0
-//     wrapper.appendChild(clone)
-//
-//     let container = parentElement
-//     if (container.parentElement) container = container.parentElement
-//     container.appendChild(wrapper)
-//     const width = wrapper.clientWidth // clone.getBoundingClientRect().width
-//     container.removeChild(wrapper)
-//     return width
-//   }
-// }
