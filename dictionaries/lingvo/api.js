@@ -29,7 +29,7 @@ export default class LingvoApi {
 
   /**
    *
-   * @param {HTMLElement} containerElement
+   * @param {HTMLElement|Element} containerElement
    * @param {string} text
    * @param {string} langFrom
    * @param {string} langTo

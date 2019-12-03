@@ -30,35 +30,41 @@ class Presenter {
     if (cardContent) {
       parentElement.innerHTML = cardContent
     }
-
-    Array.from(document.querySelectorAll('.sdb-popup-card-def-sound'))
-      .forEach( e => {
-        const articleElement = e.parentElement.querySelector('.sdb-popup-card-article')
-        const textElement = e.parentElement.querySelector('.sdb-popup-card-def-text')
-        const textSoundPlayerPromise = getSoundPlayer(textElement, soundApi, srcLng, tgtLng)
-        const articleSoundPlayerPromise = getSoundPlayer(articleElement, soundApi, srcLng, tgtLng)
-
-        Promise.all([textSoundPlayerPromise, articleSoundPlayerPromise])
-          .then(soundPlayers => {
-            const textSoundPlayer = soundPlayers[0]
-            const articleSoundPlayer = soundPlayers[1]
-            if (!textSoundPlayer || !textSoundPlayer.soundName) {
-              // have no sound for main word
-              e.remove()
-            } else {
-              e.style.opacity = 1
-              e.addEventListener('click', () => {
-                  textSoundPlayer.api.play()
-                // if (articleSoundPlayer && articleSoundPlayer.soundName) {
-                //   articleSoundPlayer.api.play()
-                //   setTimeout(() => textSoundPlayer.api.play(), articleSoundPlayer.api.duration() * 1000 * 0.4)
-                // } else {
-                //   textSoundPlayer.api.play()
-                // }
-              })
-            }
-          })
+    const soundButtonsContainer = document.querySelector('.sdb-popup-card-def-sounds-container')
+    soundButtonsContainer && soundApi.createSoundPlayer(soundButtonsContainer, text, srcLng, tgtLng)
+      .then(player => {
+        player.render()
+        return player
       })
+
+    // Array.from(document.querySelectorAll('.sdb-popup-card-def-sound'))
+    //   .forEach( e => {
+    //     const articleElement = e.parentElement.querySelector('.sdb-popup-card-article')
+    //     const textElement = e.parentElement.querySelector('.sdb-popup-card-def-text')
+    //     const textSoundPlayerPromise = getSoundPlayer(textElement, soundApi, srcLng, tgtLng)
+    //     const articleSoundPlayerPromise = getSoundPlayer(articleElement, soundApi, srcLng, tgtLng)
+    //
+    //     Promise.all([textSoundPlayerPromise, articleSoundPlayerPromise])
+    //       .then(soundPlayers => {
+    //         const textSoundPlayer = soundPlayers[0]
+    //         const articleSoundPlayer = soundPlayers[1]
+    //         if (!textSoundPlayer || !textSoundPlayer.soundName) {
+    //           // have no sound for main word
+    //           e.remove()
+    //         } else {
+    //           e.style.opacity = 1
+    //           e.addEventListener('click', () => {
+    //               textSoundPlayer.api.play()
+    //             // if (articleSoundPlayer && articleSoundPlayer.soundName) {
+    //             //   articleSoundPlayer.api.play()
+    //             //   setTimeout(() => textSoundPlayer.api.play(), articleSoundPlayer.api.duration() * 1000 * 0.4)
+    //             // } else {
+    //             //   textSoundPlayer.api.play()
+    //             // }
+    //           })
+    //         }
+    //       })
+    //   })
 
     const cardDefinitionElement = document.querySelector('.sdb-popup-card-defs')
     const exampleToggleElement = parentElement.querySelector('.sdb-popup-card-def__examples-toggle')
