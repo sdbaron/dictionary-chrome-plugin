@@ -1,5 +1,6 @@
 'use strict'
 import { fetchResource } from "../../utils"
+import LingvoSoundPlayer from './SoundPlayer'
 
 const SERVICE_URL = 'https://developers.lingvolive.com'
 const API_KEY = 'MzA1OTMzZjktNzY3OC00MTM4LTkzNTQtOWFiZjRhNWNiY2NkOjhjZmYwZTAyYWY2ODQ5ZmU5YjQ2YTA2NDFmMGYwNGEw'
@@ -26,6 +27,22 @@ export default class LingvoApi {
     return requestByKey('Minicard', getToken.bind(this), text, langFrom, langTo)
   }
 
+  /**
+   *
+   * @param {HTMLElement} containerElement
+   * @param {string} text
+   * @param {string} langFrom
+   * @param {string} langTo
+   * @returns {Promise<SoundPlayer>}
+   */
+  createSoundPlayer(containerElement, text, langFrom = 'de', langTo = 'ru') {
+    return this.miniCard(text, langFrom, langTo)
+      .then(data => {
+        const { Translation: { DictionaryName, SoundName } } = data && JSON.parse(data) || { Translation: {} }
+        return new LingvoSoundPlayer({ containerElement, dict: DictionaryName, name: SoundName })
+      })
+  }
+
   sound(text, langFrom = 'de', langTo = 'ru') {
     return this.miniCard(text, langFrom, langTo)
       .then(data => {
@@ -44,21 +61,6 @@ function getToken(forceGetToken = false) {
   if (!forceGetToken && this.token) return Promise.resolve(this.token)
 
   return new Promise((success) => {
-
-    // const xhr = new XMLHttpRequest()
-    // xhr.withCredentials = true
-    //
-    // xhr.addEventListener("readystatechange", function () {
-    //     if (this.readyState === 4) {
-    //         // console.log(this.responseText)
-    //         success(this.responseText)
-    //     }
-    // })
-    //
-    // xhr.open("POST", `${SERVICE_URL}/api/v1.1/authenticate`)
-    // xhr.setRequestHeader("authorization", `Basic ${API_KEY}`)
-    //
-    // xhr.send(null)
     fetchResource(`${SERVICE_URL}/api/v1.1/authenticate`, {
       method: 'POST',
       credentials: 'include',
@@ -67,7 +69,7 @@ function getToken(forceGetToken = false) {
       }
     }).then(data => {
       success(data.text())
-    }).catch(error=>
+    }).catch(error =>
       console.error(error && error.message || error)
     )
   })
@@ -137,34 +139,7 @@ function requestWithToken(token, key, params) {
         reject(new Error(`Ошибка при получении перевода: ${response.status}`))
       }
     })
-  //   const xhr = new XMLHttpRequest()
-  //   xhr.withCredentials = true
-  //
-  //   // xhr.addEventListener("readystatechange", function () {
-  //   //   if (this.readyState === 4) {
-  //   //     console.log(this.responseText)
-  //   //   }
-  //   // })
-  //   //
-  //   xhr.open("GET", encodeURI(makeApiURI(key, params)))
-  //   xhr.setRequestHeader("authorization", `Bearer ${token}`)
-  //   xhr.setRequestHeader("cache-control", "no-cache")
-  //
-  //   xhr.send(null)
-  //
-  //   xhr.onreadystatechange = () => {
-  //     if (xhr.readyState !== 4) return
-  //
-  //     if (xhr.status === 200) {
-  //       success(xhr.responseText)
-  //     } else if (xhr.status === 401) {
-  //       const err = new Error('Token is expired')
-  //       err.code = 401
-  //       reject(err)
-  //     } else {
-  //       reject(new Error(`Ошибка при получении перевода: ${xhr.status}`))
-  //     }
-  //   }
+
   })
 }
 
@@ -172,14 +147,3 @@ function makeApiURI(key, params) {
   const query = Object.keys(params).map(k => `${k}=${params[k]}`).join('&')
   return `${SERVICE_URL}/api/v1/${key}${query && '?' + query}`
 }
-
-// const api = new LingvoApi()
-// api.translate('machen', 'de', 'ru')
-//     .then(text => {
-//         console.log(`translated: ${JSON.stringify(text)}`)
-//     })
-//     .catch(err => {
-//             console.error(`error: ${err}`)
-//         }
-//     )
-

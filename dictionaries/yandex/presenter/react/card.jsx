@@ -5,7 +5,7 @@ import CardMarks from './components/marks'
 import CardTranslates from './components/translates'
 import Article from './components/article'
 import CardTranscription from './components/transcription'
-import Sound from './components/sound'
+import SoundsContainer from './components/sounds'
 
 let soundPlayer = {}
 
@@ -21,7 +21,7 @@ function CardDefinition(props) {
           <CardMarks def={ def }/>
           <span className="sdb-popup-card-def__examples-toggle" data-text-show="показать примеры"
                 data-text-hide="скрыть примеры"/>
-          <Sound />
+          <SoundsContainer />
           <CardTranslates translates={ def.tr }/>
         </li>
     )

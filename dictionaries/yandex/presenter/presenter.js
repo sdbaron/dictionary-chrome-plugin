@@ -17,6 +17,10 @@ class Presenter {
    * Форматирует результат перевода в html
    * @param {string} text Результат перевода
    * @param {HTMLElement} parentElement Элемент, в котрый будет вставлен результат
+   * @param {string} srcLng
+   * @param {string} tgtLng
+   * @param {Object} soundApi
+   * @param {function} processTranslate
    */
   renderView(text, parentElement, srcLng, tgtLng, soundApi, processTranslate) {
     const data = JSON.parse(text)

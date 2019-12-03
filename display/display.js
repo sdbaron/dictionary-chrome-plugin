@@ -60,11 +60,15 @@ function Popup(apis) {
 
     hideLoadingBar()
 
-    const { translator, sound: sound, presenter } = apis
+    const { translator, sound, presenter } = apis
     return translator.translate(message, srcLng, tgtLng)
       .then(text => presenter.renderView(
-        text, body, srcLng, tgtLng, sound,
-        (text, sourceLang, targetLang) => this.process(text, top, left, sourceLang, targetLang),
+        text,
+        body,
+        srcLng,
+        tgtLng,
+        sound,
+        (text, sourceLang, targetLang) => this.process(text, top, left, sourceLang, targetLang)
         )
       )
       .then(() => popupElement.classList.remove('sdb-popup_hide'))
