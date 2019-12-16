@@ -11,10 +11,11 @@ class Presenter {
     }
     /**
      * Форматирует результат перевода в html
+     * @param {string} srcText переводимое тече
      * @param {string} text Результат перевода
      * @param {HTMLElement} parentElement Элемент, в котрый будет вставлен результат
      */
-    renderView(text, parentElement, srcLng, tgtLng, soundData, processTranslate ) {
+    renderView(srcText, text, parentElement, srcLng, tgtLng, soundData, processTranslate ) {
         const data = JSON.parse(text);
 
         const cardContent = this.textConverter.getHtml(data, parentElement);

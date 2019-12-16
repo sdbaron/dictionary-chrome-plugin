@@ -1,20 +1,21 @@
 'use strict'
 
 // import './card.scss';
+import { TextConverter as ReactTextConverter } from '../presenter/react/textConverter'
+// import SoundPlayer from "../../../display/sound"
 
-import SoundPlayer from "../../../display/sound"
-
-class Presenter {
+export class YandexPresenter {
   /**
    *
    * @param {function} TextConverter -
    */
-  constructor(TextConverter) {
+  constructor(TextConverter = ReactTextConverter) {
     this.textConverter = TextConverter
   }
 
   /**
    * Форматирует результат перевода в html
+   * @param {string} srcText переводимое тече
    * @param {string} text Результат перевода
    * @param {HTMLElement} parentElement Элемент, в котрый будет вставлен результат
    * @param {string} srcLng
@@ -22,7 +23,7 @@ class Presenter {
    * @param {Object} soundApi
    * @param {function} processTranslate
    */
-  renderView(text, parentElement, srcLng, tgtLng, soundApi, processTranslate) {
+  renderView(srcText, text, parentElement, srcLng, tgtLng, soundApi, processTranslate) {
     const data = JSON.parse(text)
     data.soundApi = soundApi
 
@@ -30,11 +31,23 @@ class Presenter {
     if (cardContent) {
       parentElement.innerHTML = cardContent
     }
-    const soundButtonsContainer = document.querySelector('.sdb-popup-card-def-sounds-container')
-    soundButtonsContainer && soundApi.createSoundPlayer(soundButtonsContainer, text, srcLng, tgtLng)
-      .then(player => {
-        player.render()
-        return player
+
+    // const soundButtonsContainer = document.querySelector('.sdb-popup-card-def-sounds-container')
+    // soundButtonsContainer && soundApi.createSoundPlayer(soundButtonsContainer, srcText, srcLng, tgtLng)
+    //   .then(player => {
+    //     player.render()
+    //     return player
+    //   })
+
+    Array.from(document.querySelectorAll('.sdb-popup-card-def-sounds-container'))
+      .forEach( soundButtonsContainer => {
+        const { parentElement } = soundButtonsContainer || {}
+        const textElement = parentElement.querySelector('.sdb-popup-card-def-text')
+        soundButtonsContainer && textElement && soundApi.createSoundPlayer(soundButtonsContainer, textElement.innerText, srcLng, tgtLng)
+          .then(player => {
+            player.render()
+            return player
+          })
       })
 
     // Array.from(document.querySelectorAll('.sdb-popup-card-def-sound'))
@@ -128,8 +141,6 @@ class Presenter {
 
 }
 
-export default Presenter
-
 /**
  *
  * @param {HTMLElement|Element} textElement
@@ -138,20 +149,20 @@ export default Presenter
  * @param {string} tgtLng
  * @returns {Promise<{{play: function, soundName: string}}>}
  */
-function getSoundPlayer(textElement, soundApi, srcLng, tgtLng) {
-  return soundApi.sound(textElement && textElement.innerText && textElement.innerText.toLowerCase() || null, srcLng, tgtLng)
-    .then(data => {
-      const { soundName, dictionaryName } = data || {}
-      const soundPlayer = new SoundPlayer(dictionaryName)
-      let play = null
-      if (dictionaryName && soundPlayer) {
-        soundPlayer.load(soundName)
-        play = () => soundPlayer.play()
-      }
-      return { api: soundPlayer.getApi(), play, soundName, textElement }
-    })
-    .catch(err => {
-        console.error(`error: ${err}`)
-      },
-    )
-}
+// function getSoundPlayer(textElement, soundApi, srcLng, tgtLng) {
+//   return soundApi.sound(textElement && textElement.innerText && textElement.innerText.toLowerCase() || null, srcLng, tgtLng)
+//     .then(data => {
+//       const { soundName, dictionaryName } = data || {}
+//       const soundPlayer = new SoundPlayer(dictionaryName)
+//       let play = null
+//       if (dictionaryName && soundPlayer) {
+//         soundPlayer.load(soundName)
+//         play = () => soundPlayer.play()
+//       }
+//       return { api: soundPlayer.getApi(), play, soundName, textElement }
+//     })
+//     .catch(err => {
+//         console.error(`error: ${err}`)
+//       },
+//     )
+// }

@@ -2,8 +2,7 @@
 const cardTemplate = require('./card.pug');
 import '../card.scss';
 
-
-class TextConverter {
+export class TextConverter {
     static getHtml(data) {
         const r = cardTemplate(Object.assign({
             glob: {
@@ -14,7 +13,3 @@ class TextConverter {
         return r;
     }
 }
-
-export default TextConverter;
-
-

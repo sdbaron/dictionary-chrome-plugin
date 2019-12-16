@@ -1,3 +1,7 @@
+// import { getHtml } from './react/getHtml'
+import { getHtml } from './pub/getHtml'
+import './style.scss'
+
 export default class SoundPlayer {
   constructor({ containerElement, dict, name }) {
     this.dict = dict
@@ -31,6 +35,12 @@ export default class SoundPlayer {
   render() {
     const { containerElement } = this
     if (containerElement) {
+      const content = getHtml(containerElement)
+      if (content) {
+        containerElement.innerHTML = content
+        const d = containerElement.querySelector('div')
+        d && d.addEventListener('click', () => this.play())
+      }
       // TODO: рисуем значок и вешаем на ено обработчик клика, который проигрывает звук
     }
   }

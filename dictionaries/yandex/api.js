@@ -1,10 +1,7 @@
 'use strict'
-// window.SDBDictionary || (window.SDBDictionary = {});
-// window.SDBDictionary.Yandex || (window.SDBDictionary.Yandex = {});
-//
-// window.SDBDictionary.Yandex.Api = {
 import { fetchResource } from "../../utils"
-import Forvo from '../../forvo/Forvo'
+// import Forvo from '../../forvo/Forvo'
+
 
 const REG = 'yandexApiCallbackRegistry'
 export default class YandexApi {
@@ -39,21 +36,17 @@ export default class YandexApi {
     //         reject(new Error(`Ошибка при получении перевода: ${xhr.status}`));
     //     }
     // }
-    const forvoMedia = new Forvo(text)
-    forvoMedia.getAudioSources()
-      .then(audioScr => {
-        audioScr.forEach(media => {
-          const { id, mp3Path, oggPath } = media
-          console.log(`forvo ${text}: id(${id}) mp3(http:${mp3Path}) ogg(http:${oggPath})`)
-          debugger
-        })
-      })
+    // const forvoMedia = new Forvo(text)
+    // forvoMedia.getAudioSources()
+    //   .then(audioScr => {
+    //     audioScr.forEach(media => {
+    //       const { id, mp3Path, oggPath } = media
+    //       console.log(`forvo ${text}: id(${id}) mp3(http:${mp3Path}) ogg(http:${oggPath})`)
+    //       debugger
+    //     })
+    //   })
 
-    return fetchResource(request, {
-      method: 'GET',
-      // credentials: 'include',
-      // mode: 'cors',
-    }).then(response => response.text())
+    return fetchResource(request, { method: 'GET' }).then(response => response.text())
     // return fetch(request, {
     //   method: 'GET',
     //   // credentials: 'include',
@@ -61,27 +54,5 @@ export default class YandexApi {
     // }).then(response => response.text())
     // return this.getByJSONP(request)
   }
-
-  getByJSONP(request) {
-    const callbackName = `ycb${this.callbackCounter++}`
-    return new Promise((resolve, reject) => {
-      window[REG][callbackName] = (data) => {
-        resolve(data)
-      }
-      console.log(`window[${REG}][${callbackName}] = ${window[REG][callbackName]}`)
-      const script = document.createElement('script')
-      script.src = request // `${request}&callback=window.${REG}.${callbackName}`
-      script.onload = () => {
-        console.log(`onload: window[${REG}][${callbackName}] = ${window[REG][callbackName]}`)
-        debugger
-      }
-      document.body.appendChild(script)
-    })
-  }
-
 }
-
-// export default Api;
-// };
-
 

@@ -63,6 +63,7 @@ function Popup(apis) {
     const { translator, sound, presenter } = apis
     return translator.translate(message, srcLng, tgtLng)
       .then(text => presenter.renderView(
+        message,
         text,
         body,
         srcLng,

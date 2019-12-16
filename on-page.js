@@ -1,9 +1,9 @@
 import YandexDictionaryApi from './dictionaries/yandex/api'
 import LingvoApi from './dictionaries/lingvo/api'
-import MustacheTextConverter from './dictionaries/yandex/presenter/mustache/textConverter'
-import PugTextConverter from './dictionaries/yandex/presenter/pug/textConverter'
-import ReactTextConverter from './dictionaries/yandex/presenter/react/textConverter'
-import YandexPresenter from './dictionaries/yandex/presenter/presenter'
+// import { TextConverter}  from './dictionaries/yandex/presenter/mustache/textConverter'
+// import { TextConverter} from './dictionaries/yandex/presenter/pug/textConverter'
+import { TextConverter} from './dictionaries/yandex/presenter/react/textConverter'
+import { YandexPresenter } from './dictionaries/yandex/presenter/yandexPresenter'
 import Popup from './display/display'
 
 /**
@@ -14,11 +14,7 @@ import Popup from './display/display'
 
 const popup = new Popup({
     translator: new YandexDictionaryApi(),
-    presenter: new YandexPresenter(
-      ReactTextConverter
-      //PugTextConverter
-      // MustacheTextConverter
-    ),
+    presenter: new YandexPresenter(TextConverter),
     sound: new LingvoApi(),
   })
 
