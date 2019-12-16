@@ -45,8 +45,13 @@ export class YandexPresenter {
         const textElement = parentElement.querySelector('.sdb-popup-card-def-text')
         soundButtonsContainer && textElement && soundApi.createSoundPlayer(soundButtonsContainer, textElement.innerText, srcLng, tgtLng)
           .then(player => {
-            player.render()
-            return player
+            if (player) {
+              return player
+            } else {
+              return soundApi.createSoundPlayer(soundButtonsContainer, textElement.innerText.toLowerCase(), srcLng, tgtLng)
+            }
+          }).then(player => {
+            player && player.render()
           })
       })
 
