@@ -39,7 +39,7 @@ export default class LingvoApi {
     return this.miniCard(text, langFrom, langTo)
       .then(data => {
         const { Translation: { DictionaryName, SoundName } } = data && JSON.parse(data) || { Translation: {} }
-        return new LingvoSoundPlayer({ containerElement, dict: DictionaryName, name: SoundName })
+        return SoundName && new LingvoSoundPlayer({ containerElement, dict: DictionaryName, name: SoundName })
       })
   }
 
