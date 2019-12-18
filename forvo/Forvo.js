@@ -1,7 +1,5 @@
 'use strict'
-
 import { fetchResource } from "../utils"
-
 
 const baseUrl = 'https://forvo.com/word/'
 

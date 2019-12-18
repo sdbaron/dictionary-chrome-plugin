@@ -33,13 +33,13 @@ export default class LingvoApi {
    * @param {string} text
    * @param {string} langFrom
    * @param {string} langTo
-   * @returns {Promise<SoundPlayer>}
+   * @returns {Promise<Array.<SoundPlayer>>}
    */
-  createSoundPlayer(containerElement, text, langFrom = 'de', langTo = 'ru') {
+  createSoundPlayers(containerElement, text, langFrom = 'de', langTo = 'ru') {
     return this.miniCard(text, langFrom, langTo)
       .then(data => {
         const { Translation: { DictionaryName, SoundName } } = data && JSON.parse(data) || { Translation: {} }
-        return SoundName && new LingvoSoundPlayer({ containerElement, dict: DictionaryName, name: SoundName })
+        return SoundName && [new LingvoSoundPlayer({ containerElement, dict: DictionaryName, name: SoundName })]
       })
   }
 

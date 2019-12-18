@@ -3,15 +3,19 @@ import { getHtml } from './pub/getHtml'
 import './style.scss'
 
 export default class SoundPlayer {
-  constructor({ containerElement, dict, name }) {
+  constructor({ containerElement, name, soundSource, dict }) {
     this.dict = dict
     this.containerElement = containerElement
     this.name = name
-    this.audioElement = new Audio(this.getSoundSrc())
+    this.soundSource = soundSource
+    return this.getSoundSrc().then(soundSrc => {
+      this.audioElement = new Audio(soundSrc)
+      return this
+    })
   }
 
   /**
-   * @returns {string}
+   * @returns {Promise<string>}
    */
   getSoundSrc() {
     throw Error('method id not realised')
@@ -37,9 +41,11 @@ export default class SoundPlayer {
     if (containerElement) {
       const content = getHtml(containerElement)
       if (content) {
-        containerElement.innerHTML = content
-        const d = containerElement.querySelector('div')
-        d && d.addEventListener('click', () => this.play())
+        const d = document.createElement('div')
+        d.className = 'sdb-popup-card-def-sound __sdb-popup-card-def-sound_animation__'
+        d.innerHTML = content
+        containerElement.appendChild(d)
+        d.addEventListener('click', () => this.play())
       }
       // TODO: рисуем значок и вешаем на ено обработчик клика, который проигрывает звук
     }

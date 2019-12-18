@@ -9,6 +9,6 @@ export default class LingvoSoundPlayer extends SoundPlayer {
 
   getSoundSrc() {
     const { dict, name } = this
-    return encodeURI(urlTemplate.replace('{{dict}}', dict).replace('{{file}}', name))
+    return Promise.resolve(encodeURI(urlTemplate.replace('{{dict}}', dict).replace('{{file}}', name)))
   }
 }

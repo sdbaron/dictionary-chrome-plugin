@@ -2,6 +2,7 @@
 
 // import './card.scss';
 import { TextConverter as ReactTextConverter } from '../presenter/react/textConverter'
+
 // import SoundPlayer from "../../../display/sound"
 
 export class YandexPresenter {
@@ -20,12 +21,12 @@ export class YandexPresenter {
    * @param {HTMLElement} parentElement Элемент, в котрый будет вставлен результат
    * @param {string} srcLng
    * @param {string} tgtLng
-   * @param {Object} soundApi
+   * @param {[Object]} soundApis
    * @param {function} processTranslate
    */
-  renderView(srcText, text, parentElement, srcLng, tgtLng, soundApi, processTranslate) {
+  renderView(srcText, text, parentElement, srcLng, tgtLng, soundApis, processTranslate) {
     const data = JSON.parse(text)
-    data.soundApi = soundApi
+    data.soundApis = soundApis
 
     const cardContent = this.textConverter.getHtml(data, parentElement)
     if (cardContent) {
@@ -33,19 +34,16 @@ export class YandexPresenter {
     }
 
     Array.from(document.querySelectorAll('.sdb-popup-card-def-sounds-container'))
-      .forEach( soundButtonsContainer => {
+      .forEach(soundButtonsContainer => {
         const { parentElement } = soundButtonsContainer || {}
         const textElement = parentElement.querySelector('.sdb-popup-card-def-text')
-        soundButtonsContainer && textElement && soundApi.createSoundPlayer(soundButtonsContainer, textElement.innerText, srcLng, tgtLng)
-          .then(player => {
-            if (player) {
-              return player
-            } else {
-              return soundApi.createSoundPlayer(soundButtonsContainer, textElement.innerText.toLowerCase(), srcLng, tgtLng)
-            }
-          }).then(player => {
-            player && player.render()
-          })
+        soundButtonsContainer && textElement
+        && soundApis.forEach(api => {
+          api.createSoundPlayers(soundButtonsContainer, textElement.innerText, srcLng, tgtLng)
+            .then(playersPromise => {
+              playersPromise && playersPromise.forEach(player => player.then(p => p.render()))
+            })
+        })
       })
 
     const cardDefinitionElement = document.querySelector('.sdb-popup-card-defs')

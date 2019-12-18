@@ -1,5 +1,7 @@
 import YandexDictionaryApi from './dictionaries/yandex/api'
 import LingvoApi from './dictionaries/lingvo/api'
+import ForvoSoundApi from './forvo/soundApi'
+
 // import { TextConverter}  from './dictionaries/yandex/presenter/mustache/textConverter'
 // import { TextConverter} from './dictionaries/yandex/presenter/pug/textConverter'
 import { TextConverter} from './dictionaries/yandex/presenter/react/textConverter'
@@ -15,7 +17,8 @@ import Popup from './display/display'
 const popup = new Popup({
     translator: new YandexDictionaryApi(),
     presenter: new YandexPresenter(TextConverter),
-    sound: new LingvoApi(),
+    // sound: new LingvoApi(),
+    sound: [new LingvoApi(), new ForvoSoundApi()],
   })
 
 init()
