@@ -12,6 +12,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development',
 
 const needToWatchChanges = NODE_ENV !== 'production' && NODE_ENV !== 'demo'
 const codeCompression = NODE_ENV === 'production' || NODE_ENV === 'demo'
+const mode = NODE_ENV === 'production' && 'production' || 'development'
 
 const path = require('path')
 
@@ -19,6 +20,7 @@ const path = require('path')
 // const CSS_LOADER_NAME = (NODE_ENV === 'production') ? 'css?minimize' : 'css?-minimize';
 
 module.exports = {
+  mode,
   watch: needToWatchChanges,
   watchOptions: {
     aggregateTimeout: 100,
@@ -46,11 +48,10 @@ module.exports = {
   },
   module: {
     rules: [
-      // сюда вставится es3ify в продакшн-версии
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
-        loaders: ['babel-loader'],
+        loader: 'babel-loader',
       },
       {
         test: /\.mst$/,
