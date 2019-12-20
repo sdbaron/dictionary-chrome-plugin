@@ -5,16 +5,16 @@ const baseUrl = 'https://forvo.com/word/'
 const forvoData = {}
 
 export default class ForvoSoundPlayer extends SoundPlayer {
-  constructor({ containerElement, name, audioSrc }) {
+  constructor({ containerElement, lng, name, audioSrc }) {
     super({ containerElement, name, soundSource: audioSrc.mp3Path  || audioSrc.oggPath })
     this.audioSrc = audioSrc
   }
 
   getSoundSrc() {
-    const { soundSource, name } = this
+    const { soundSource, name, lng } = this
     return soundSource
       ? Promise.resolve(soundSource)
-      : getAudioSources(name, forvoData[name] || (forvoData[name] = {}))
+      : getAudioSources(name, lng, forvoData[name] || (forvoData[name] = {}))
       .then(sources => {
         if (!sources || !sources.length) throw Error('sound not found')
         const src = sources[0]
@@ -27,27 +27,31 @@ export default class ForvoSoundPlayer extends SoundPlayer {
   /**
    * @returns {Promise<Array.<ForvoSoundPlayer>>}
    */
-  static createPlayers({ containerElement, name }) {
+  static createPlayers({ containerElement, lng, name }) {
       const data = forvoData[name] || ( forvoData[name] = {})
-      return getAudioSources(name, data)
+      return getAudioSources(name, lng, data)
       .then(sources => {
         if (!sources || !sources.length) throw Error('sound not found')
         return sources.map(audioSrc => {
-          return new ForvoSoundPlayer({ containerElement, name, audioSrc })
+          return new ForvoSoundPlayer({ containerElement, lng, name, audioSrc })
         })
       })
   }
 }
 
-function getAudioSources(text, forvoData) {
+function getAudioSources(text, lng, forvoData) {
   const { _audioSources } = forvoData
   if (_audioSources) return Promise.resolve(_audioSources)
   const regexp = /Play\((.*?),'(.*?)','(.*?)',\s*(\w+),'(.*?)','(.*?),\s*'\w+'/gi
-  return getSrcPage(text, forvoData)
+  return getSrcPage(text, lng, forvoData)
     .then(src => {
       if (!src) return Promise.resolve(null)
+      let splitted = src.split(`id="language-container-${lng}"`)
+      let part = splitted && splitted.length > 1 && splitted[1]
+      splitted = part && part.split('id="language-container-')
+      part = splitted && splitted.length > 0 && splitted[0] || part
 
-      const res = src.matchAll(regexp)
+      const res = part.matchAll(regexp)
       return Array.from(res).map(r => ({
         id: r[1],
         mp3: r[2],
@@ -57,7 +61,7 @@ function getAudioSources(text, forvoData) {
       }))
     })
     .then(audioSources => {
-      return getAudioHost(text, forvoData)
+      return getAudioHost(text, lng, forvoData)
         .then(audioHost => {
           forvoData._audioSources = audioSources && audioSources.length > 0 && audioSources
 
@@ -77,7 +81,7 @@ function getAudioSources(text, forvoData) {
  *
  * @returns {Promise<string | void>}
  */
-function getSrcPage(text, forvoData) {
+function getSrcPage(text, lng, forvoData) {
   const { /** @type {string} */ _srcPage } = forvoData
   if (_srcPage) return Promise.resolve(_srcPage)
 
@@ -96,12 +100,12 @@ function getSrcPage(text, forvoData) {
     )
 }
 
-function getAudioHost(text, forvoData) {
+function getAudioHost(text, lng, forvoData) {
   const { _audioHost } = forvoData
   if (_audioHost) return Promise.resolve(_audioHost)
 
   const audioHostRg = /_AUDIO_HTTP_HOST=\'(.*?)'/i
-  return getSrcPage(text, forvoData).then(src => {
+  return getSrcPage(text, lng, forvoData).then(src => {
     const res = src.match(audioHostRg)
     return forvoData._audioHost = (res && res.length > 1) && res[1]
   })

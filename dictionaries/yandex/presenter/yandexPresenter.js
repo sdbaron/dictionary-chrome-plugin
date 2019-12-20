@@ -37,9 +37,9 @@ export class YandexPresenter {
       .forEach(soundButtonsContainer => {
         const { parentElement } = soundButtonsContainer || {}
         const textElement = parentElement.querySelector('.sdb-popup-card-def-text')
-        soundButtonsContainer && textElement
+        soundButtonsContainer && textElement && textElement.innerText
         && soundApis.forEach(api => {
-          api.createSoundPlayers(soundButtonsContainer, textElement.innerText, srcLng, tgtLng)
+          api.createSoundPlayers(soundButtonsContainer, textElement.innerText.toLowerCase(), srcLng, tgtLng)
             .then(playersPromise => {
               playersPromise && playersPromise.forEach(player => player.then(p => p.render()))
             })

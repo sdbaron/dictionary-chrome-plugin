@@ -10,6 +10,6 @@ export default class ForvoSoundApi {
    * @returns {Promise<Array.<SoundPlayer>>}
    */
   createSoundPlayers(containerElement, text, langFrom = 'de', langTo = 'ru') {
-    return ForvoSoundPlayer.createPlayers({ containerElement, name: text })
+    return ForvoSoundPlayer.createPlayers({ containerElement, lng: langFrom, name: text })
   }
 }

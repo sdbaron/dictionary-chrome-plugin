@@ -3,9 +3,10 @@ import { getHtml } from './pub/getHtml'
 import './style.scss'
 
 export default class SoundPlayer {
-  constructor({ containerElement, name, soundSource, dict }) {
+  constructor({ containerElement, lng,  name, soundSource, dict }) {
     this.dict = dict
     this.containerElement = containerElement
+    this.lng = lng
     this.name = name
     this.soundSource = soundSource
     return this.getSoundSrc().then(soundSrc => {
