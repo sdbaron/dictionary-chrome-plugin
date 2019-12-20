@@ -5,8 +5,8 @@ const NODE_ENV = process.env.NODE_ENV || 'development',
   ExtractTextPlugin = require('extract-text-webpack-plugin'),
   extractSASS = new ExtractTextPlugin('./css/[name].css'),
   extractCSS = new ExtractTextPlugin('./css/[name].css'),
-  autoprefixer = require('autoprefixer'),
-  browserslist = require('browserslist'),
+  // autoprefixer = require('autoprefixer'),
+  // browserslist = require('browserslist'),
   OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
   CopyWebpackPlugin = require('copy-webpack-plugin')
 
