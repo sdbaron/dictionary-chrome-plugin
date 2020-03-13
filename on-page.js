@@ -58,10 +58,11 @@ function clickEventHandler(event) {
   const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
 
   // const { text, rect } = getRangeFromSelection(/* event.pageX - scrollLeft, event.pageY - scrollTop */ )
-  const { text, rect } = getRangeFromSelection(event.clientX, event.clientY)
+  const { clientX, clientY } = event
+  const { text, rect } = getRangeFromSelection()
   if (rect) {
-    let top = rect.bottom + scrollTop
-    let left = rect.left + scrollLeft - 20
+    let top = (rect.bottom || clientY)+ scrollTop
+    let left = (rect.left || clientX) + scrollLeft - 20
     let right = left + 500
     let widthOver = right - document.documentElement.clientWidth
     if (widthOver > 0) {
@@ -79,7 +80,8 @@ function getRangeFromSelection() {
   let sel = window.getSelection()
   const rangeCount = sel.rangeCount
   if (rangeCount) {
-    return { text: sel.toString(), rect: sel.getRangeAt(0).getBoundingClientRect() }
+    const range = sel.getRangeAt(0)
+    return { text: sel.toString(), rect: range.getBoundingClientRect() || null }
   } else {
     return { text: null, rect: null }
   }
