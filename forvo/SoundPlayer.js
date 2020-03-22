@@ -6,7 +6,7 @@ const forvoData = {}
 
 export default class ForvoSoundPlayer extends SoundPlayer {
   constructor({ containerElement, lng, name, audioSrc }) {
-    super({ containerElement, name, soundSource: audioSrc.mp3Path  || audioSrc.oggPath })
+    super({ containerElement, name, soundSource: audioSrc.mp3Path || audioSrc.oggPath })
     this.audioSrc = audioSrc
   }
 
@@ -15,21 +15,22 @@ export default class ForvoSoundPlayer extends SoundPlayer {
     return soundSource
       ? Promise.resolve(soundSource)
       : getAudioSources(name, lng, forvoData[name] || (forvoData[name] = {}))
-      .then(sources => {
-        if (!sources || !sources.length) throw Error('sound not found')
-        const src = sources[0]
-        const audioSrc = src.mp3Path || src.oggPath
-        if (!audioSrc) throw Error('sound not found')
-        console.log(`audio source = ${audioSrc}`)
-        return audioSrc
-      })
+        .then(sources => {
+          if (!sources || !sources.length) throw Error('sound not found')
+          const src = sources[0]
+          const audioSrc = src.mp3Path || src.oggPath
+          if (!audioSrc) throw Error('sound not found')
+          console.log(`audio source = ${audioSrc}`)
+          return audioSrc
+        })
   }
+
   /**
    * @returns {Promise<Array.<ForvoSoundPlayer>>}
    */
   static createPlayers({ containerElement, lng, name }) {
-      const data = forvoData[name] || ( forvoData[name] = {})
-      return getAudioSources(name, lng, data)
+    const data = forvoData[name] || (forvoData[name] = {})
+    return getAudioSources(name, lng, data)
       .then(sources => {
         if (!sources || !sources.length) throw Error('sound not found')
         return sources.map(audioSrc => {
@@ -52,13 +53,15 @@ function getAudioSources(text, lng, forvoData) {
       part = splitted && splitted.length > 0 && splitted[0] || part
 
       const res = part.matchAll(regexp)
-      return Array.from(res).map(r => ({
-        id: r[1],
-        mp3: r[2],
-        ogg: r[3],
-        audioMp3: r[5],
-        audioOgg: r[6]
-      }))
+      return Array.from(res)
+        .slice(0, 5)
+        .map(r => ({
+          id: r[1],
+          mp3: r[2],
+          ogg: r[3],
+          audioMp3: r[5],
+          audioOgg: r[6]
+        }))
     })
     .then(audioSources => {
       return getAudioHost(text, lng, forvoData)
