@@ -35,19 +35,7 @@ export class YandexPresenter {
       parentElement.innerHTML = cardContent
     }
 
-    // Array.from(document.querySelectorAll('.sdb-popup-card-def-sounds-container'))
-    //   .forEach(soundButtonsContainer => {
-    //     const { parentElement } = soundButtonsContainer || {}
-    //     const textElement = parentElement.querySelector('.sdb-popup-card-def-text')
-    //     soundButtonsContainer && textElement && textElement.innerText
-    //     && soundApis.forEach(api => {
-    //       api.createSoundPlayers(soundButtonsContainer, textElement.innerText.toLowerCase(), srcLng, tgtLng)
-    //         .then(playersPromise => {
-    //           playersPromise && playersPromise.forEach(player => player.then(p => p.render()))
-    //         })
-    //     })
-    //   })
-
+    // TODO: make as react
     const cardDefinitionElement = document.querySelector('.sdb-popup-card-defs')
     const exampleToggleElement = parentElement.querySelector('.sdb-popup-card-def__examples-toggle')
     if (exampleToggleElement) {
@@ -76,9 +64,9 @@ export class YandexPresenter {
       })
     }
 
-    (function f() {
+    {
       let gens = parentElement.querySelectorAll('.cart-marks__gen');
-      [].forEach.call(gens, gen => {
+      Array.from(gens).forEach(gen => {
         let hint = getHint(gen.innerText)
         if (hint) {
           gen.setAttribute('title', hint)
@@ -100,7 +88,7 @@ export class YandexPresenter {
             return 'Неизвестно!'
         }
       }
-    })()
+    }
 
   }
 
