@@ -21,7 +21,8 @@ function CardDefinition(props) {
           <CardMarks def={ def }/>
           <span className="sdb-popup-card-def__examples-toggle" data-text-show="показать примеры"
                 data-text-hide="скрыть примеры"/>
-          <SoundsContainer />
+          <SoundsContainer apis={ props.soundApis } text={ def.text } srcLng={ props.srcLng } tgtLng={ props.tgtLng } />
+
           <CardTranslates translates={ def.tr }/>
         </li>
     )
@@ -45,16 +46,16 @@ class Card extends React.Component {
 
   render() {
     return (
-      <div className="sdb-popup-card"><CardDefinition defs={ this.props.def }/></div>
+      <div className="sdb-popup-card"><CardDefinition defs={ this.props.def } soundApis={ this.props.soundApis }/></div>
     )
   }
 
 }
 
 function render(rootElement, data) {
-  soundPlayer = data.soundPlayer
+  // soundPlayer = data.soundPlayer
   ReactDOM.render(
-    <Card def={ data.def }/>,
+    <Card def={ data.def } soundApis={ data.soundApis }/>,
     rootElement
   )
 }

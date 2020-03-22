@@ -1,7 +1,5 @@
 'use strict'
 import { fetchResource } from "../../utils"
-// import Forvo from '../../forvo/Forvo'
-
 
 const REG = 'yandexApiCallbackRegistry'
 export default class YandexApi {
@@ -24,35 +22,8 @@ export default class YandexApi {
     let request = `https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=${dictionaryKey}&lang=${langFrom}-${langTo}&text=${text}&flags=4`
     // const translateKey = 'trnsl.1.1.20170520T132215Z.0b9839920231de8d.ab7ce95a4c5deeae64928bc39640507c474c890f';
     // let request = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${translateKey}&lang=${langFrom}-${langTo}&text=${text}`;
-    // xhr.open('GET', request, true);
-    // xhr.send();
-
-    // xhr.onreadystatechange = () => {
-    //     if (xhr.readyState !== 4) return;
-    //
-    //     if (xhr.status === 200) {
-    //         success(xhr.responseText);
-    //     } else {
-    //         reject(new Error(`Ошибка при получении перевода: ${xhr.status}`));
-    //     }
-    // }
-    // const forvoMedia = new Forvo(text)
-    // forvoMedia.getAudioSources()
-    //   .then(audioScr => {
-    //     audioScr.forEach(media => {
-    //       const { id, mp3Path, oggPath } = media
-    //       console.log(`forvo ${text}: id(${id}) mp3(http:${mp3Path}) ogg(http:${oggPath})`)
-    //       debugger
-    //     })
-    //   })
 
     return fetchResource(request, { method: 'GET' }).then(response => response.text())
-    // return fetch(request, {
-    //   method: 'GET',
-    //   // credentials: 'include',
-    //   // mode: 'cors',
-    // }).then(response => response.text())
-    // return this.getByJSONP(request)
   }
 }
 

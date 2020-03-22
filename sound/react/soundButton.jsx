@@ -1,14 +1,22 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+/***
+ * Button for sound
+ */
+import React from 'react';
 
-class SoundButton extends React.Component {
+export default class SoundButton extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.player = props.player
+  }
+
+  handlePlayClick() {
+    const { props: { player } } = this
+    player && player.play()
   }
 
   render() {
-    return (<div className="sdb-popup-card-def-sound __sdb-popup-card-def-sound_animation__">
+    return (<div className="sdb-popup-card-def-sound __sdb-popup-card-def-sound_animation__" onClick={ this.handlePlayClick.bind(this) }>
       <svg className="" data-reactid="s0.0.0" viewBox="0 0 25 21">
         <title> sound1 </title>
         <g fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round">
@@ -71,14 +79,4 @@ class SoundButton extends React.Component {
       </svg>
     </div>)
   }
-
 }
-
-function render(rootElement, data ={}) {
-  ReactDOM.render(
-    <SoundButton def={ data.def }/>,
-    rootElement
-  )
-}
-
-export default render

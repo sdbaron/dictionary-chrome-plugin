@@ -27,24 +27,26 @@ export class YandexPresenter {
   renderView(srcText, text, parentElement, srcLng, tgtLng, soundApis, processTranslate) {
     const data = JSON.parse(text)
     data.soundApis = soundApis
+    data.srcLng = srcLng
+    data.tgtLng = tgtLng
 
     const cardContent = this.textConverter.getHtml(data, parentElement)
     if (cardContent) {
       parentElement.innerHTML = cardContent
     }
 
-    Array.from(document.querySelectorAll('.sdb-popup-card-def-sounds-container'))
-      .forEach(soundButtonsContainer => {
-        const { parentElement } = soundButtonsContainer || {}
-        const textElement = parentElement.querySelector('.sdb-popup-card-def-text')
-        soundButtonsContainer && textElement && textElement.innerText
-        && soundApis.forEach(api => {
-          api.createSoundPlayers(soundButtonsContainer, textElement.innerText.toLowerCase(), srcLng, tgtLng)
-            .then(playersPromise => {
-              playersPromise && playersPromise.forEach(player => player.then(p => p.render()))
-            })
-        })
-      })
+    // Array.from(document.querySelectorAll('.sdb-popup-card-def-sounds-container'))
+    //   .forEach(soundButtonsContainer => {
+    //     const { parentElement } = soundButtonsContainer || {}
+    //     const textElement = parentElement.querySelector('.sdb-popup-card-def-text')
+    //     soundButtonsContainer && textElement && textElement.innerText
+    //     && soundApis.forEach(api => {
+    //       api.createSoundPlayers(soundButtonsContainer, textElement.innerText.toLowerCase(), srcLng, tgtLng)
+    //         .then(playersPromise => {
+    //           playersPromise && playersPromise.forEach(player => player.then(p => p.render()))
+    //         })
+    //     })
+    //   })
 
     const cardDefinitionElement = document.querySelector('.sdb-popup-card-defs')
     const exampleToggleElement = parentElement.querySelector('.sdb-popup-card-def__examples-toggle')
@@ -107,29 +109,3 @@ export class YandexPresenter {
   }
 
 }
-
-/**
- *
- * @param {HTMLElement|Element} textElement
- * @param {object} soundApi
- * @param {string} srcLng
- * @param {string} tgtLng
- * @returns {Promise<{{play: function, soundName: string}}>}
- */
-// function getSoundPlayer(textElement, soundApi, srcLng, tgtLng) {
-//   return soundApi.sound(textElement && textElement.innerText && textElement.innerText.toLowerCase() || null, srcLng, tgtLng)
-//     .then(data => {
-//       const { soundName, dictionaryName } = data || {}
-//       const soundPlayer = new SoundPlayer(dictionaryName)
-//       let play = null
-//       if (dictionaryName && soundPlayer) {
-//         soundPlayer.load(soundName)
-//         play = () => soundPlayer.play()
-//       }
-//       return { api: soundPlayer.getApi(), play, soundName, textElement }
-//     })
-//     .catch(err => {
-//         console.error(`error: ${err}`)
-//       },
-//     )
-// }
