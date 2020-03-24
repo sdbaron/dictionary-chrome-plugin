@@ -4,9 +4,8 @@ export default class SoundPlayer {
   /**
    * returns {Promise<SoundPlayer>}
    */
-  constructor({ containerElement, lng, name, soundSource, dict }) {
+  constructor({ lng, name, soundSource, dict }) {
     this.dict = dict
-    this.containerElement = containerElement
     this.lng = lng
     this.name = name
     this.soundSource = soundSource
@@ -37,21 +36,6 @@ export default class SoundPlayer {
     const { audioElement } = this
     return audioElement && audioElement.duration || 0
   }
-
-  // render() {
-  //   const { containerElement } = this
-  //   if (containerElement) {
-  //     const content = getHtml(containerElement)
-  //     if (content) {
-  //       const d = document.createElement('div')
-  //       d.className = 'sdb-popup-card-def-sound __sdb-popup-card-def-sound_animation__'
-  //       d.innerHTML = content
-  //       containerElement.appendChild(d)
-  //       d.addEventListener('click', () => this.play())
-  //     }
-  //     // TODO: рисуем значок и вешаем на ено обработчик клика, который проигрывает звук
-  //   }
-  // }
 
   getRenderData() {
 

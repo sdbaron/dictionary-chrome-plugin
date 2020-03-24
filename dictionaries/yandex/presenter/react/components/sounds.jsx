@@ -12,7 +12,7 @@ export default class SoundsContainer extends React.Component {
     const soundButtonsContainer = null
 
     props.apis.forEach(api => {
-      api.createSoundPlayers(soundButtonsContainer, props.text.toLowerCase(), props.srcLng, props.tgtLng)
+      api.createSoundPlayers(props.text.toLowerCase(), props.srcLng, props.tgtLng)
         .then(playersPromise => {
           playersPromise && playersPromise.forEach(player => player.then(p => {
             // this.setState({ players: this.state.players.concat(p) })

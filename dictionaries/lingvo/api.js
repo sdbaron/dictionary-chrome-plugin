@@ -29,27 +29,26 @@ export default class LingvoApi {
 
   /**
    *
-   * @param {HTMLElement|Element} containerElement
    * @param {string} text
    * @param {string} langFrom
    * @param {string} langTo
    * @returns {Promise<Array.<SoundPlayer>>}
    */
-  createSoundPlayers(containerElement, text, langFrom = 'de', langTo = 'ru') {
+  createSoundPlayers(text, langFrom = 'de', langTo = 'ru') {
     return this.miniCard(text, langFrom, langTo)
       .then(data => {
         const { Translation: { DictionaryName, SoundName } } = data && JSON.parse(data) || { Translation: {} }
-        return SoundName && [new LingvoSoundPlayer({ containerElement, dict: DictionaryName, name: SoundName })]
+        return SoundName && [new LingvoSoundPlayer({ dict: DictionaryName, name: SoundName })]
       })
   }
 
-  sound(text, langFrom = 'de', langTo = 'ru') {
-    return this.miniCard(text, langFrom, langTo)
-      .then(data => {
-        const { Translation: { DictionaryName, SoundName } } = data && JSON.parse(data) || { Translation: {} }
-        return { dictionaryName: DictionaryName, soundName: SoundName }
-      })
-  }
+  // sound(text, langFrom = 'de', langTo = 'ru') {
+  //   return this.miniCard(text, langFrom, langTo)
+  //     .then(data => {
+  //       const { Translation: { DictionaryName, SoundName } } = data && JSON.parse(data) || { Translation: {} }
+  //       return { dictionaryName: DictionaryName, soundName: SoundName }
+  //     })
+  // }
 }
 
 /**

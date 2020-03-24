@@ -1,12 +1,11 @@
 import SoundPlayer from '../sound/SoundPlayer'
 import { fetchResource } from "../utils"
 
-const baseUrl = 'https://forvo.com/word/'
 const forvoData = {}
 
 export default class ForvoSoundPlayer extends SoundPlayer {
-  constructor({ containerElement, lng, name, audioSrc }) {
-    super({ containerElement, name, soundSource: audioSrc.mp3Path || audioSrc.oggPath })
+  constructor({ lng, name, audioSrc }) {
+    super({ name, soundSource: audioSrc.mp3Path || audioSrc.oggPath })
     this.audioSrc = audioSrc
   }
 
@@ -28,16 +27,42 @@ export default class ForvoSoundPlayer extends SoundPlayer {
   /**
    * @returns {Promise<Array.<ForvoSoundPlayer>>}
    */
-  static createPlayers({ containerElement, lng, name }) {
+  static createPlayers({ lng, name }) {
     const data = forvoData[name] || (forvoData[name] = {})
     return getAudioSources(name, lng, data)
       .then(sources => {
         if (!sources || !sources.length) throw Error('sound not found')
-        return sources.map(audioSrc => {
-          return new ForvoSoundPlayer({ containerElement, lng, name, audioSrc })
-        })
+        return sources.map(audioSrc =>
+          new ForvoSoundPlayer({ lng, name, audioSrc }))
       })
   }
+}
+
+// region private
+
+const baseUrl = 'https://forvo.com/word/'
+
+/**
+ *
+ * @returns {Promise<string | void>}
+ */
+function getSrcPage(text, lng, forvoData) {
+  const { /** @type {string} */ _srcPage } = forvoData
+  if (_srcPage) return Promise.resolve(_srcPage)
+
+  return fetchResource(`${baseUrl}${text}`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(function(data) {
+      return data.clone().text()
+    })
+    .then(d => {
+      return forvoData._srcPage = d
+    })
+    .catch(error =>
+      console.error(error && error.message || error)
+    )
 }
 
 function getAudioSources(text, lng, forvoData) {
@@ -78,29 +103,6 @@ function getAudioSources(text, lng, forvoData) {
           return forvoData._audioSources
         })
     })
-}
-
-/**
- *
- * @returns {Promise<string | void>}
- */
-function getSrcPage(text, lng, forvoData) {
-  const { /** @type {string} */ _srcPage } = forvoData
-  if (_srcPage) return Promise.resolve(_srcPage)
-
-  return fetchResource(`${baseUrl}${text}`, {
-    method: 'GET',
-    credentials: 'include',
-  })
-    .then(function(data) {
-      return data.clone().text()
-    })
-    .then(d => {
-      return forvoData._srcPage = d
-    })
-    .catch(error =>
-      console.error(error && error.message || error)
-    )
 }
 
 function getAudioHost(text, lng, forvoData) {
@@ -157,3 +159,5 @@ function utf8Decode(a) {
         c += 3)
   return b.join("")
 }
+
+// endregion private
