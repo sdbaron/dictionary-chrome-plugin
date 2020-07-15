@@ -15,10 +15,12 @@ document.body.insertBefore(messageElement, document.body.firstChild)
 /**
  *
  * @param {Object} apis
+ * @param {String} [srcLng='de']
+ * @param {String} [tgtLng='ru']
  * @returns {{show: show, hide: hide, showLoadingBar: showLoadingBar, hideLoadingBar: hideLoadingBar}}
  * @constructor
  */
-function Popup(apis) {
+function Popup(apis, srcLng = 'de', tgtLng = 'ru') {
   let popupElement
   let loadingBar
   let header
@@ -36,9 +38,11 @@ function Popup(apis) {
     hideLoadingBar: hideLoadingBar,
   }
 
-  function process(text, top, left, srcLng = 'de', tgtLng = 'ru') {
+  function process(text, top, left, src, tgt) {
+    src || (src = srcLng)
+    tgt || (tgt = tgtLng)
     this.showLoadingBar(text, top, left)
-    this.show(text, top, left, srcLng, tgtLng)
+    this.show(text, top, left, src, tgt)
       .catch(error => {
         console.error(error.message)
         this.hide()
@@ -49,10 +53,12 @@ function Popup(apis) {
    * @param {string|null} message -
    * @param {number} [top] -
    * @param {number} [left] -
-   * @param {string} srcLng
-   * @param {string} tgtLng
+   * @param {string} src
+   * @param {string} tgt
    */
-  function show(message, top, left, srcLng = 'de', tgtLng = 'ru') {
+  function show(message, top, left, src, tgt) {
+    src || (src = srcLng)
+    tgt || (tgt = tgtLng)
     if (!popupElement) {
       create()
     }
@@ -61,13 +67,13 @@ function Popup(apis) {
     hideLoadingBar()
 
     const { translator, sound, presenter } = apis
-    return translator.translate(message, srcLng, tgtLng)
+    return translator.translate(message, src, tgt)
       .then(text => presenter.renderView(
         message,
         text,
         body,
-        srcLng,
-        tgtLng,
+        src,
+        tgt,
         sound,
         (text, sourceLang, targetLang) => this.process(text, top, left, sourceLang, targetLang)
         )

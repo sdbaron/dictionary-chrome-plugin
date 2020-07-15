@@ -9,7 +9,8 @@ import { YandexPresenter } from './dictionaries/yandex/presenter/yandexPresenter
 import Popup from './display/display'
 
 /**
- *  Инициализация popup, подписвываемся на двойной клик, во время клика получаем выделенный текст и его координаты,
+ *  Инициализация popup, подписвываемся на двойной клик,
+ *  во время клика получаем выделенный текст и его координаты,
  *  вычисляем координаты всплывающего окна и открываем его
  *
  */
@@ -17,9 +18,9 @@ import Popup from './display/display'
 const popup = new Popup({
     translator: new YandexDictionaryApi(),
     presenter: new YandexPresenter(TextConverter),
-    // sound: new LingvoApi(),
     sound: [new LingvoApi(), new ForvoSoundApi()],
-  })
+  },
+  'de', 'ru')
 
 init()
 

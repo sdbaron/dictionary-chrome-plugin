@@ -2,7 +2,6 @@
  * Button for sound
  */
 import React from 'react';
-// import Sound from './sound'
 import SoundButton from '../../../../../sound/react/soundButton'
 
 export default class SoundsContainer extends React.Component {
@@ -15,7 +14,6 @@ export default class SoundsContainer extends React.Component {
       api.createSoundPlayers(props.text.toLowerCase(), props.srcLng, props.tgtLng)
         .then(playersPromise => {
           playersPromise && playersPromise.forEach(player => player.then(p => {
-            // this.setState({ players: this.state.players.concat(p) })
             this.setState({ players: [ ...(this.state.players || []), p ] })
           }))
         })

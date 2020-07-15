@@ -5,8 +5,6 @@ const NODE_ENV = process.env.NODE_ENV || 'development',
   ExtractTextPlugin = require('extract-text-webpack-plugin'),
   extractSASS = new ExtractTextPlugin('./css/[name].css'),
   extractCSS = new ExtractTextPlugin('./css/[name].css'),
-  // autoprefixer = require('autoprefixer'),
-  // browserslist = require('browserslist'),
   OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
   CopyWebpackPlugin = require('copy-webpack-plugin')
 
@@ -28,7 +26,6 @@ module.exports = {
 
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
-    // далее определяем те переменные, которые хотим сделать доступными клиенту (в исходниках)
     new webpack.DefinePlugin({
       NODE_ENV: JSON.stringify(NODE_ENV),
     }),
@@ -83,7 +80,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg)$/,
-        // options.name указывает путь куда будут скопированы файлы, путь относительно output.path конфигурации webpack,
+        // options.name указывает путь, куда будут скопированы файлы, путь относительно output.path конфигурации webpack,
         //            помимо этого, этот параметр задает строку замены пути в файлах css
         // options.regExp задает регулярное выражение по которому будут подбираться файлы, анализ параметра url
         // options.limit задает лимит размера файлов, которые могут быть вставлены как Base64 строка, если размер файла будет превышать это

@@ -46,16 +46,15 @@ class Card extends React.Component {
 
   render() {
     return (
-      <div className="sdb-popup-card"><CardDefinition defs={ this.props.def } soundApis={ this.props.soundApis }/></div>
+      <div className="sdb-popup-card"><CardDefinition defs={ this.props.def } soundApis={ this.props.soundApis } srcLng={ this.props.srcLng } tgtLng={ this.props.tgtLng } /></div>
     )
   }
 
 }
 
 function render(rootElement, data) {
-  // soundPlayer = data.soundPlayer
   ReactDOM.render(
-    <Card def={ data.def } soundApis={ data.soundApis }/>,
+    <Card def={ data.def } soundApis={ data.soundApis } srcLng={ data.srcLng } tgtLng={ data.tgtLng } />,
     rootElement
   )
 }

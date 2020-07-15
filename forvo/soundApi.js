@@ -1,4 +1,4 @@
-import ForvoSoundPlayer from './SoundPlayer'
+import ForvoSoundPlayer from './soundPlayer'
 
 export default class ForvoSoundApi {
   /**

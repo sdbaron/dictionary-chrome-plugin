@@ -174,7 +174,7 @@ a.sdb-popup-card-translate-text {
 
 li.sdb-popup-card-synonym-list__item {
     float: left;
-    // перед первым элеменом списка покажем запятую
+    // перед первым элементом списка покажем запятую
     &:first-of-type:before {
         float: left;
         margin: 0 $comma-list-padding 0 0;
