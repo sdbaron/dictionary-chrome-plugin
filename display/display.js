@@ -1,6 +1,7 @@
 'use strict'
 
 import './display.scss'
+import pairLangSelectorRender from './langSelector/pairLangSelector'
 
 let messageElement = document.createElement('div')
 document.body.insertBefore(messageElement, document.body.firstChild)
@@ -138,7 +139,7 @@ function Popup(apis, srcLng = 'de', tgtLng = 'ru') {
     p.appendChild(body)
 
     document.body.appendChild(p)
-
+    pairLangSelectorRender(header, { srcLng: 'de', tgtLng: 'ru'})
   }
 }
 

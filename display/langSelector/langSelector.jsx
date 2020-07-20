@@ -1,40 +1,50 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-function Selector(props) {
-  const options = props.options
-    ? props.options.map((opt, index) =>
-      <option key={ index } value={ opt.value } className="">{ opt.name }
-      </option>
-    )
-    : (null)
-
-  return (
-    <sector className="sdb-popup-card-lang-selector">
-     { options }
-    </sector>
-  )
+const langOptionsDefs = {
+  'ru': 'Русский',
+  'de': 'German',
+  'en': 'English'
 }
 
 class LangSelector extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = { lang: props.lang || 'de' }
+    this.onChange = this.onChange.bind(this)
+  }
+
+  onChange(e) {
+    Object.keys(langOptionsDefs).some((key, ind) => {
+      if (ind === e.selectedIndex) {
+        this.setState({ lang: e.selectedIndex })
+        return true
+      }
+    })
   }
 
   render() {
+    const options = Object.entries(langOptionsDefs)
+      .map(([value, name], index) =>
+        (<option key={index} value={value}
+                        className="">{name}</option>)
+      )
+
     return (
-      <div className="sdb-popup-card"><CardDefinition defs={ this.props.def } soundApis={ this.props.soundApis } srcLng={ this.props.srcLng } tgtLng={ this.props.tgtLng } /></div>
+      <select className="sdb-popup-card-lang-selector" onChange={this.onChange}
+              defaultValue={this.state.lang} >
+        {options}
+      </select>
     )
   }
 
 }
 
-function render(rootElement, data) {
-  ReactDOM.render(
-    <LangSelector def={ data.def } soundApis={ data.soundApis } srcLng={ data.srcLng } tgtLng={ data.tgtLng } />,
-    rootElement
-  )
-}
+// function render(rootElement, data) {
+//   ReactDOM.render(
+//     <LangSelector name={data.name} lang={ data.lang } />,
+//     rootElement
+//   )
+// }
 
-export default render
+export default LangSelector
