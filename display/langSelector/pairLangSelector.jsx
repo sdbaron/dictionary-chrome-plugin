@@ -13,34 +13,47 @@ class PairLangSelector extends React.Component {
   constructor(props) {
     super(props)
     const { srcLng, tgtLng } = props
-    this.state = {
-      srcLng,
-      tgtLng
-    }
+    this.state = this.makeOptions({ srcLng, tgtLng })
     this.onSrcChange = this.onSrcChange.bind(this)
     this.onTgtChange = this.onTgtChange.bind(this)
 
   }
 
   onSrcChange(e) {
-    this.setState({ srcLng: e.nativeEvent.target.selectedOptions[0].value })
+    this.setState(this.makeOptions({ srcLng: e.nativeEvent.target.selectedOptions[0].value }))
   }
 
   onTgtChange(e) {
-    this.setState({ tgtLng: e.nativeEvent.target.selectedOptions[0].value } )
+    this.setState(this.makeOptions({ tgtLng: e.nativeEvent.target.selectedOptions[0].value }))
   }
 
-  render() {
-
-    const { srcLng, tgtLng } = this.state
+  makeOptions(params) {
+    let { srcLng, tgtLng } = params || {}
     const srcLangOptions = langOptionsDefs
-      // .reduce((res, [key, value]) => {
-      //   key !== tgtLng && (res[key] = value); return res }, {})
-
+    if (srcLng === undefined) srcLng = this.state.srcLng
+    if (tgtLng === undefined) tgtLng = this.state.tgtLng
     const tgtLangOptions = Object.entries(langOptionsDefs)
       .reduce((res, [key, value]) => {
         key !== srcLng && (res[key] = value); return res }, {})
 
+    if (srcLng === tgtLng) {
+      tgtLng = Object.keys(tgtLangOptions)[0]
+    }
+
+    return { srcLng, tgtLng, srcLangOptions: langOptionsDefs, tgtLangOptions }
+  }
+  render() {
+
+    const { srcLng, tgtLng, srcLangOptions, tgtLangOptions } = this.state
+    // const srcLangOptions = langOptionsDefs
+    //   // .reduce((res, [key, value]) => {
+    //   //   key !== tgtLng && (res[key] = value); return res }, {})
+    //
+    // const tgtLangOptions = Object.entries(langOptionsDefs)
+    //   .reduce((res, [key, value]) => {
+    //     key !== srcLng && (res[key] = value); return res }, {})
+    //
+    // if (tgtLng === srcLng) this.setState({ tgtLng: Object.keys(tgtLangOptions)[0] })
     return <div>
       <LangSelector name="srcLng" lang={this.state.srcLng} onChange={this.onSrcChange} langOptionsDefs={srcLangOptions} />
       <LangSelector name="tgtLng" lang={this.state.tgtLng} onChange={this.onTgtChange} langOptionsDefs={tgtLangOptions}/>
