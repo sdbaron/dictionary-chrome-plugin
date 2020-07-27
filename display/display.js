@@ -1,6 +1,7 @@
 'use strict'
 
 import './display.scss'
+import LocalStorage from '../storage'
 import pairLangSelectorRender from './langSelector/pairLangSelector'
 
 let messageElement = document.createElement('div')
@@ -139,7 +140,8 @@ function Popup(apis, srcLng = 'de', tgtLng = 'ru') {
     p.appendChild(body)
 
     document.body.appendChild(p)
-    pairLangSelectorRender(header, { srcLng: 'de', tgtLng: 'ru'})
+    const storage = new LocalStorage()
+    pairLangSelectorRender(header, { srcLng: 'de', tgtLng: 'ru', storage})
   }
 }
 
