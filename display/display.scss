@@ -46,6 +46,7 @@ $popupBodyHeight: $popupMaxHeight - $popupHeaderHeight;
     position: relative;
     min-height: $popupHeaderHeight;
     background-color: lightgrey;
+    padding: 0 0.4em;
 }
 
 .sdb-popup__body {

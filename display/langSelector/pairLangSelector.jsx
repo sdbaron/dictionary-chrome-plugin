@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import LangSelector from './langSelector'
+import './pairLangSelector.scss'
 
 const langOptionsDefs = {
   'ru': 'Русский',
@@ -45,18 +46,9 @@ class PairLangSelector extends React.Component {
   render() {
 
     const { srcLng, tgtLng, srcLangOptions, tgtLangOptions } = this.state
-    // const srcLangOptions = langOptionsDefs
-    //   // .reduce((res, [key, value]) => {
-    //   //   key !== tgtLng && (res[key] = value); return res }, {})
-    //
-    // const tgtLangOptions = Object.entries(langOptionsDefs)
-    //   .reduce((res, [key, value]) => {
-    //     key !== srcLng && (res[key] = value); return res }, {})
-    //
-    // if (tgtLng === srcLng) this.setState({ tgtLng: Object.keys(tgtLangOptions)[0] })
-    return <div>
-      <LangSelector name="srcLng" lang={this.state.srcLng} onChange={this.onSrcChange} langOptionsDefs={srcLangOptions} />
-      <LangSelector name="tgtLng" lang={this.state.tgtLng} onChange={this.onTgtChange} langOptionsDefs={tgtLangOptions}/>
+    return <div className="sdb-popup-card-pair-lang-selector">
+      <LangSelector name="srcLng" lang={srcLng} onChange={this.onSrcChange} langOptionsDefs={srcLangOptions} className="sdb-popup-card-pair-lang-selector__src-lang-selector" />
+      <LangSelector name="tgtLng" lang={tgtLng} onChange={this.onTgtChange} langOptionsDefs={tgtLangOptions} className="sdb-popup-card-pair-lang-selector__tgt-lang-selector" />
     </div>
   }
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import './langSelector.scss'
 
 class LangSelector extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class LangSelector extends React.Component {
       )
 
     return (
-      <select className="sdb-popup-card-lang-selector" onChange={this.props.onChange}
+      <select className={"sdb-popup-card-lang-selector " + this.props.className || ''} onChange={this.props.onChange}
               defaultValue={this.props.lang} >
         {options}
       </select>
