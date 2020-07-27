@@ -13,19 +13,30 @@ const langOptionsDefs = {
 class PairLangSelector extends React.Component {
   constructor(props) {
     super(props)
-    const { srcLng, tgtLng } = props
+    const { storage } = props
+    let { srcLng, tgtLng } = props
+    if (storage) {
+      srcLng = storage.get('srcLng') || srcLng
+      tgtLng = storage.get('tgtLng') || tgtLng
+    }
     this.state = this.makeOptions({ srcLng, tgtLng })
     this.onSrcChange = this.onSrcChange.bind(this)
     this.onTgtChange = this.onTgtChange.bind(this)
-
   }
 
   onSrcChange(e) {
-    this.setState(this.makeOptions({ srcLng: e.nativeEvent.target.selectedOptions[0].value }))
+    const { storage } = this.props
+    const srcLng = e.nativeEvent.target.selectedOptions[0].value
+    storage && storage.save({ srcLng })
+    this.setState(this.makeOptions({ srcLng }))
   }
 
   onTgtChange(e) {
-    this.setState(this.makeOptions({ tgtLng: e.nativeEvent.target.selectedOptions[0].value }))
+    const { storage } = this.props
+    const tgtLng = e.nativeEvent.target.selectedOptions[0].value
+    storage && storage.save( { tgtLng })
+
+    this.setState(this.makeOptions({ tgtLng }))
   }
 
   makeOptions(params) {

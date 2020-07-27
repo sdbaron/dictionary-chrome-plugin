@@ -9,7 +9,7 @@ import { YandexPresenter } from './dictionaries/yandex/presenter/yandexPresenter
 import Popup from './display/display'
 
 /**
- *  Инициализация popup, подписвываемся на двойной клик,
+ *  Инициализация popup, подписывваемся на двойной клик,
  *  во время клика получаем выделенный текст и его координаты,
  *  вычисляем координаты всплывающего окна и открываем его
  *
