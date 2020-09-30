@@ -3,6 +3,7 @@
 import './display.scss'
 import LocalStorage from '../storage'
 import pairLangSelectorRender from './langSelector/pairLangSelector'
+import closeSvg from './svg/close.svg'
 
 let messageElement = document.createElement('div')
 document.body.insertBefore(messageElement, document.body.firstChild)
@@ -142,6 +143,13 @@ function Popup(apis, srcLng = 'de', tgtLng = 'ru') {
     document.body.appendChild(p)
     const storage = new LocalStorage()
     pairLangSelectorRender(header, { srcLng: 'de', tgtLng: 'ru', storage})
+
+    const cross = document.createElement('div')
+    cross.classList.add('sdb-popup__closer')
+    cross.innerHTML = closeSvg
+    cross.addEventListener('click', () => hide())
+    header.appendChild(cross)
+
   }
 }
 

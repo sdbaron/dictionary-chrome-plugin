@@ -1,0 +1,11 @@
+<svg id="skipAd" width="22" height="22" viewBox="0 0 64 64">
+  <style>
+    g#vnSkipAd > path#cross { opacity: 0.5 }
+    g#vnSkipAd:hover > path#cross { opacity: 1 }
+    g#vnSkipAd:hover > path#background { fill-opacity: 0.5 }
+  </style>
+  <g id="vnSkipAd">
+    <path id="background" fill-opacity=".298" d="M64.055 16c0-8.832-7.173-16-16.017-16h-31.99C7.204 0 .03 7.167.03 16v32c0 8.83 7.174 16 16.018 16h31.99c8.844 0 16.017-7.17 16.017-16V16z"/>
+    <path id="cross" fill="#fff" d="M32.605 27.734L47.91 12.427l3.62 3.62L36.223 31.35 51.53 46.66l-3.62 3.617L32.606 34.97 17.298 50.278 13.68 46.66l15.306-15.31L13.68 16.046l3.618-3.62 15.307 15.308z"/>
+  </g>
+</svg>

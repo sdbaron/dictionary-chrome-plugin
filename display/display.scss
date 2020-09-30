@@ -66,3 +66,12 @@ $popupBodyHeight: $popupMaxHeight - $popupHeaderHeight;
     text-align: center;
     background-color: lightgrey;
 }
+
+.sdb-popup__closer {
+    position: absolute;
+    right: 3px;
+    top: 50%;
+    margin-top: -11px;
+    cursor: pointer;
+    z-index: 1;
+}

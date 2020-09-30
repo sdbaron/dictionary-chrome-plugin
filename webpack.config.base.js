@@ -95,10 +95,11 @@ module.exports = {
       {
         test: /\.svg/,
         use: {
+          // loader: 'raw-loader'
           loader: 'svg-url-loader',
           options: {
             name: '../img/[name].[ext]',
-            regExp: 'Resources/img/(.*)',
+            regExp: 'resources/img/(.*)',
             limit: '1248',
           },
         }
