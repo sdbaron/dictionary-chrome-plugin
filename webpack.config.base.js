@@ -94,15 +94,18 @@ module.exports = {
       },
       {
         test: /\.svg/,
-        use: {
-          // loader: 'raw-loader'
-          loader: 'svg-url-loader',
-          options: {
-            name: '../img/[name].[ext]',
-            regExp: 'resources/img/(.*)',
-            limit: '1248',
-          },
-        }
+        use: [
+        //   {
+        //   loader: 'svg-url-loader',
+        //   options: {
+        //     name: '../img/[name].[ext]',
+        //     regExp: 'resources/img/(.*)',
+        //     limit: '1248',
+        //   },
+        // },
+          {
+          loader: 'raw-loader'
+        }]
       }
     ],
   },
