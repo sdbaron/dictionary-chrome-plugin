@@ -1,54 +1,157 @@
 <html>
 <head>
-	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.js"></script>
 
 	<script>
       AWS.config.update({
-        region: "us-west-2",
-        endpoint: 'http://localhost:8000',
+        region: 'us-east-1',
+        // endpoint: 'http://localhost:63342',
+        // endpoint: document.location.href,
         // accessKeyId default can be used while using the downloadable version of DynamoDB.
         // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
-        accessKeyId: "fakeMyKeyId",
+        accessKeyId: 'AKIAWVVBQD4VXVL5UUHP',
         // secretAccessKey default can be used while using the downloadable version of DynamoDB.
         // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
-        secretAccessKey: "fakeSecretAccessKey"
-      });
+        secretAccessKey: 'q7ZHneCBptUJgdneDANGXznwR405mkFqrJyDHPys'
+      })
 
-      var dynamodb = new AWS.DynamoDB();
+      // var dynamodb = new AWS.DynamoDB();
+      var docClient = new AWS.DynamoDB.DocumentClient()
 
-      function createMovies() {
-        var params = {
-          TableName : "Movies",
-          KeySchema: [
-            { AttributeName: "year", KeyType: "HASH"},
-            { AttributeName: "title", KeyType: "RANGE" }
-          ],
-          AttributeDefinitions: [
-            { AttributeName: "year", AttributeType: "N" },
-            { AttributeName: "title", AttributeType: "S" }
-          ],
-          ProvisionedThroughput: {
-            ReadCapacityUnits: 5,
-            WriteCapacityUnits: 5
+      function getData(key) {
+        const params = {
+          TableName: 'Users',
+          Key: {
+            Email: `${key}`
           }
-        };
+        }
 
-        dynamodb.createTable(params, function(err, data) {
+        docClient.get(params, function(err, data) {
+          if (err) console.log(err, err.stack) // an error occurred
+          else console.log(data)           // successful response
           if (err) {
-            document.getElementById('textarea').innerHTML = "Unable to create table: " + "\n" + JSON.stringify(err, undefined, 2);
+            document.getElementById('textarea').innerHTML = 'Unable to get data by key: ' + '\n' + JSON.stringify(err, undefined, 2)
           } else {
-            document.getElementById('textarea').innerHTML = "Created table: " + "\n" + JSON.stringify(data, undefined, 2);
+            document.getElementById('textarea').innerHTML = JSON.stringify(data, undefined, 2)
           }
-        });
+
+        })
       }
+
+      function updateData(key, src = 'ru', tgt = 'en') {
+        const params = {
+          TableName: 'Users',
+          Key: {
+            Email: `${key}`,
+          },
+          UpdateExpression: 'set Languages.tgt = :t, Languages.src=:s',
+          ExpressionAttributeValues: {
+            ':t': `${tgt}`,
+            ':s': `${src}`
+          },
+          ReturnValues: 'UPDATED_NEW'
+        }
+
+
+        docClient.update(params, function(err, data) {
+          if (err) console.log(err, err.stack) // an error occurred
+          else console.log(data)           // successful response
+          if (err) {
+            document.getElementById('textarea').innerHTML = 'Unable to udate: ' + '\n' + JSON.stringify(err, undefined, 2)
+          } else {
+            document.getElementById('textarea').innerHTML = JSON.stringify(data, undefined, 2)
+          }
+
+        })
+      }
+
+      function createData(key, src = 'ru', tgt = 'en', name) {
+        const params = {
+          TableName: 'Users',
+		  Item: {
+            Email: `${key}`,
+            Languages: {
+              src,
+			  tgt
+			},
+			Name: name
+		  }
+        }
+
+        docClient.put(params, function(err, data) {
+          if (err) console.log(err, err.stack) // an error occurred
+          else console.log(data)           // successful response
+          if (err) {
+            document.getElementById('textarea').innerHTML = 'Unable to crate: ' + '\n' + JSON.stringify(err, undefined, 2)
+          } else {
+            document.getElementById('textarea').innerHTML = JSON.stringify(data, undefined, 2)
+          }
+
+        })
+      }
+
+      // function createMovies() {
+      //   var params = {
+      //     TableName : "Movies",
+      //     KeySchema: [
+      //       { AttributeName: "year", KeyType: "HASH"},
+      //       { AttributeName: "title", KeyType: "RANGE" }
+      //     ],
+      //     AttributeDefinitions: [
+      //       { AttributeName: "year", AttributeType: "N" },
+      //       { AttributeName: "title", AttributeType: "S" }
+      //     ],
+      //     ProvisionedThroughput: {
+      //       ReadCapacityUnits: 5,
+      //       WriteCapacityUnits: 5
+      //     }
+      //   };
+      //
+      //   dynamodb.createTable(params, function(err, data) {
+      //     if (err) {
+      //       document.getElementById('textarea').innerHTML = "Unable to create table: " + "\n" + JSON.stringify(err, undefined, 2);
+      //     } else {
+      //       document.getElementById('textarea').innerHTML = "Created table: " + "\n" + JSON.stringify(data, undefined, 2);
+      //     }
+      //   });
+      // }
 
 	</script>
 </head>
 
 <body>
-<input id="createTableButton" type="button" value="Create Table" onclick="createMovies();" />
-<br><br>
-<textarea readonly id= "textarea" style="width:400px; height:800px"></textarea>
+<script>
+	function update() {
+	  const key = document.getElementById('key').value
+	  const src = document.getElementById('src').value
+	  const tgt = document.getElementById('tgt').value
+      updateData(key, src, tgt)
+	}
+	function create() {
+	  const key = document.getElementById('key').value
+	  const src = document.getElementById('src').value
+	  const tgt = document.getElementById('tgt').value
+	  const name = document.getElementById('name').value
+      createData(key, src, tgt, name)
+	}
+</script>
+<label for="key">Key</label><input id="key" type="text" value="sergeydaub@gmail.com" style="width: 300px"/>
+<input id="getDataButton" type="button" value="get data" onclick="getData(document.getElementById('key').value)"/>
+<br>
+<label for="src">Source lang</label><input id="src" type="text" value="de" style="width: 30px"/>
+<label for="tgt">Target lang</label><input id="tgt" type="text" value="de" style="width: 30px"/>
+<input id="updateDataButton" type="button" value="update data" onclick="update()"/>
+<hr>
 
+<br><br>
+<label for="name">Name:</label><input id="name" type="text" value="de" style="width: 300px"/>
+<input id="createDataButton" type="button" value="create item" onclick="create()"/>
+
+<textarea readonly id="textarea" style="width:400px; height:800px"></textarea>
+<p>https://aws.amazon.com/ru/sdk-for-browser/?nc1=h_ls</p>
+<p>https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/dynamodb-dg.pdf</p>
+<p>https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#getItem-property</p>
+
+<p>https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html#WorkingWithItems.ReadingData</p>
 </body>
 </html>
