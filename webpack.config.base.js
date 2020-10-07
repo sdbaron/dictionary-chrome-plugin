@@ -47,8 +47,13 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(static|node_modules|bower_components)/,
         loader: 'babel-loader',
+      },
+      {
+        test: /thp\/*\.(js)$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'raw-loader'
       },
       {
         test: /\.mst$/,

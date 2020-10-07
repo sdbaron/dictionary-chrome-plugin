@@ -4,9 +4,10 @@ import ForvoSoundApi from './forvo/soundApi'
 
 // import { TextConverter}  from './dictionaries/yandex/presenter/mustache/textConverter'
 // import { TextConverter} from './dictionaries/yandex/presenter/pug/textConverter'
-import { TextConverter} from './dictionaries/yandex/presenter/react/textConverter'
+import { TextConverter } from './dictionaries/yandex/presenter/react/textConverter'
 import { YandexPresenter } from './dictionaries/yandex/presenter/yandexPresenter'
 import Popup from './display/display'
+import { getDB } from './utils'
 
 /**
  *  Инициализация popup, подписывваемся на двойной клик,
@@ -24,13 +25,32 @@ const popup = new Popup({
 
 init()
 
-
+const hdl = setInterval(() => {
+  if (window.AWS) {
+    console.warn(`AWS=${AWS}`)
+    debugger
+    clearInterval(hdl)
+  }
+}, 1000)
+//
 function init() {
   //
   // showMessage("<b>Ok, lets begin!</b>");
   // loadDictionaryApi('chrome-extension://__MSG_@@extension_id__/dictionaries/yandex/api.js');
-  console.warn("I am here")
+  console.warn('I am here')
+  // getDB().then(info => {
+  //   console.warn(`${info}`)
+  //   debugger
+  // }).catch(err => {
+  //   console.warn(`${err}`)
+  //   debugger
+  // })
 
+  // chrome.tabs.getCurrent(function(tab) {
+  //   debugger
+  //   sendResponse([`SUCCESS current=${a}`])
+  // })
+  //
   // handle any click
   document.addEventListener('click', catchOutsideClick)
 
@@ -62,7 +82,7 @@ function clickEventHandler(event) {
   const { clientX, clientY } = event
   const { text, rect } = getRangeFromSelection()
   if (rect) {
-    let top = (rect.bottom || clientY)+ scrollTop
+    let top = (rect.bottom || clientY) + scrollTop
     let left = (rect.left || clientX) + scrollLeft - 20
     let right = left + 500
     let widthOver = right - document.documentElement.clientWidth
