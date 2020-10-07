@@ -7,7 +7,7 @@ import ForvoSoundApi from './forvo/soundApi'
 import { TextConverter } from './dictionaries/yandex/presenter/react/textConverter'
 import { YandexPresenter } from './dictionaries/yandex/presenter/yandexPresenter'
 import Popup from './display/display'
-import { getDB } from './utils'
+import { getDB } from './dynamoDB'
 
 /**
  *  Инициализация popup, подписывваемся на двойной клик,
@@ -25,32 +25,25 @@ const popup = new Popup({
 
 init()
 
-const hdl = setInterval(() => {
-  if (window.AWS) {
-    console.warn(`AWS=${AWS}`)
-    debugger
-    clearInterval(hdl)
-  }
-}, 1000)
 //
 function init() {
   //
   // showMessage("<b>Ok, lets begin!</b>");
   // loadDictionaryApi('chrome-extension://__MSG_@@extension_id__/dictionaries/yandex/api.js');
   console.warn('I am here')
-  // getDB().then(info => {
-  //   console.warn(`${info}`)
-  //   debugger
-  // }).catch(err => {
-  //   console.warn(`${err}`)
-  //   debugger
-  // })
 
-  // chrome.tabs.getCurrent(function(tab) {
-  //   debugger
-  //   sendResponse([`SUCCESS current=${a}`])
-  // })
-  //
+  getDB()
+    .then(db => {
+      debugger
+      db.getData('sergeydaub@gmail.com')
+        .then(data => {
+          console.warn(`d=${JSON.stringify(data, null, 2)}`)
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    })
+
   // handle any click
   document.addEventListener('click', catchOutsideClick)
 
