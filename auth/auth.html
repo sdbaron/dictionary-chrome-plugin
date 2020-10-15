@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>auth</title>
+</head>
+<body>
+<iframe src="http://f0477644.xsph.ru/" width="300" height="200"></iframe>
+<script>
+  const iframe = window.frames[0]
+
+  window.addEventListener('message', (event) => {
+    const { origin, data } = event
+    data && console.log(`data from iframe=${data} origin=${origin}`)
+    postMessage('Hello form the master page', iframe.contentWindow)
+  })
+
+  iframe.onload = () => {
+
+  }
+</script>
+</body>
+</html>

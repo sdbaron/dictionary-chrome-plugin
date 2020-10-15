@@ -34,7 +34,7 @@ function init() {
 
   getDB()
     .then(db => {
-      debugger
+      // debugger
       db.getData('sergeydaub@gmail.com')
         .then(data => {
           console.warn(`d=${JSON.stringify(data, null, 2)}`)
