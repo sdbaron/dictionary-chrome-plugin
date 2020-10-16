@@ -5,19 +5,51 @@
 	<title>auth</title>
 </head>
 <body>
-<iframe src="http://f0477644.xsph.ru/" width="300" height="200"></iframe>
 <script>
-  const iframe = window.frames[0]
+  const iframeOrigin = 'http://lancinate-meridian.000webhostapp.com/'
 
+  window.iframeIsReady = () => {
+    return new Promise(resolve => {
+      const handler = (event) => {
+        const { origin } = event
+        if (origin === iframeOrigin) {
+          // data && console.log(`CHECK data from iframe=${data} origin=${origin}`)
+          window.removeEventListener('message', handler)
+          resolve()
+        }
+      }
+
+      window.addEventListener('message', handler)
+    })
+  }
+
+  window.iframeIsReady()
+  console.log('master page start')
+
+</script>
+<iframe src="https://lancinate-meridian.000webhostapp.com/" width="300" height="200"></iframe>
+
+<script>
+
+  const iframe = window.frames[0]
   window.addEventListener('message', (event) => {
     const { origin, data } = event
-    data && console.log(`data from iframe=${data} origin=${origin}`)
-    postMessage('Hello form the master page', iframe.contentWindow)
+    if (origin === iframeOrigin) {
+      data && console.log(`data from iframe=${data} origin=${origin}`)
+    }
   })
 
-  iframe.onload = () => {
 
-  }
+  window.iframeIsReady()
+    .then(() => {
+      console.log('ready')
+      iframe.postMessage('Hello form the master page', '*')
+      iframe.postMessage({ action: 'setSessionId', value: '2345' }, '*')
+      iframe.postMessage({ action: 'getSessionId' }, '*')
+    })
+
+
 </script>
+
 </body>
 </html>
