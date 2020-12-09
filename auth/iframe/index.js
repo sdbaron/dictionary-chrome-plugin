@@ -12,7 +12,7 @@ function getMessage(event) {
         const pairs = document.cookie.split(';')
         let sessionId = getSession()
         if (!sessionId && value === true) {
-          sessionId = (Math.random() * 10000).toString(16)
+          sessionId = createUId()
           setSession(sessionId)
         }
         window.parent.postMessage({ sessionId }, '*')
@@ -34,7 +34,7 @@ function onPageLoad() {
 if (window.document.readyState === 'complete') onPageLoad()
 else window.addEventListener('load', onPageLoad)
 
-const SessionIdName = 'sid'
+const SessionIdName = '__dcp_sid'
 
 function getSession() {
   const pairs = document.cookie.split(';')
@@ -51,4 +51,13 @@ function getSession() {
 
 function setSession(value) {
   value && (document.cookie = `${SessionIdName}=${value}; SameSite=None;`)
+}
+
+function createUId(cc = 3) {
+  const getChunk = (radix= 16) => Math.random().toString(radix).substring(2)
+  let id = ''
+  for(let i = 0; i < cc; i++) {
+    id += getChunk()
+  }
+  return id
 }
