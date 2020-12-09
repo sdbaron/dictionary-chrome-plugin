@@ -1,15 +1,15 @@
+const MODULE_ID = 'DCN_Session_iframe'
+const SessionIdName = 'sid_dcp'
 
 console.log('iframe start')
 
 function getMessage(event) {
   const { origin, data } = event || {}
-  console.log(`IFRAME getMessage() origin=${origin} data=${data && JSON.stringify(data, null, 2)}`)
+  // console.log(`IFRAME getMessage() origin=${origin} data=${data && JSON.stringify(data, null, 2)}`)
   const { action, value } = data
   switch (action) {
     case 'getSessionId':
       setTimeout(() => {
-
-        const pairs = document.cookie.split(';')
         let sessionId = getSession()
         if (!sessionId && value === true) {
           sessionId = createUId()
@@ -18,23 +18,29 @@ function getMessage(event) {
         window.parent.postMessage({ sessionId }, '*')
       })
       break;
+
     case 'setSessionId':
       setSession(value)
+      break;
+
+    case 'handshake':
+      sendHandshake()
       break
   }
 }
 
 function onPageLoad() {
   window.addEventListener('message', getMessage)
-  window.parent.postMessage('', '*')
-  window.parent.postMessage('Hello from inside iframe', '*')
+  sendHandshake()
   console.log('iframe onPageLoad')
+}
+
+function sendHandshake() {
+  window.parent.postMessage({ handshake: MODULE_ID }, '*')
 }
 
 if (window.document.readyState === 'complete') onPageLoad()
 else window.addEventListener('load', onPageLoad)
-
-const SessionIdName = '__dcp_sid'
 
 function getSession() {
   const pairs = document.cookie.split(';')
@@ -50,7 +56,10 @@ function getSession() {
 }
 
 function setSession(value) {
-  value && (document.cookie = `${SessionIdName}=${value}; SameSite=None;`)
+  let date = new Date();
+  date.setFullYear(date.getFullYear() + 1)
+  date = date.toUTCString();
+  value && (document.cookie = `${SessionIdName}=${value}; SameSite=None; secure; expires=${date}`)
 }
 
 function createUId(cc = 3) {

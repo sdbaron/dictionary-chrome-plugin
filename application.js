@@ -8,6 +8,7 @@ import { TextConverter } from './dictionaries/yandex/presenter/react/textConvert
 import { YandexPresenter } from './dictionaries/yandex/presenter/yandexPresenter'
 import Popup from './display/display'
 import { getDB } from './dynamoDB'
+import Session from './auth/session'
 
 /**
  *  Инициализация popup, подписывваемся на двойной клик,
@@ -30,6 +31,16 @@ function init() {
   //
   // showMessage("<b>Ok, lets begin!</b>");
   // loadDictionaryApi('chrome-extension://__MSG_@@extension_id__/dictionaries/yandex/api.js');
+  const session = new Session()
+  session.init()
+
+  session.getSessionId()
+    .then(sid => {
+      console.warn(`got session Id = ${sid}`)
+    })
+    .catch(err => {
+      console.error(error)
+    })
   console.warn('I am here')
 
   getDB()
