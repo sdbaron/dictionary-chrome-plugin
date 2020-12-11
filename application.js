@@ -38,9 +38,7 @@ function init() {
     .then(sid => {
       console.warn(`got session Id = ${sid}`)
     })
-    .catch(err => {
-      console.error(error)
-    })
+
   console.warn('I am here')
 
   getDB()

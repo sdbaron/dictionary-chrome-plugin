@@ -49,6 +49,14 @@ export default class Session {
     const iframe = document.createElement('iframe')
     document.body.appendChild(iframe)
     iframe.src = iframeSrc
+    iframe.style.zIndex = '-1'
+    iframe.style.border = 'none'
+    iframe.style.height = '1px'
+    iframe.style.width = '1px'
+    iframe.style.position = 'absolute'
+    iframe.style.top = '-999px'
+    iframe.style.left = '-999px'
+
     this.iframeIsReady()
     return iframe
   }
