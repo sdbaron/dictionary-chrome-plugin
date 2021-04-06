@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>auth</title>
+</head>
+<body>
+<script>
+  // const iframeOrigin = 'https://lancinate-meridian.000webhostapp.com/'
+
+
+  console.log('master page start')
+
+</script>
+<iframe id="sessionIframe" src="https://lancinate-meridian.000webhostapp.com/" width="1" height="1" style="z-index: -1; display: none;"></iframe>
+
+<script>
+
+  let iframeOrigin = document.getElementById('sessionIframe').src
+  iframeOrigin.endsWith('/') && (iframeOrigin = iframeOrigin.slice(0, -1))
+
+  window.iframeIsReady = () => {
+    return new Promise(resolve => {
+      const handler = (event) => {
+        const { origin, data } = event
+        // console.log(`CHECK data from iframe=${data} origin=${origin} iframeOrigin=${iframeOrigin} [${origin === iframeOrigin}]`)
+        if (origin === iframeOrigin) {
+          window.removeEventListener('message', handler)
+          // console.log(`CHECK data from iframe=${data} `)
+          resolve()
+        }
+      }
+
+      window.addEventListener('message', handler)
+    })
+  }
+
+  window.iframeIsReady()
+
+  const iframe = window.frames[0]
+  window.addEventListener('message', (event) => {
+    const { origin, data } = event
+    if (origin === iframeOrigin) {
+      data && console.log(`data from iframe=${JSON.stringify(data, null, 2)} origin=${origin}`)
+    }
+  })
+
+
+  window.iframeIsReady()
+    .then(() => {
+      console.log('ready')
+      // iframe.postMessage({ action: 'setSessionId', value: '2345' }, '*')
+      iframe.postMessage({ action: 'getSessionId', value: true }, '*')
+    })
+
+
+</script>
+
+</body>
+</html>
