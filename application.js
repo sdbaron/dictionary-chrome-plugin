@@ -32,17 +32,31 @@ function init() {
   // loadDictionaryApi('chrome-extension://__MSG_@@extension_id__/dictionaries/yandex/api.js');
   console.warn('I am here')
 
-  getDB()
-    .then(db => {
-      // debugger
-      db.getData('sergeydaub@gmail.com')
-        .then(data => {
-          console.warn(`d=${JSON.stringify(data, null, 2)}`)
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    })
+  const defaultEmail = 'default.user@gmail.com'
+  const userIdKey = 'userId'
+  chrome.storage.local.get([userIdKey], function(result) {
+    let email = result && result[userIdKey]
+    if (!email) {
+      email = defaultEmail
+      chrome.storage.local.set({[userIdKey]: email}, function() {
+        console.log('Value is set to ' + email);
+      });
+    }
+    console.log(`Current user's email is ${email}`);
+    getDB()
+      .then(db => {
+        // debugger
+        db.getData(email)
+          .then(data => {
+            console.warn(`d=${JSON.stringify(data, null, 2)}`)
+          })
+          .catch(err => {
+            console.error(err)
+          })
+      })
+
+
+  });
 
   // handle any click
   document.addEventListener('click', catchOutsideClick)
@@ -58,7 +72,7 @@ function init() {
 function catchOutsideClick(event) {
   if (popup && popup.isVisible()) {
     const popupCls = Popup.getRootCssClass()
-    // if click was happened ouside
+    // if click was happened outside
     if (!event.target.closest('.' + popupCls)) {
       popup.hide()
     }

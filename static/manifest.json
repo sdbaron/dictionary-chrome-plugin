@@ -23,6 +23,7 @@
     }
   ],
   "permissions": [
+    "storage",
     "tabs",
     "activeTab",
     "background",

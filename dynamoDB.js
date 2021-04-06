@@ -1,3 +1,7 @@
+/*
+  https://console.aws.amazon.com/dynamodb/home?region=us-east-1#tables:selected=Users;tab=items
+ */
+
 /**
  *
  * @returns {Promise<DynamoDB>}

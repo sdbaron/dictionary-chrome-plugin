@@ -77,11 +77,26 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: extractCSS.extract({ use: ['css-loader', 'style-loader'] }),
+        loader: extractCSS.extract({
+          use: [
+            'style-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+                modules: true,
+                localIdentName: '[name]__[local]__[hash:base64:5]'
+              }
+            }
+          ]
+        }),
       },
       {
         test: /\.scss$/,
-        loader: extractSASS.extract({ fallback: 'style-loader', use: ['css-loader', 'sass-loader'] }),
+        loader: extractSASS.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        }),
       },
       {
         test: /\.(png|jpg)$/,
