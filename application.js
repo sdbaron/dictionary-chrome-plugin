@@ -43,19 +43,19 @@ function init() {
       });
     }
     console.log(`Current user's email is ${email}`);
-    getDB()
-      .then(db => {
-        // debugger
-        db.getData(email)
-          .then(data => {
-            console.warn(`d=${JSON.stringify(data, null, 2)}`)
+    setTimeout(() => {
+      getDB()
+          .then(db => {
+            // debugger
+            db.getData(email)
+                .then(data => {
+                  console.warn(`d=${JSON.stringify(data, null, 2)}`)
+                })
+                .catch(err => {
+                  console.error(err)
+                })
           })
-          .catch(err => {
-            console.error(err)
-          })
-      })
-
-
+    })
   });
 
   // handle any click

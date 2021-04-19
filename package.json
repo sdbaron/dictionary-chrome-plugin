@@ -60,7 +60,7 @@
     "ws": "^3.3.3"
   },
   "scripts": {
-    "watch": "node_modules/.bin/webpack --watch",
+    "watch": "npx webpack --watch",
     "test:api:lingvo": "newman run dictionaries/lingvo/postman_abby.json -e dictionaries/lingvo/postman_env_abby.json",
     "test:jasmine": "babel-node spec/run.js",
     "test:watch": "karma start carma.conf.js"
