@@ -1,9 +1,12 @@
 {
   "manifest_version": 2,
   "name": "Multi dictionary",
-  "description": "Popup with translated word by double click",
+  "description": "Popup with translated a word from the page by double click",
   "version": "0.0.1.4",
-  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
   "browser_action": {
     "default_title": "translate",
     "default_popup": "popup.html"

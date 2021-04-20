@@ -9,10 +9,9 @@ const config = {
   ...baseConfig,
   ...{
     entry: {
-      // es5Shims: './Resources/src/js/lib/es5-shims/es5-shims.custom',
-      // es6Shims: './Resources/src/js/lib/es6-shims/es6-shims',
       application: './application.js',
-      background: './background.js'
+      background: './background.js',
+      popup: './popup.js'
     },
     devtool: developmentSources,
     output: {

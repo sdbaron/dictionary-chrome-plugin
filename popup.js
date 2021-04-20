@@ -1,6 +1,13 @@
-window.addEventListener("DOMContentLoaded", init);
+import getCurrentUserData from './auth/userData'
 
-function init(){
+(() => {
     let root = document.getElementById("main");
-    root.innerHTML = "<b>Ok, lets begin!</b>";
-}
+    getCurrentUserData()
+        .then(data => {
+            console.warn(`data: ${data}`)
+            root.innerHTML = `${JSON.stringify(data, null, 2)}`;
+        })
+        .catch(err => {
+            console.error(`Error: ${err}`)
+        })
+}) ()

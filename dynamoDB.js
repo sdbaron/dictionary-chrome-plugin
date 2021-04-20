@@ -7,13 +7,17 @@
  * @returns {Promise<DynamoDB>}
  */
 export function getDB() {
+  let counter = 20
   return new Promise((resolve, reject) => {
     const hdl = setInterval(() => {
       if (window.AWS) {
         clearInterval(hdl)
         resolve(new DynamoDB(window.AWS))
+      } else if (--counter <= 0) {
+        clearInterval(hdl)
+        reject(Error('Fail connect to DB'))
       }
-    }, 100)
+    }, 250)
   })
 }
 
