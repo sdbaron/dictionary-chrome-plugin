@@ -34,7 +34,7 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^5.0.2",
     "mustache-loader": "^1.4.3",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "path-chunk-webpack-plugin": "^1.2.0",
     "postcss": "^7.0.25",
